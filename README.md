@@ -1,5 +1,5 @@
 # HiClass
- #HiClass refactor 2022/1/19
+ #HiClass Refactor 2022/1/19R
  
  基于 JetPack + MVVM 架构对HiClass代码进行重构
  
