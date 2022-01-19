@@ -1,11 +1,9 @@
 package com.example.hiclass.schedule
 
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -16,21 +14,19 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.hiclass.App
 import com.example.hiclass.GetClassInfo
 import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemDataBean
-import com.example.hiclass.edit.ItemEdit
+import com.example.hiclass.item_add.ItemAdd
+import com.example.hiclass.item_edit.ItemEdit
 import com.example.hiclass.utils.ChangeItem.changedItem
 import com.example.hiclass.utils.ChangeItem.itemAddFlag
 import com.example.hiclass.utils.ChangeItem.itemDeleteFlag
 import com.example.hiclass.utils.ChangeItem.itemUpdateFlag
-import com.example.hiclass.utils.TypeSwitcher
 import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.popup_class_window.*
 import java.util.regex.Pattern
 
 
@@ -100,10 +96,10 @@ class ScheduleFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.menu_add -> {
-//                val intent = Intent(activity, ClassEditActivity::class.java)
-//                startActivity(intent)
-//            }
+            R.id.menu_add -> {
+                val intent = Intent(activity, ItemAdd::class.java)
+                startActivity(intent)
+            }
         }
         return true
     }

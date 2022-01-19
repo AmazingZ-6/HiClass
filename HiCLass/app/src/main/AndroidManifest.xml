@@ -29,8 +29,10 @@
         android:roundIcon="@drawable/ic_launcher_playstore_2"
         android:supportsRtl="true"
         android:theme="@style/Theme.HiClass">
-        <activity android:name=".edit.ItemEdit" />
-        <activity android:name=".schedule.ScheduleFragment"
+        <activity android:name=".item_add.ItemAdd"></activity>
+        <activity android:name=".item_edit.ItemEdit" />
+        <activity
+            android:name=".schedule.ScheduleFragment"
             tools:ignore="Instantiatable" />
         <activity android:name=".GetClassInfo" />
         <activity android:name=".schedule.ScheduleMain" />
