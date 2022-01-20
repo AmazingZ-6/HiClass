@@ -14,7 +14,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:background="@android:color/holo_red_light"
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_item_add"
             app:title="添加事项"
             app:titleTextColor="@color/white"
             android:layout_width="match_parent"

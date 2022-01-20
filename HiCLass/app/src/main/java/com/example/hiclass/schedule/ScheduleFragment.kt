@@ -19,6 +19,7 @@ import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.item_edit.ItemEdit
+import com.example.hiclass.utils.ChangeItem.AddItemList
 import com.example.hiclass.utils.ChangeItem.changedItem
 import com.example.hiclass.utils.ChangeItem.itemAddFlag
 import com.example.hiclass.utils.ChangeItem.itemDeleteFlag
@@ -30,9 +31,6 @@ import com.google.android.material.navigation.NavigationView
 import java.util.regex.Pattern
 
 
-/**
- * A placeholder fragment containing a simple view.
- */
 class ScheduleFragment : Fragment() {
 
     private class ViewMap(r: RelativeLayout, v: View, i: Long) {
@@ -62,6 +60,7 @@ class ScheduleFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         pageViewModel.updateFlag()
+        pageViewModel.addFlag()
 
     }
 
@@ -112,13 +111,17 @@ class ScheduleFragment : Fragment() {
 
 
             pageViewModel.changeFlag.observe(viewLifecycleOwner, Observer {
-                when(it){
+                when (it) {
                     1 -> {
                         updateRefresh(view)
                     }
 
-                    2->{
+                    2 -> {
                         deleteRefresh(view)
+                    }
+
+                    3 -> {
+                        addRefresh(view)
                     }
                 }
 
@@ -270,7 +273,7 @@ class ScheduleFragment : Fragment() {
                 popWindow.dismiss()
             }
 
-            val buttonItemDelete :Button = popView.findViewById(R.id.item_delete)
+            val buttonItemDelete: Button = popView.findViewById(R.id.item_delete)
             buttonItemDelete.setOnClickListener {
                 activity?.let { it1 ->
                     AlertDialog.Builder(it1).apply {
@@ -356,6 +359,16 @@ class ScheduleFragment : Fragment() {
                 break
             }
         }
+    }
+
+    private fun addRefresh(view: View) {
+        for (entity in AddItemList!!) {
+            createItemView(view, entity)
+        }
+        AddItemList!!.clear()
+        itemUpdateFlag = 0
+        itemDeleteFlag = 0
+        itemAddFlag = 0
     }
 }
 

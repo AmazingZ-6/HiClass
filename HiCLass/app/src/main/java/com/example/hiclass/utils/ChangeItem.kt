@@ -6,5 +6,6 @@ object ChangeItem {
     var itemUpdateFlag = 0
     var itemDeleteFlag = 0
     var itemAddFlag = 0
-    var changedItem : ItemDataBean? = null
+    var changedItem: ItemDataBean? = null
+    var AddItemList: MutableList<ItemDataBean>? = null
 }
