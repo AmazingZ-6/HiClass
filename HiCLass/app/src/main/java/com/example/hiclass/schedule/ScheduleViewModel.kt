@@ -16,6 +16,11 @@ class ScheduleViewModel : ViewModel() {
         get() = _changeFlag
 
 
+    val position:LiveData<Int>
+        get() = _position
+
+    private val _position = MutableLiveData<Int>()
+
     private val _changeFlag = MutableLiveData<Int>()
 
     private val _index = MutableLiveData<Int>()
@@ -47,11 +52,7 @@ class ScheduleViewModel : ViewModel() {
     }
 
     fun addFlag() {
-        if (ChangeItem.AddItemList != null){
-            for (entity in ChangeItem.AddItemList!!){
-                weekList[entity.itemWeek-1].dayItemList.add(entity)
-            }
-        }
+
         if (ChangeItem.itemAddFlag != 0) {
             _changeFlag.value = 3
         }
@@ -60,6 +61,10 @@ class ScheduleViewModel : ViewModel() {
 
     fun setIndex(index: Int) {
         _index.value = index
+    }
+
+    fun updatePosition(index: Int) {
+        _position.value = index
     }
 
 

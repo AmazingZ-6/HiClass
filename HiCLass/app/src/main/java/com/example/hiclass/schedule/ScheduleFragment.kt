@@ -4,6 +4,7 @@ package com.example.hiclass.schedule
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -61,26 +62,27 @@ class ScheduleFragment : Fragment() {
         super.onResume()
         pageViewModel.updateFlag()
         pageViewModel.addFlag()
-
+        Log.d("testing", weekNum.toString() + "onResume!")
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.toolbar, menu)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.menu_add).isVisible = true
-        return super.onPrepareOptionsMenu(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+////        super.onCreateOptionsMenu(menu, inflater)
+//        inflater.inflate(R.menu.toolbar, menu)
+//    }
+//
+//    override fun onPrepareOptionsMenu(menu: Menu) {
+//        menu.findItem(R.id.menu_add).isVisible = true
+//        return super.onPrepareOptionsMenu(menu)
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pageViewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java).apply {
-            setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 0)
-        }
+        pageViewModel =
+            ViewModelProvider(activity as ScheduleMain).get(ScheduleViewModel::class.java).apply {
+                setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 0)
+            }
         setHasOptionsMenu(true)
 
     }
@@ -93,22 +95,22 @@ class ScheduleFragment : Fragment() {
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_add -> {
-                val intent = Intent(activity, ItemAdd::class.java)
-                startActivity(intent)
-            }
-        }
-        return true
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.menu_add -> {
+//                val intent = Intent(activity, ItemAdd::class.java)
+//                startActivity(intent)
+//            }
+//        }
+//        return true
+//    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.takeIf { it.containsKey(ARG_SECTION_NUMBER) }?.apply {
             setHasOptionsMenu(true)
             weekNum = getInt(ARG_SECTION_NUMBER)
-
+            Log.d("testing", weekNum.toString() + "onViewCreated!")
 
             pageViewModel.changeFlag.observe(viewLifecycleOwner, Observer {
                 when (it) {
@@ -139,47 +141,47 @@ class ScheduleFragment : Fragment() {
                 }
 
                 createLeftView(view)
-                val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-                val drawerLayout: DrawerLayout = view.findViewById(R.id.drawer_layout)
-                val navView: NavigationView = view.findViewById(R.id.nav_view)
-                val mActivity = activity as AppCompatActivity
-                mActivity.setSupportActionBar(toolbar)
-                val titleString = "第" + weekNum + "周"
-                toolbar.title = titleString
-                mActivity.supportActionBar?.let {
-                    it.setDisplayHomeAsUpEnabled(true)
-                    it.setHomeAsUpIndicator(R.drawable.ic_baseline_settings_24)
-                }
-                toolbar.inflateMenu(R.menu.toolbar)
-                toolbar.setNavigationOnClickListener {
-                    drawerLayout.openDrawer(GravityCompat.START)
-                }
-                navView.setNavigationItemSelectedListener {
-                    when (it.itemId) {
-                        R.id.nav_login -> {
-                            val intent = Intent(      //注意在这里杀掉服务进程
-                                activity,
-                                GetClassInfo::class.java
-                            ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            intent.putExtra("isReLogin", "true")
-                            startActivity(intent)
-                            android.os.Process.killProcess(android.os.Process.myPid())
-                            true
-                        }
-//                        R.id.nav_timer -> {
-//                            val intent = Intent(activity, AlarmEdit::class.java)
+//                val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+//                val drawerLayout: DrawerLayout = view.findViewById(R.id.drawer_layout)
+//                val navView: NavigationView = view.findViewById(R.id.nav_view)
+//                val mActivity = activity as AppCompatActivity
+//                mActivity.setSupportActionBar(toolbar)
+//                val titleString = "第" + weekNum + "周"
+//                toolbar.title = titleString
+//                mActivity.supportActionBar?.let {
+//                    it.setDisplayHomeAsUpEnabled(true)
+//                    it.setHomeAsUpIndicator(R.drawable.ic_baseline_settings_24)
+//                }
+//                toolbar.inflateMenu(R.menu.toolbar)
+//                toolbar.setNavigationOnClickListener {
+//                    drawerLayout.openDrawer(GravityCompat.START)
+//                }
+//                navView.setNavigationItemSelectedListener {
+//                    when (it.itemId) {
+//                        R.id.nav_login -> {
+//                            val intent = Intent(      //注意在这里杀掉服务进程
+//                                activity,
+//                                GetClassInfo::class.java
+//                            ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                            intent.putExtra("isReLogin", "true")
 //                            startActivity(intent)
+//                            android.os.Process.killProcess(android.os.Process.myPid())
 //                            true
 //                        }
-//                        R.id.nav_about_me -> {
-//                            val intent = Intent(activity, AboutMe::class.java)
-//                            startActivity(intent)
-//                            true
-//                        }
-
-                        else -> false
-                    }
-                }
+////                        R.id.nav_timer -> {
+////                            val intent = Intent(activity, AlarmEdit::class.java)
+////                            startActivity(intent)
+////                            true
+////                        }
+////                        R.id.nav_about_me -> {
+////                            val intent = Intent(activity, AboutMe::class.java)
+////                            startActivity(intent)
+////                            true
+////                        }
+//
+//                        else -> false
+//                    }
+//                }
             }
 
 
@@ -309,8 +311,8 @@ class ScheduleFragment : Fragment() {
 //            }
         }
         v.layoutParams = params
-
         re.addView(v)
+
     }
 
     private fun createLeftView(view: View) {
@@ -333,17 +335,22 @@ class ScheduleFragment : Fragment() {
     private fun updateRefresh(view: View) {
 
         val item = changedItem
-        for (entity in viewList) {
-            if (entity.id == item?.id) {
-                entity.re.removeView(entity.vi)
-                createItemView(view, item)
-                itemUpdateFlag = 0
-                itemDeleteFlag = 0
-                itemAddFlag = 0
-                changedItem = null
-                break
+        if (item != null) {
+            for (entity in viewList) {
+                if (entity.id == item.id) {
+                    entity.re.removeView(entity.vi)
+                    createItemView(view, item)
+                    viewList.remove(entity)
+                    Log.d("testing", weekNum.toString() + "refresh!")
+                    itemUpdateFlag = 0
+                    itemDeleteFlag = 0
+                    itemAddFlag = 0
+                    changedItem = null
+                    break
+                }
             }
         }
+
     }
 
     private fun deleteRefresh(view: View) {
@@ -362,13 +369,34 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun addRefresh(view: View) {
-        for (entity in AddItemList!!) {
-            createItemView(view, entity)
+        var isCreated = false
+        val existsList = arrayListOf<ItemDataBean>()
+        if (AddItemList != null) {
+            Log.d("testing", weekNum.toString() + "AddItem!!")
+            for (entity in AddItemList!!) {
+                if (entity.itemWeek == weekNum) {
+                    for (i in viewList) {
+                        if (i.id == entity.id) {
+                            isCreated = true
+                            break
+                        }
+                    }
+                    if (!isCreated) {
+                        weekList[weekNum - 1].dayItemList.add(entity)
+                        createItemView(view, entity)
+                        existsList.add(entity)
+                    }
+                }
+            }
+            for (j in existsList) {
+                AddItemList!!.remove(j)
+            }
+        } else {
+            itemUpdateFlag = 0
+            itemDeleteFlag = 0
+            itemAddFlag = 0
+            AddItemList = null
         }
-        AddItemList!!.clear()
-        itemUpdateFlag = 0
-        itemDeleteFlag = 0
-        itemAddFlag = 0
     }
 }
 

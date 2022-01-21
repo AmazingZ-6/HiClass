@@ -22,7 +22,7 @@ import com.example.hiclass.data_class.ItemEditBean
 
 class ItemAddAdapter(
     private val addList: List<Int>, private val supportManager: FragmentManager,
-    private val owner: ViewModelStoreOwner
+    owner: ViewModelStoreOwner
 ) :
     RecyclerView.Adapter<ItemAddAdapter.ViewHolder>() {
 
@@ -30,15 +30,15 @@ class ItemAddAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameView: AppCompatTextView = view.findViewById(R.id.recycle_name)
-        val nameEdit:AppCompatEditText = view.findViewById(R.id.et_name)
+        val nameEdit: AppCompatEditText = view.findViewById(R.id.et_name)
         val timeView: AppCompatTextView = view.findViewById(R.id.recycle_time)
         val weekView: AppCompatTextView = view.findViewById(R.id.recycle_week)
         val teacherView: AppCompatTextView = view.findViewById(R.id.recycle_teacher)
-        val teacherEdit:AppCompatEditText = view.findViewById(R.id.et_teacher)
+        val teacherEdit: AppCompatEditText = view.findViewById(R.id.et_teacher)
         val addressView: AppCompatTextView = view.findViewById(R.id.recycle_address)
-        val addressEdit:AppCompatEditText = view.findViewById(R.id.et_address)
+        val addressEdit: AppCompatEditText = view.findViewById(R.id.et_address)
         val remarkView: AppCompatTextView = view.findViewById(R.id.recycle_remark)
-        val remarkEdit:AppCompatEditText = view.findViewById(R.id.et_remark)
+        val remarkEdit: AppCompatEditText = view.findViewById(R.id.et_remark)
         val timeSelection: AppCompatTextView = view.findViewById(R.id.et_time)
         val weekSelection: AppCompatTextView = view.findViewById(R.id.et_week)
     }
@@ -57,7 +57,7 @@ class ItemAddAdapter(
         viewHolder.weekSelection.setOnClickListener {
             val weekSelection = SelectWeekFragment.newInstance(position)
             weekSelection.isCancelable = false
-            weekSelection.show(supportManager,"select_week")
+            weekSelection.show(supportManager, "select_week")
         }
         return ViewHolder(view)
     }
@@ -85,18 +85,20 @@ class ItemAddAdapter(
         holder.weekSelection.setOnClickListener {
             val weekSelection = SelectWeekFragment.newInstance(position)
             weekSelection.isCancelable = false
-            weekSelection.show(supportManager,"select_week")
+            weekSelection.show(supportManager, "select_week")
         }
         val mutableList = MutableLiveData<ArrayList<Int>>()
         val initLiveData = arrayListOf(0)
         mutableList.value = initLiveData
-        val itemAdd = ItemEditBean(mutableList,"","",
-        "","","","")
-        viewModel.editList.add(position,itemAdd)
-        viewModel.nameViewGroup.add(position,holder.nameEdit)
-        viewModel.teacherViewGroup.add(position,holder.teacherEdit)
-        viewModel.addressViewGroup.add(position,holder.addressEdit)
-        viewModel.remarkViewGroup.add(position,holder.remarkEdit)
+        val itemAdd = ItemEditBean(
+            mutableList, "", "",
+            "", "", "", ""
+        )
+        viewModel.editList.add(position, itemAdd)
+        viewModel.nameViewGroup.add(position, holder.nameEdit)
+        viewModel.teacherViewGroup.add(position, holder.teacherEdit)
+        viewModel.addressViewGroup.add(position, holder.addressEdit)
+        viewModel.remarkViewGroup.add(position, holder.remarkEdit)
     }
 
 

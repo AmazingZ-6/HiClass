@@ -33,6 +33,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
         return POSITION_NONE
     }
 
+
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         super.destroyItem(container, position, `object`)
     }

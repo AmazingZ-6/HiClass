@@ -40,23 +40,26 @@ class ItemAddViewModel : ViewModel() {
             editList[i].itemAddress = addressViewGroup[i].text.toString()
             editList[i].itemRemarks = remarkViewGroup[i].text.toString()
         }
-        for (entry in editList) {
-            for (index in entry.itemWeekList.value!!) {
-                if (index != 0) {
-                    val temp = ItemDataBean(
-                        index, entry.itemWeekDay, entry.itemTime,
-                        entry.itemName, entry.itemAddress, entry.itemTeacher, entry.itemRemarks,
-                        false, ""
-                    )
-                    thread {
+
+        thread {
+            for (entry in editList) {
+                for (index in entry.itemWeekList.value!!) {
+                    if (index != 0) {
+                        val temp = ItemDataBean(
+                            index, entry.itemWeekDay, entry.itemTime,
+                            entry.itemName, entry.itemAddress, entry.itemTeacher, entry.itemRemarks,
+                            false, ""
+                        )
                         temp.id = itemDao.insertItem(temp)
                         saveList.add(temp)
                     }
                 }
             }
+            ChangeItem.AddItemList = saveList
+            ChangeItem.itemAddFlag = 1
         }
-        ChangeItem.AddItemList = saveList
-        ChangeItem.itemAddFlag = 1
+
+
     }
 }
 
