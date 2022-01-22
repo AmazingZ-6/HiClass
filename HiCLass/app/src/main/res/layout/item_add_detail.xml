@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/little_white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp">
@@ -78,7 +79,7 @@
             android:layout_marginEnd="24dp"
             android:background="@null"
             android:gravity="center_vertical"
-            android:hint="周一    第1 - 2节"
+            android:hint="时间   "
             android:lines="1"
             android:textSize="14sp"
             app:autoSizeMaxTextSize="14sp"

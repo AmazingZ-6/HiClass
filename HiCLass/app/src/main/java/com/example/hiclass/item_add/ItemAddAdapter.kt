@@ -12,17 +12,16 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hiclass.App
 import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemEditBean
+import com.example.hiclass.utils.TypeSwitcher
 
 class ItemAddAdapter(
     private val addList: List<Int>, private val supportManager: FragmentManager,
-    owner: ViewModelStoreOwner
+    private val owner: ViewModelStoreOwner, private val lifecycleOwner: LifecycleOwner
 ) :
     RecyclerView.Adapter<ItemAddAdapter.ViewHolder>() {
 
@@ -90,8 +89,10 @@ class ItemAddAdapter(
         val mutableList = MutableLiveData<ArrayList<Int>>()
         val initLiveData = arrayListOf(0)
         mutableList.value = initLiveData
+        val initLiveStr = MutableLiveData<String>()
+        initLiveStr.value = ""
         val itemAdd = ItemEditBean(
-            mutableList, "", "",
+            mutableList, initLiveStr, "",
             "", "", "", ""
         )
         viewModel.editList.add(position, itemAdd)
@@ -99,6 +100,34 @@ class ItemAddAdapter(
         viewModel.teacherViewGroup.add(position, holder.teacherEdit)
         viewModel.addressViewGroup.add(position, holder.addressEdit)
         viewModel.remarkViewGroup.add(position, holder.remarkEdit)
+
+        viewModel.editList[position].itemWeekList.observe(lifecycleOwner, Observer {
+            val temp = viewModel.editList[position].itemWeekList.value
+            var str = "周数   "
+            if (temp != null) {
+                if (temp.size != 20) {
+                    for (i in temp) {
+                        if (i != 0) {
+                            str = "$str$i "
+                        }
+                    }
+                } else {
+                    str = "$str 1 - 20"
+                }
+
+            }
+            holder.weekSelection.hint = str
+        })
+        viewModel.editList[position].itemWeekDay.observe(lifecycleOwner, Observer {
+            val temp = viewModel.editList[position].itemWeekDay.value.toString()
+            val str = "时间   "
+            if (temp.isNotEmpty()) {
+                holder.timeSelection.hint =
+                    str + temp.substring(0, 2) +
+                            TypeSwitcher.charToChinese(temp[2]) +
+                            "   " + temp.substring(3)
+            }
+        })
     }
 
 

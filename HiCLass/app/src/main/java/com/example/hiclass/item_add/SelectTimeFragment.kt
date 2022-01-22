@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.hiclass.R
+import com.example.hiclass.utils.TypeSwitcher
 import kotlinx.android.synthetic.main.fragment_select_time.*
 
 
@@ -94,7 +95,7 @@ class SelectTimeFragment : DialogFragment() {
         }
 
         btn_save.setOnClickListener {
-            viewModel.editList[position].itemWeekDay = "星期$day" + "第$start" + "-" +"$end" + "节"
+            viewModel.editList[position].itemWeekDay.value = "星期$day" + "第$start" + "-" +"$end" + "节"
             dismiss()
         }
     }

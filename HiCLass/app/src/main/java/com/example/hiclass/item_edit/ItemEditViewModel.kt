@@ -2,8 +2,8 @@ package com.example.hiclass.item_edit
 
 import androidx.lifecycle.ViewModel
 import com.example.hiclass.data_class.ItemDataBean
-import com.example.hiclass.schedule.itemDao
-import com.example.hiclass.schedule.weekList
+import com.example.hiclass.itemDao
+import com.example.hiclass.weekList
 import com.example.hiclass.utils.ChangeItem
 import kotlin.concurrent.thread
 

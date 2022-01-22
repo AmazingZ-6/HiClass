@@ -1,9 +1,9 @@
 package com.example.hiclass.utils
 
 object TypeSwitcher {
-    fun charToInt(char: Char):Int{
+    fun charToInt(char: Char): Int {
         var res = 0
-        when(char){
+        when (char) {
             '1' -> res = 1
             '2' -> res = 2
             '3' -> res = 3
@@ -43,5 +43,32 @@ object TypeSwitcher {
             }
         }
         return 0
+    }
+
+    fun charToChinese(char: Char): Char {
+        when (char) {
+            '1' -> {
+                return '一'
+            }
+            '2' -> {
+                return '二'
+            }
+            '3' -> {
+                return '三'
+            }
+            '4' -> {
+                return '四'
+            }
+            '5' -> {
+                return '五'
+            }
+            '6' -> {
+                return '六'
+            }
+            '7' -> {
+                return '日'
+            }
+        }
+        return '一'
     }
 }

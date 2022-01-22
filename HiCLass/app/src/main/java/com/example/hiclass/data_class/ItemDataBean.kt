@@ -22,7 +22,7 @@ data class ItemDataBean(
     var id: Long = 0
 
     fun getTimeString1(): String {
-        return "第$itemWeek 周$itemWeekDay $itemTime"
+        return "第${itemWeek}周 $itemWeekDay$itemTime"
     }
 
     fun getTimeString2(): String {

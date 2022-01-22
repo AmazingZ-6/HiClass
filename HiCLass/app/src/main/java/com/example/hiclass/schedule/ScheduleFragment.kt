@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.hiclass.GetClassInfo
 import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemDataBean
+import com.example.hiclass.hasAskClassInfo
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.item_edit.ItemEdit
 import com.example.hiclass.utils.ChangeItem.AddItemList
@@ -28,6 +29,7 @@ import com.example.hiclass.utils.ChangeItem.itemUpdateFlag
 import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
+import com.example.hiclass.weekList
 import com.google.android.material.navigation.NavigationView
 import java.util.regex.Pattern
 
@@ -66,17 +68,6 @@ class ScheduleFragment : Fragment() {
     }
 
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-////        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.toolbar, menu)
-//    }
-//
-//    override fun onPrepareOptionsMenu(menu: Menu) {
-//        menu.findItem(R.id.menu_add).isVisible = true
-//        return super.onPrepareOptionsMenu(menu)
-//    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel =
@@ -93,17 +84,6 @@ class ScheduleFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.app_bar_main, container, false)
     }
-
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.menu_add -> {
-//                val intent = Intent(activity, ItemAdd::class.java)
-//                startActivity(intent)
-//            }
-//        }
-//        return true
-//    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -129,9 +109,6 @@ class ScheduleFragment : Fragment() {
 
             })
 
-
-
-
             if (hasAskClassInfo) {
                 val dayL = weekList[weekNum - 1].dayItemList
                 for (i in 0 until dayL.size) {
@@ -141,47 +118,7 @@ class ScheduleFragment : Fragment() {
                 }
 
                 createLeftView(view)
-//                val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-//                val drawerLayout: DrawerLayout = view.findViewById(R.id.drawer_layout)
-//                val navView: NavigationView = view.findViewById(R.id.nav_view)
-//                val mActivity = activity as AppCompatActivity
-//                mActivity.setSupportActionBar(toolbar)
-//                val titleString = "第" + weekNum + "周"
-//                toolbar.title = titleString
-//                mActivity.supportActionBar?.let {
-//                    it.setDisplayHomeAsUpEnabled(true)
-//                    it.setHomeAsUpIndicator(R.drawable.ic_baseline_settings_24)
-//                }
-//                toolbar.inflateMenu(R.menu.toolbar)
-//                toolbar.setNavigationOnClickListener {
-//                    drawerLayout.openDrawer(GravityCompat.START)
-//                }
-//                navView.setNavigationItemSelectedListener {
-//                    when (it.itemId) {
-//                        R.id.nav_login -> {
-//                            val intent = Intent(      //注意在这里杀掉服务进程
-//                                activity,
-//                                GetClassInfo::class.java
-//                            ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                            intent.putExtra("isReLogin", "true")
-//                            startActivity(intent)
-//                            android.os.Process.killProcess(android.os.Process.myPid())
-//                            true
-//                        }
-////                        R.id.nav_timer -> {
-////                            val intent = Intent(activity, AlarmEdit::class.java)
-////                            startActivity(intent)
-////                            true
-////                        }
-////                        R.id.nav_about_me -> {
-////                            val intent = Intent(activity, AboutMe::class.java)
-////                            startActivity(intent)
-////                            true
-////                        }
-//
-//                        else -> false
-//                    }
-//                }
+
             }
 
 
@@ -207,11 +144,7 @@ class ScheduleFragment : Fragment() {
             s.add(a++, m.group().toInt())
         }
         val re = ViewUtil.getDayView(view, s[0])
-        val v: View = LayoutInflater.from(this.context).inflate(R.layout.course_card, null)
 
-        val viewMapEntity = ViewMap(re, v, item.id)
-
-        viewList.add(viewMapEntity)
 
         if (s.size == 3) {
             classStart = s[1]
@@ -222,7 +155,20 @@ class ScheduleFragment : Fragment() {
             classEnd = s[2] * 10 + s[3]
         }
         val height = ((classStart + 1) / 2 - 1) * 360 //1-0 3-360 5-720 7-1080
+        var v: View = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null)
+        if (height <= 360){
+            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null)
+        }
+        if(height in 361..1000){
+            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_2, null)
+        }
+        if (height >= 1000){
+            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_3, null)
+        }
+
         v.y = height.toFloat()
+        val viewMapEntity = ViewMap(re, v, item.id)
+        viewList.add(viewMapEntity)
         val textView: TextView = v.findViewById(R.id.text_view)
         val params = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -230,20 +176,6 @@ class ScheduleFragment : Fragment() {
         ) //设置布局高度,即跨多少节课
         v.isClickable = true
 
-        if (height <= 360) {
-            v.setBackgroundColor(Color.rgb(255, 187, 51))
-            textView.setBackgroundColor(Color.rgb(255, 187, 51))
-        }
-
-        if (height in 361..1080) {
-            v.setBackgroundColor(Color.rgb(255, 68, 68))
-            textView.setBackgroundColor(Color.rgb(255, 68, 68))
-        }
-
-        if (height > 1080) {
-            v.setBackgroundColor(Color.rgb(0, 153, 204))
-            textView.setBackgroundColor(Color.rgb(0, 153, 204))
-        }
         textView.text = name
         v.setOnClickListener {
             val screenH = getScreenHeight(this.requireContext())
@@ -372,7 +304,7 @@ class ScheduleFragment : Fragment() {
         var isCreated = false
         val existsList = arrayListOf<ItemDataBean>()
         if (AddItemList != null) {
-            Log.d("testing", weekNum.toString() + "AddItem!!")
+            Log.d("testing", weekNum.toString() + AddItemList!!.size.toString())
             for (entity in AddItemList!!) {
                 if (entity.itemWeek == weekNum) {
                     for (i in viewList) {

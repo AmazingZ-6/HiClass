@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="IconTextViewStyle">
         <item name="android:textSize">24sp</item>
         <item name="android:gravity">center</item>
         <item name="android:includeFontPadding">false</item>
-<!--        <item name="android:fontFamily"></item>-->
+        <!--        <item name="android:fontFamily"></item>-->
     </style>
 
     <style name="ButtonBackground">
@@ -17,5 +18,14 @@
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="title">
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

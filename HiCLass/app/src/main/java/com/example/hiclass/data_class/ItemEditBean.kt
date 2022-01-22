@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 
 data class ItemEditBean(
     val itemWeekList: MutableLiveData<ArrayList<Int>>,
-    var itemWeekDay: String,
+    var itemWeekDay: MutableLiveData<String>,
     var itemTime: String,
     var itemName: String,
     var itemAddress: String,

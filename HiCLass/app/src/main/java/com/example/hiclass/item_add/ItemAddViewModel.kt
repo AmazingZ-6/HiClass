@@ -1,11 +1,18 @@
 package com.example.hiclass.item_add
 
+import android.app.ProgressDialog
+import android.content.Context
+import android.os.Handler
+import android.os.Message
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.data_class.ItemEditBean
-import com.example.hiclass.schedule.itemDao
-import com.example.hiclass.schedule.weekList
+import com.example.hiclass.itemDao
+import com.example.hiclass.weekList
 import com.example.hiclass.utils.ChangeItem
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 class ItemAddViewModel : ViewModel() {
@@ -41,14 +48,21 @@ class ItemAddViewModel : ViewModel() {
             editList[i].itemRemarks = remarkViewGroup[i].text.toString()
         }
 
+
         thread {
             for (entry in editList) {
                 for (index in entry.itemWeekList.value!!) {
                     if (index != 0) {
                         val temp = ItemDataBean(
-                            index, entry.itemWeekDay, entry.itemTime,
-                            entry.itemName, entry.itemAddress, entry.itemTeacher, entry.itemRemarks,
-                            false, ""
+                            index,
+                            entry.itemWeekDay.value.toString().substring(0, 3),
+                            entry.itemWeekDay.value.toString().substring(3),
+                            entry.itemName,
+                            entry.itemAddress,
+                            entry.itemTeacher,
+                            entry.itemRemarks,
+                            false,
+                            ""
                         )
                         temp.id = itemDao.insertItem(temp)
                         saveList.add(temp)
@@ -58,8 +72,7 @@ class ItemAddViewModel : ViewModel() {
             ChangeItem.AddItemList = saveList
             ChangeItem.itemAddFlag = 1
         }
-
-
+        Thread.sleep(500)
     }
 }
 

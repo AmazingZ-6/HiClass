@@ -3,7 +3,7 @@ package com.example.hiclass.utils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.hiclass.data_class.ItemDataBean
-import com.example.hiclass.schedule.itemDao
+import com.example.hiclass.itemDao
 import kotlin.concurrent.thread
 
 object GetDbInfo {

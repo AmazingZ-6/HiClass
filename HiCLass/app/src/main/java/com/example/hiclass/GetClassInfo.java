@@ -166,7 +166,7 @@ public class GetClassInfo extends AppCompatActivity {
                     editor.apply();
 //                    String data = getResources().getString(R.string.username);
 //                    data = String.format(data, userName);
-                    nextIntent = new Intent(GetClassInfo.this, ScheduleMain.class);
+                    nextIntent = new Intent(GetClassInfo.this, StartActivity.class);
                     nextIntent.putExtra("class_info", ClassItem.toString());
                     if (loginFlag != null && loginFlag.equals("true")) {
                         nextIntent.putExtra("isReLogin", "true");

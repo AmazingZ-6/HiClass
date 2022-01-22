@@ -17,4 +17,7 @@ interface ItemDao {
 
     @Delete
     fun deleteItem(item:ItemDataBean)
+
+    @Query("delete from ItemDataBean")
+    fun clearAllItems()
 }

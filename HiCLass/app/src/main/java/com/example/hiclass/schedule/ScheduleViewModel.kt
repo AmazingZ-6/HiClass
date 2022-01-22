@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.hiclass.data_class.ItemDataBean
+import com.example.hiclass.itemDao
 import com.example.hiclass.utils.ChangeItem
+import com.example.hiclass.weekList
 import kotlin.concurrent.thread
 
 class ScheduleViewModel : ViewModel() {
