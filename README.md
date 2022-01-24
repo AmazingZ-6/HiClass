@@ -24,4 +24,10 @@
  
  Android 原生就是你吗一坨浓shit 开发就是在吃屎 去你妈的google 垃圾
  
+ #HiClass Refactor 2022/1/22
+ 
+ 重构批量添加item模块
+ 
+ 一定程度解决更新UI卡顿现象
+ 
  
