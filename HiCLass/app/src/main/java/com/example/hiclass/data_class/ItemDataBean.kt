@@ -3,6 +3,7 @@ package com.example.hiclass.data_class
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.hiclass.utils.TypeSwitcher
 import kotlinx.android.parcel.Parcelize
 
 @Entity
@@ -16,7 +17,7 @@ data class ItemDataBean(
     var itemRemarks: String,
     var isSetAlarm: Boolean,
     var itemAlarmTime: String
-)  {
+) {
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
@@ -27,6 +28,11 @@ data class ItemDataBean(
 
     fun getTimeString2(): String {
         return itemWeekDay + itemTime
+    }
+
+    fun getTimeString3(): String {
+        val weekDay = TypeSwitcher.charToChinese(itemWeekDay[2])
+        return "第${itemWeek}周 星期$weekDay$itemTime"
     }
 
 }

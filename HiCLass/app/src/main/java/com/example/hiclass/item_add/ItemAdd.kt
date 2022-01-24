@@ -1,40 +1,43 @@
 package com.example.hiclass.item_add
 
-import android.annotation.SuppressLint
-import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.activity.viewModels
+import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hiclass.R
+import com.example.hiclass.schedule.ScheduleMain
+import com.example.hiclass.schedule.ScheduleViewModel
 import com.example.hiclass.utils.StatusUtil
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.item_add_base.*
-import kotlinx.android.synthetic.main.item_add_detail.*
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class ItemAdd : AppCompatActivity() {
 
 
     private lateinit var viewModel: ItemAddViewModel
+    private lateinit var mainViewModel: ScheduleViewModel
     private val addList = ArrayList<Int>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StatusUtil.setStatusBarMode(this,true,R.color.little_white)
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.item_add_base)
+        add_progressbar.visibility = GONE
         viewModel = ViewModelProvider(this).get(ItemAddViewModel::class.java)
+        mainViewModel =
+            ViewModelProvider(ScheduleMain.supplyOwner()).get(ScheduleViewModel::class.java)
         initAdds()
         val layoutManager = LinearLayoutManager(this)
         item_add_recyclerView.layoutManager = layoutManager
-        val adapter = ItemAddAdapter(addList, supportFragmentManager, this,this)
+        val adapter = ItemAddAdapter(addList, supportFragmentManager, this, this)
         item_add_recyclerView.adapter = adapter
         recycle_fab.setOnClickListener {
             addList.add(1)
@@ -57,9 +60,15 @@ class ItemAdd : AppCompatActivity() {
                     setTitle("是否保存")
                     setMessage("点击右下方悬浮按钮可以进行更加快捷方便的批量保存噢")
                     setCancelable(false)
-                    setPositiveButton("是") { dialog, which ->
+                    setPositiveButton("是") { _, _ ->
+                        add_progressbar.visibility = VISIBLE
                         viewModel.saveAddItemList()
-                        finish()
+                        Timer().schedule(object : TimerTask() {
+                            override fun run() {
+                                finish()
+                            }
+
+                        }, 1000)
                     }
 
                     setNegativeButton("否") { dialog, which ->

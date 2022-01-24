@@ -18,7 +18,7 @@ class ScheduleViewModel : ViewModel() {
         get() = _changeFlag
 
 
-    val position:LiveData<Int>
+    val position: LiveData<Int>
         get() = _position
 
     private val _position = MutableLiveData<Int>()
@@ -50,6 +50,31 @@ class ScheduleViewModel : ViewModel() {
         }
         if (ChangeItem.itemDeleteFlag != 0) {
             _changeFlag.value = 2
+        }
+    }
+
+    fun deleteBatchFlag() {
+        if (ChangeItem.changedItem != null) {
+            val name = ChangeItem.changedItem!!.itemName
+            for (i in 0..19) {
+                val temp = arrayListOf<ItemDataBean>()
+                for (entity in weekList[i].dayItemList) {
+                    if (entity.itemName == name) {
+                        ChangeItem.deleteItemIdList.add(entity.id)
+                        thread {
+                            itemDao.deleteItem(entity)
+                        }
+                        temp.add(entity)
+                    }
+                }
+                for(t in temp){
+                    weekList[i].dayItemList.remove(t)
+                }
+            }
+
+        }
+        if (ChangeItem.itemBatchDeleteFlag != 0) {
+            _changeFlag.value = 4
         }
     }
 

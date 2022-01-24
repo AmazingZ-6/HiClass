@@ -3,34 +3,38 @@ package com.example.hiclass.schedule
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import android.widget.ListPopupWindow.WRAP_CONTENT
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.hiclass.GetClassInfo
-import com.example.hiclass.R
+import com.example.hiclass.*
 import com.example.hiclass.data_class.ItemDataBean
-import com.example.hiclass.hasAskClassInfo
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.item_edit.ItemEdit
 import com.example.hiclass.utils.ChangeItem.AddItemList
 import com.example.hiclass.utils.ChangeItem.changedItem
+import com.example.hiclass.utils.ChangeItem.deleteItemIdList
 import com.example.hiclass.utils.ChangeItem.itemAddFlag
+import com.example.hiclass.utils.ChangeItem.itemBatchDeleteFlag
 import com.example.hiclass.utils.ChangeItem.itemDeleteFlag
 import com.example.hiclass.utils.ChangeItem.itemUpdateFlag
 import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
-import com.example.hiclass.weekList
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_item_edit.*
+import kotlinx.android.synthetic.main.popup_class_window.*
 import java.util.regex.Pattern
 
 
@@ -64,7 +68,6 @@ class ScheduleFragment : Fragment() {
         super.onResume()
         pageViewModel.updateFlag()
         pageViewModel.addFlag()
-        Log.d("testing", weekNum.toString() + "onResume!")
     }
 
 
@@ -104,6 +107,9 @@ class ScheduleFragment : Fragment() {
 
                     3 -> {
                         addRefresh(view)
+                    }
+                    4 ->{
+                        deleteBatchRefresh(view)
                     }
                 }
 
@@ -156,13 +162,13 @@ class ScheduleFragment : Fragment() {
         }
         val height = ((classStart + 1) / 2 - 1) * 360 //1-0 3-360 5-720 7-1080
         var v: View = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null)
-        if (height <= 360){
+        if (height <= 360) {
             v = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null)
         }
-        if(height in 361..1000){
+        if (height in 361..1080) {
             v = LayoutInflater.from(this.context).inflate(R.layout.course_card_2, null)
         }
-        if (height >= 1000){
+        if (height > 1080) {
             v = LayoutInflater.from(this.context).inflate(R.layout.course_card_3, null)
         }
 
@@ -182,15 +188,15 @@ class ScheduleFragment : Fragment() {
             val screenW = getScreenWidth(this.requireContext())
             val popView: View =
                 LayoutInflater.from(this.context).inflate(R.layout.popup_class_window, null)
-            val popWindow: PopupWindow = PopupWindow(popView, screenW, 650)
+            val popWindow: PopupWindow = PopupWindow(popView, screenW, WRAP_CONTENT)
             val parentView: View =
                 LayoutInflater.from(this.context).inflate(R.layout.activity_main, null)
 
             popWindow.isOutsideTouchable = true
             popWindow.isFocusable = true
             popWindow.animationStyle = R.style.popupAnimation
-            popWindow.showAtLocation(parentView, 0, 200, 2000)
-            val buttonAlarmEdit: Button = popView.findViewById(R.id.button_edit)
+            popWindow.showAtLocation(parentView, Gravity.NO_GRAVITY, 0, 2000)
+//            val buttonAlarmEdit: Button = popView.findViewById(R.id.button_edit)
 //            buttonAlarmEdit.setOnClickListener {
 //                val alarmIntent = Intent(activity, SetAlarmClock::class.java)
 //                val alarmName = "$name#$time#$week"
@@ -198,7 +204,30 @@ class ScheduleFragment : Fragment() {
 //                startActivity(alarmIntent)
 //                popWindow.dismiss()
 //            }
-            val buttonItemEdit: Button = popView.findViewById(R.id.item_edit)
+
+            val buttonItemEdit: AppCompatTextView = popView.findViewById(R.id.item_edit)
+            val buttonItemDelete: AppCompatTextView = popView.findViewById(R.id.item_delete)
+            val buttonItemClock:AppCompatTextView = popView.findViewById(R.id.item_clock)
+            val popName:AppCompatTextView = popView.findViewById(R.id.pop_name)
+            val popAddress:AppCompatTextView = popView.findViewById(R.id.pop_address)
+            val popTeacher:AppCompatTextView = popView.findViewById(R.id.pop_teacher)
+            val popRemark:AppCompatTextView = popView.findViewById(R.id.pop_remark)
+            val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
+            popName.typeface = font
+            popName.text = App.context.resources.getString(R.string.icon_name)
+            popAddress.typeface = font
+            popAddress.text = App.context.resources.getString(R.string.icon_address)
+            popTeacher.typeface = font
+            popTeacher.text = App.context.resources.getString(R.string.icon_user)
+            popRemark.typeface = font
+            popRemark.text = App.context.resources.getString(R.string.icon_remark)
+            buttonItemEdit.typeface = font
+            buttonItemEdit.text = App.context.resources.getString(R.string.icon_edit)
+            buttonItemDelete.typeface = font
+            buttonItemDelete.text = App.context.resources.getString(R.string.icon_delete_edit)
+            buttonItemClock.typeface = font
+            buttonItemClock.text = App.context.resources.getString(R.string.icon_set_clock)
+
             buttonItemEdit.setOnClickListener {
                 val intent = Intent(activity, ItemEdit::class.java)
                 intent.putExtra("item_week", item.itemWeek)
@@ -207,7 +236,7 @@ class ScheduleFragment : Fragment() {
                 popWindow.dismiss()
             }
 
-            val buttonItemDelete: Button = popView.findViewById(R.id.item_delete)
+
             buttonItemDelete.setOnClickListener {
                 activity?.let { it1 ->
                     AlertDialog.Builder(it1).apply {
@@ -227,6 +256,8 @@ class ScheduleFragment : Fragment() {
                     }.show()
                 }
             }
+
+
             val popTextView1: TextView = popView.findViewById(R.id.popclasstext_view1)
             val popTextView2: TextView = popView.findViewById(R.id.popclasstext_view2)
             val popTextView3: TextView = popView.findViewById(R.id.popclasstext_view3)
@@ -234,8 +265,9 @@ class ScheduleFragment : Fragment() {
             val popTextView5: TextView = popView.findViewById(R.id.popclasstext_view5)
             popTextView1.text = time
             popTextView2.text = name
-            popTextView3.text = address
-            popTextView4.text = teacher
+            popTextView3.text = teacher
+            popTextView4.text = address
+//            popTextView5.text =
 //            if (isSetAlarm) {
 //                val timeToString =
 //                    "⏰" + AlarmTime[0].toString() + AlarmTime[1].toString() + ":" + AlarmTime[2].toString() + AlarmTime[3].toString()
@@ -330,6 +362,32 @@ class ScheduleFragment : Fragment() {
             AddItemList = null
         }
     }
+
+    private fun deleteBatchRefresh(view: View) {
+        val idList = deleteItemIdList
+        val temp = arrayListOf<Long>()
+        for (i in idList) {
+            for (j in viewList) {
+                if (i == j.id) {
+                    j.re.removeView(j.vi)
+                    viewList.remove(j)
+                    temp.add(i)
+                    break
+                }
+            }
+        }
+        for (e in temp){
+            idList.remove(e)
+        }
+        if (idList.size == 0){
+            itemBatchDeleteFlag = 0
+            itemUpdateFlag = 0
+            itemDeleteFlag = 0
+            itemAddFlag = 0
+            changedItem = null
+        }
+    }
+
 }
 
 

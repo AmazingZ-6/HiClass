@@ -54,11 +54,14 @@ class ItemEditViewModel : ViewModel() {
         }
     }
 
-    fun deleteInfo() {
+    fun deleteBatchInfo() {
+        ChangeItem.changedItem = itemi
+        ChangeItem.itemBatchDeleteFlag = 1
+    }
 
-        thread {
-            itemi?.let { itemDao.deleteItem(it) }
-        }
+    fun deleteInfo(){
+        ChangeItem.changedItem = itemi
+        ChangeItem.itemDeleteFlag = 1
     }
 }
 

@@ -3,16 +3,21 @@
     <string name="start_alarm">开启闹钟</string>
     <string name="ok">OK</string>
     <string name="add_thing">添加事项</string>
+    <string name="delete_select"></string>
 
 
-    <string name="icon_name">&#xe64c;</string>
+    <string name="icon_name">&#xe6ed;</string>
     <string name="icon_delete">&#xe661;</string>
     <string name="icon_user">&#xe63d;</string>
     <string name="icon_clock">&#xe64d;</string>
+    <string name="icon_set_clock">&#xe890;</string>
     <string name="icon_address">&#xe61f;</string>
     <string name="icon_remark">&#xe60e;</string>
     <string name="icon_add">&#xe620;</string>
     <string name="icon_thing">&#xe670;</string>
+    <string name="icon_save">&#xec09;</string>
+    <string name="icon_delete_edit">&#xe8b6;</string>
+    <string name="icon_edit">&#xe64c;</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

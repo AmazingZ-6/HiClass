@@ -80,12 +80,12 @@ class StartActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        val intent = Intent(this@StartActivity, GetClassInfo::class.java)
+                        val intent = Intent(this@StartActivity, GetTcpInfo::class.java)
                         startActivity(intent)
                         finish()
                     }
                 } else {
-                    val intent = Intent(this@StartActivity, GetClassInfo::class.java)
+                    val intent = Intent(this@StartActivity, GetTcpInfo::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -111,7 +111,7 @@ class StartActivity : AppCompatActivity() {
                 this.openFileOutput(filename, MODE_PRIVATE).use {
                     it.write(fileContents.toByteArray())
                 }
-                if (askClassInfo.length > 10) {
+                if (askClassInfo.length > 20) {
                     hasAskClassInfo = true
                     initTimeTable()
                 }

@@ -11,8 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewpager.widget.ViewPager
 import com.example.hiclass.*
 import com.example.hiclass.dao.ItemDao
@@ -27,6 +29,7 @@ import kotlin.concurrent.thread
 
 
 
+private lateinit var mainOwner: ViewModelStoreOwner
 
 class ScheduleMain : AppCompatActivity() {
 
@@ -34,6 +37,7 @@ class ScheduleMain : AppCompatActivity() {
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
+        mainOwner = this
         super.onCreate(savedInstanceState)
         StatusUtil.setStatusBarMode(this,true,R.color.little_white)
         setContentView(R.layout.view_pager)
@@ -69,7 +73,7 @@ class ScheduleMain : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
-            it.setHomeAsUpIndicator(R.drawable.ic_baseline_settings_24)
+            it.setHomeAsUpIndicator(R.drawable.ic_baseline_subject_24)
         }
         toolbar.setNavigationOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -87,7 +91,7 @@ class ScheduleMain : AppCompatActivity() {
                             }
                             val intent = Intent(      //注意在这里杀掉服务进程
                                 context,
-                                GetClassInfo::class.java
+                                GetTcpInfo::class.java
                             ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                             intent.putExtra("isReLogin", "true")
                             startActivity(intent)
@@ -133,6 +137,12 @@ class ScheduleMain : AppCompatActivity() {
 
     override fun onBackPressed() {
         android.os.Process.killProcess(android.os.Process.myPid())
+    }
+
+    companion object {
+        fun supplyOwner() : ViewModelStoreOwner{
+            return mainOwner
+        }
     }
 
 }
