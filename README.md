@@ -36,6 +36,12 @@
  
  美化整体UI
  
+ #HiClass Refactor 2022/1/24
+ 
+ 重构TCP python服务端及Android客户端 弃用UDP传输
+ 
+ 完成题库存储及通过python后端获取题库
+ 
  
  
  
