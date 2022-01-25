@@ -5,13 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.hiclass.dao.ItemDao
+import com.example.hiclass.dao.ResourceDao
 import com.example.hiclass.data_class.ItemDataBean
+import com.example.hiclass.data_class.ResourceBean
 
 
-@Database(version = 1, entities = [ItemDataBean::class])
+@Database(version = 1, entities = [ItemDataBean::class, ResourceBean::class])
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
+    abstract fun resourceDao(): ResourceDao
 
     companion object {
         private var instance: AppDatabase? = null

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.hiclass.dao.ItemDao
+import com.example.hiclass.dao.ResourceDao
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.utils.StatusUtil
@@ -20,6 +21,7 @@ import kotlin.concurrent.thread
 lateinit var askClassInfo: String
 var hasAskClassInfo: Boolean = false
 lateinit var itemDao: ItemDao
+lateinit var resourceDao: ResourceDao
 
 
 class WeekItemList(week: Int) {

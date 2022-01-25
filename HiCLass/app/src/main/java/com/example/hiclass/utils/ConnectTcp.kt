@@ -9,8 +9,9 @@ import java.net.Socket
 
 object ConnectTcp {
     private val sc: Socket? = null
-    private const val ip = "101.43.18.202"  //本地服务端地址
-    private const val port = 12345
+    private const val ip = "101.43.18.202"
+    private const val port_login = 12345
+    private const val port_load = 12346
 
 //    //图片交互接口
 //    private val ImageSocket: Socket? = null
@@ -18,13 +19,18 @@ object ConnectTcp {
     private var dout: OutputStream? = null
     private var din: InputStreamReader? = null
 
-//    //图片交互流
+    //    //图片交互流
 //    private val imageInputStream: InputStream? = null
 //    private val imageFileOutputSteam: DataOutputStream? = null
     var isConnect = false
 //    var ImageConncet = false
 
-    private fun initConnect() {
+    private fun initConnect(type:Int) {
+        val port = if (type == 0){
+            port_login
+        }else{
+            port_load
+        }
         try {
             val sc: Socket = Socket(ip, port)
             din = InputStreamReader(sc.getInputStream(), "utf-8")
@@ -33,7 +39,7 @@ object ConnectTcp {
             if (din != null && dout != null) {
                 isConnect = true
             } else {
-                initConnect()
+                initConnect(type)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -41,7 +47,7 @@ object ConnectTcp {
     }
 
 
-    private fun sendSno(sno: String?):Boolean {
+    private fun sendSno(sno: String?): Boolean {
         try {
             if (isConnect) {
                 if (dout != null && sno != null) {
@@ -83,18 +89,34 @@ object ConnectTcp {
     }
 
     fun login(sno: String?): String? {
-        if (sno?.length != 10){
+        if (sno?.length != 10) {
             return null
         }
-        initConnect()
+        initConnect(0)
         val mSend: String = sno
         val isSend = sendSno(mSend)
-        if (!isSend){
+        if (!isSend) {
             return null
         }
         var reply: String? = ""
         reply = receiveItemInfo()
-        if (reply == null){
+        if (reply == null) {
+            return null
+        }
+        closeConnect()
+        return reply
+    }
+
+    fun load(type: String): String? {
+        initConnect(1)
+        val mSend: String = type
+        val isSend = sendSno(mSend)
+        if (!isSend) {
+            return null
+        }
+        var reply: String? = ""
+        reply = receiveItemInfo()
+        if (reply == null) {
             return null
         }
         closeConnect()

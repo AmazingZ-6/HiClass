@@ -24,10 +24,14 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="2cdb4876-462c-49a6-8992-7f02a6a092ca">
+        <schema name="main" object-types="table, view, constraint, index, column, dataset trigger" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="8f99867b-7de4-491f-bfc9-0bd14e893d55">
+    <connection id="2cdb4876-462c-49a6-8992-7f02a6a092ca">
       <console name="Connection" type="STANDARD" schema="main" session="Main" />
     </connection>
   </component>
@@ -35,10 +39,10 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="8f99867b-7de4-491f-bfc9-0bd14e893d55" />
+    <connection id="2cdb4876-462c-49a6-8992-7f02a6a092ca" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="8f99867b-7de4-491f-bfc9-0bd14e893d55" dataset="main.ItemDataBean" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="2cdb4876-462c-49a6-8992-7f02a6a092ca" dataset="main.ResourceBean" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -69,7 +73,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="8f99867b-7de4-491f-bfc9-0bd14e893d55" active="true">
+      <connection id="2cdb4876-462c-49a6-8992-7f02a6a092ca" active="true">
         <database>
           <name value="Connection" />
           <description value="" />

@@ -16,5 +16,9 @@
             android:icon="@drawable/ic_readme"
             android:id="@+id/nav_about_me"
             android:title="关于我们" />
+        <item
+            android:icon="@drawable/ic_readme"
+            android:id="@+id/nav_load"
+            android:title="题库下载"/>
     </group>
 </menu>

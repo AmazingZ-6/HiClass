@@ -1,3 +1,5 @@
+//UDP通信 已弃用
+
 //package com.example.hiclass;
 //
 //

@@ -29,13 +29,13 @@
         android:roundIcon="@drawable/ic_launcher_playstore_2"
         android:supportsRtl="true"
         android:theme="@style/Theme.HiClass">
-        <activity android:name=".GetTcpInfo"></activity>
+        <activity android:name=".load.LoadQue"></activity>
+        <activity android:name=".GetTcpInfo" />
         <activity android:name=".item_add.ItemAdd" />
         <activity android:name=".item_edit.ItemEdit" />
         <activity
             android:name=".schedule.ScheduleFragment"
-            tools:ignore="Instantiatable" />
-<!--        <activity android:name=".GetClassInfo" />-->
+            tools:ignore="Instantiatable" /> <!-- <activity android:name=".GetClassInfo" /> -->
         <activity android:name=".schedule.ScheduleMain" />
         <activity android:name=".StartActivity">
             <intent-filter>

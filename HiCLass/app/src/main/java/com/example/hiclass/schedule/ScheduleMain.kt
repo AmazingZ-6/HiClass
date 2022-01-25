@@ -20,6 +20,7 @@ import com.example.hiclass.*
 import com.example.hiclass.dao.ItemDao
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.item_add.ItemAdd
+import com.example.hiclass.load.LoadQue
 import com.example.hiclass.utils.ChangeItem.AddItemList
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher
@@ -114,6 +115,11 @@ class ScheduleMain : AppCompatActivity() {
 //                            startActivity(intent)
 //                            true
 //                        }
+                R.id.nav_load ->{
+                    val intent = Intent(this,LoadQue::class.java)
+                    startActivity(intent)
+                    true
+                }
 
                 else -> false
             }
