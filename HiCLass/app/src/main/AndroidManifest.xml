@@ -29,7 +29,14 @@
         android:roundIcon="@drawable/ic_launcher_playstore_2"
         android:supportsRtl="true"
         android:theme="@style/Theme.HiClass">
-        <activity android:name=".load.LoadQue"></activity>
+        <activity android:name=".alarm.SetAlarm"></activity>
+
+        <service
+            android:name=".alarm.AlarmService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".load.LoadQue" />
         <activity android:name=".GetTcpInfo" />
         <activity android:name=".item_add.ItemAdd" />
         <activity android:name=".item_edit.ItemEdit" />

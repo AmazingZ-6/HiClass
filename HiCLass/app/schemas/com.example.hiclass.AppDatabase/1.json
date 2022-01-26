@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "15d49fb853e8bf5cd80b7adda1e70b2b",
+    "identityHash": "b66c9b713aa66846b0eeb39b74e1d4db",
     "entities": [
       {
         "tableName": "ItemDataBean",
@@ -139,12 +139,68 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "AlarmDataBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `alarmName` TEXT NOT NULL, `alarmTermDay` TEXT NOT NULL, `alarmTime` TEXT NOT NULL, `alarmQueType` TEXT NOT NULL, `alarmInterval` TEXT NOT NULL, `alarmSwitch` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmName",
+            "columnName": "alarmName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmTermDay",
+            "columnName": "alarmTermDay",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmTime",
+            "columnName": "alarmTime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmQueType",
+            "columnName": "alarmQueType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmInterval",
+            "columnName": "alarmInterval",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmSwitch",
+            "columnName": "alarmSwitch",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '15d49fb853e8bf5cd80b7adda1e70b2b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b66c9b713aa66846b0eeb39b74e1d4db')"
     ]
   }
 }

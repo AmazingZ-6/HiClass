@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -25,6 +26,7 @@ import com.example.hiclass.utils.ChangeItem.AddItemList
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import java.io.File
 import kotlin.concurrent.thread
 
@@ -120,6 +122,10 @@ class ScheduleMain : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+//                R.id.image_header ->{
+//                    Toast.makeText(this,"fuck",Toast.LENGTH_LONG)
+//                    true
+//                }
 
                 else -> false
             }

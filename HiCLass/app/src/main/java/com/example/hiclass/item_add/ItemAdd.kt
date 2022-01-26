@@ -46,6 +46,9 @@ class ItemAdd : AppCompatActivity() {
         }
         val toolbar = findViewById<Toolbar>(R.id.toolbar_item_add)
         setSupportActionBar(toolbar)
+        viewModel.isFinished.observe(this, androidx.lifecycle.Observer {
+            finish()
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -63,12 +66,12 @@ class ItemAdd : AppCompatActivity() {
                     setPositiveButton("是") { _, _ ->
                         add_progressbar.visibility = VISIBLE
                         viewModel.saveAddItemList()
-                        Timer().schedule(object : TimerTask() {
-                            override fun run() {
-                                finish()
-                            }
-
-                        }, 1000)
+//                        Timer().schedule(object : TimerTask() {
+//                            override fun run() {
+//                                finish()
+//                            }
+//
+//                        }, 1000)
                     }
 
                     setNegativeButton("否") { dialog, which ->

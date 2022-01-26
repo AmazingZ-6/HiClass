@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.hiclass.*
+import com.example.hiclass.alarm.SetAlarm
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.item_edit.ItemEdit
@@ -227,6 +228,14 @@ class ScheduleFragment : Fragment() {
             buttonItemDelete.text = App.context.resources.getString(R.string.icon_delete_edit)
             buttonItemClock.typeface = font
             buttonItemClock.text = App.context.resources.getString(R.string.icon_set_clock)
+
+            buttonItemClock.setOnClickListener {
+                val intent = Intent(activity,SetAlarm::class.java)
+                intent.putExtra("term_day",item.getTimeString3())
+                intent.putExtra("name",item.itemName)
+                startActivity(intent)
+                popWindow.dismiss()
+            }
 
             buttonItemEdit.setOnClickListener {
                 val intent = Intent(activity, ItemEdit::class.java)

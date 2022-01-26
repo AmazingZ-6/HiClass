@@ -18,6 +18,10 @@
     <string name="icon_save">&#xec09;</string>
     <string name="icon_delete_edit">&#xe8b6;</string>
     <string name="icon_edit">&#xe64c;</string>
+    <string name="icon_load">&#xe856;</string>
+    <string name="icon_loading">&#xe60f;</string>
+    <string name="icon_load_ok">&#xe65b;</string>
+    <string name="icon_next">&#xe6a2;</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

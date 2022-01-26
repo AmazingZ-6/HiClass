@@ -5,6 +5,8 @@ import android.content.Context
 import android.os.Handler
 import android.os.Message
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.data_class.ItemEditBean
@@ -24,6 +26,11 @@ class ItemAddViewModel : ViewModel() {
     val teacherViewGroup = mutableListOf<androidx.appcompat.widget.AppCompatEditText>()
     val addressViewGroup = mutableListOf<androidx.appcompat.widget.AppCompatEditText>()
     val remarkViewGroup = mutableListOf<androidx.appcompat.widget.AppCompatEditText>()
+
+    val isFinished :LiveData<Boolean>
+    get() = _isFinished
+    private val _isFinished = MutableLiveData<Boolean>()
+
     fun judgeType(list: ArrayList<Int>): Int {
         val oddListCount = list.count {
             it % 2 == 1
@@ -71,8 +78,8 @@ class ItemAddViewModel : ViewModel() {
             }
             ChangeItem.AddItemList = saveList
             ChangeItem.itemAddFlag = 1
+            _isFinished.postValue(true)
         }
-        Thread.sleep(500)
     }
 }
 
