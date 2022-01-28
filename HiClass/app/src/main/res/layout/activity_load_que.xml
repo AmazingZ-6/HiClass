@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/little_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/little_white"
+        android:id="@+id/toolbar_load_que"
+        app:title="题库资源"
+        app:titleTextColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:popupTheme="@style/Theme.MenuTest.PopupOverlay" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_que_english"
+        android:layout_gravity="center"
+        android:layout_width="380dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/ll_edit_address"
+        android:background="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_que_english"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="考研英语词汇1000题"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:gravity="center"
+            android:textSize="20sp"
+            android:id="@+id/load_que_btn"
+            style="@style/ButtonBackground"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="@string/icon_address"
+            android:textColor="@color/black" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</com.google.android.material.appbar.AppBarLayout>

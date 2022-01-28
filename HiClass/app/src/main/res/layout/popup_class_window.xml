@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/boder"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/popclasstext_view1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="0dp"
+        android:singleLine="true"
+        android:text=""
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_pop_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/popclasstext_view1"
+        android:background="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pop_name"
+            style="@style/IconTextViewStyle"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:text="@string/icon_name"
+            android:textColor="#16AD9F" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/popclasstext_view2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="事项名称"
+            android:lines="1"
+            android:textSize="14sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_pop_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/ll_pop_name"
+        android:background="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pop_teacher"
+            style="@style/IconTextViewStyle"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:text="@string/icon_user"
+            android:textColor="#673AB7" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/popclasstext_view3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="上课老师"
+            android:lines="1"
+            android:singleLine="true"
+            android:textSize="14sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_pop_address"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/ll_pop_teacher"
+        android:background="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pop_address"
+            style="@style/IconTextViewStyle"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:text="@string/icon_user"
+            android:textColor="#FFEB3B" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/popclasstext_view4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="地点"
+            android:lines="1"
+            android:singleLine="true"
+            android:textSize="14sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_pop_remark"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/ll_pop_address"
+        android:background="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pop_remark"
+            style="@style/IconTextViewStyle"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:text="@string/icon_address"
+            android:textColor="#F63D3E" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/popclasstext_view5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="事项备注"
+            android:lines="1"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ll_pop_remark"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_clock"
+            style="@style/ButtonBackground"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:fontFamily="@assets/iconfont"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="24sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_delete"
+            style="@style/ButtonBackground"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:fontFamily="@assets/iconfont"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="#3F51B5"
+            android:textSize="24sp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_edit"
+            style="@style/ButtonBackground"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:fontFamily="@assets/iconfont"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="24sp" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>

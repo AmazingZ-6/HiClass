@@ -1,0 +1,150 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "15d49fb853e8bf5cd80b7adda1e70b2b",
+    "entities": [
+      {
+        "tableName": "ItemDataBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `itemWeek` INTEGER NOT NULL, `itemWeekDay` TEXT NOT NULL, `itemTime` TEXT NOT NULL, `itemName` TEXT NOT NULL, `itemAddress` TEXT NOT NULL, `itemTeacher` TEXT NOT NULL, `itemRemarks` TEXT NOT NULL, `isSetAlarm` INTEGER NOT NULL, `itemAlarmTime` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemWeek",
+            "columnName": "itemWeek",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemWeekDay",
+            "columnName": "itemWeekDay",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemTime",
+            "columnName": "itemTime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemName",
+            "columnName": "itemName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemAddress",
+            "columnName": "itemAddress",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemTeacher",
+            "columnName": "itemTeacher",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemRemarks",
+            "columnName": "itemRemarks",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isSetAlarm",
+            "columnName": "isSetAlarm",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemAlarmTime",
+            "columnName": "itemAlarmTime",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ResourceBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT NOT NULL, `content` TEXT NOT NULL, `A` TEXT NOT NULL, `B` TEXT NOT NULL, `C` TEXT NOT NULL, `D` TEXT NOT NULL, `correct` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "A",
+            "columnName": "A",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "B",
+            "columnName": "B",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "C",
+            "columnName": "C",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "D",
+            "columnName": "D",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correct",
+            "columnName": "correct",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '15d49fb853e8bf5cd80b7adda1e70b2b')"
+    ]
+  }
+}
