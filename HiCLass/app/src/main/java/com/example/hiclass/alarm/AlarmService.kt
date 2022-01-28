@@ -45,7 +45,7 @@ class AlarmService : Service() {
 
     }
 
-    private fun cancelCLock(){
+    private fun cancelClock(){
 
     }
 }

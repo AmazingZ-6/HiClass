@@ -140,7 +140,7 @@ class ScheduleFragment : Fragment() {
         val week = item.itemWeek
         val address = item.itemAddress
         val teacher = item.itemTeacher
-        val time = item.getTimeString2()
+        val time = item.getTimeString3()
         val p = Pattern.compile("[0-9]")
         var classStart = 0
         var classEnd = 0

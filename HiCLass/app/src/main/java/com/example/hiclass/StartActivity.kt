@@ -7,8 +7,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.hiclass.dao.AlarmDao
 import com.example.hiclass.dao.ItemDao
 import com.example.hiclass.dao.ResourceDao
+import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.utils.StatusUtil
@@ -22,6 +24,7 @@ lateinit var askClassInfo: String
 var hasAskClassInfo: Boolean = false
 lateinit var itemDao: ItemDao
 lateinit var resourceDao: ResourceDao
+lateinit var alarmDao: AlarmDao
 
 
 class WeekItemList(week: Int) {
@@ -29,7 +32,7 @@ class WeekItemList(week: Int) {
     val dayItemList = mutableListOf<ItemDataBean>()
 }
 
-
+val alarmList: MutableList<AlarmDataBean> = mutableListOf()
 val weekList: MutableList<WeekItemList> = mutableListOf(
     WeekItemList(1),
     WeekItemList(2),
@@ -60,11 +63,12 @@ class StartActivity : AppCompatActivity() {
 //        val controller = ViewCompat.getWindowInsetsController(view)
 //        controller?.hide(WindowInsetsCompat.Type.statusBars())
         window.statusBarColor = Color.TRANSPARENT
-        StatusUtil.setStatusBarMode(this,true,R.color.little_white)
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_start)
         itemDao = initDatabase()
         val file = File(applicationContext.filesDir, "load_info")
         initInfo()
+        getAlarmInfo()
 
 
         Timer().schedule(object : TimerTask() {
@@ -97,6 +101,15 @@ class StartActivity : AppCompatActivity() {
 
     private fun initDatabase(): ItemDao {
         return AppDatabase.getDatabase(this).itemDao()
+    }
+
+    private fun getAlarmInfo() {
+        alarmDao = AppDatabase.getDatabase(this).alarmDao()
+        thread {
+            for(entity in alarmDao.loadAllAlarms()){
+                alarmList.add(entity)
+            }
+        }
     }
 
     private fun initInfo() {

@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_set_alarm.*
 class SetAlarm : AppCompatActivity() {
     private val hourList = arrayOfNulls<String>(47)
     private val minuteList = arrayOfNulls<String>(119)
+    private var minute = ""
+    private var hour = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
@@ -25,6 +27,7 @@ class SetAlarm : AppCompatActivity() {
         alarm_set_term_day.text = alarmTermDay.toString()
         alarm_set_name.setText(alarmName.toString())
         initEvents()
+        initOptions()
     }
 
     private fun initEvents() {
@@ -44,10 +47,10 @@ class SetAlarm : AppCompatActivity() {
             }
         }
 
-        for(b in 59 downTo 1){
-            if (b < 10){
+        for (b in 59 downTo 1) {
+            if (b < 10) {
                 minuteList[59 - b] = "0$b"
-            }else{
+            } else {
                 minuteList[59 - b] = "$b"
             }
         }
@@ -69,5 +72,21 @@ class SetAlarm : AppCompatActivity() {
         alarm_set_minute.minValue = 0
         alarm_set_minute.value = 59
 
+        alarm_set_hour.setOnValueChangedListener { picker, oldVal, newVal ->
+            hour = hourList[newVal].toString()
+        }
+        alarm_set_minute.setOnValueChangedListener { picker, oldVal, newVal ->
+            minute = minuteList[newVal].toString()
+        }
+
+
+    }
+
+    private fun initOptions(){
+        alarm_set_que.setOnClickListener {
+            val queSelection = SelectQueFragment.newInstance()
+            queSelection.isCancelable = false
+            queSelection.show(supportFragmentManager,"Select_que_type")
+        }
     }
 }

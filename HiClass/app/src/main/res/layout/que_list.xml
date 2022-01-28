@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="260dp"
+
+    android:layout_height="40dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_gravity="center"
+        android:id="@+id/que_select_single"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:gravity="center"
+            android:id="@+id/que_name_icon"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textColor="#FFC107"
+            android:text=""/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:gravity="center_vertical"
+            android:id="@+id/que_name"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:text=""/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="invisible"
+            android:gravity="center_vertical"
+            android:id="@+id/que_name_select"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/teal_200"
+            android:text=""/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+</LinearLayout>
