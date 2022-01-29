@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b66c9b713aa66846b0eeb39b74e1d4db",
+    "identityHash": "5f3f4f5b47acb6dd6fd60898f36c9ebd",
     "entities": [
       {
         "tableName": "ItemDataBean",
@@ -142,7 +142,7 @@
       },
       {
         "tableName": "AlarmDataBean",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `alarmName` TEXT NOT NULL, `alarmTermDay` TEXT NOT NULL, `alarmTime` TEXT NOT NULL, `alarmQueType` TEXT NOT NULL, `alarmInterval` TEXT NOT NULL, `alarmSwitch` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `alarmName` TEXT NOT NULL, `alarmTermDay` TEXT NOT NULL, `alarmTime` TEXT NOT NULL, `alarmQueType` INTEGER NOT NULL, `alarmInterval` TEXT NOT NULL, `alarmSwitch` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -171,7 +171,7 @@
           {
             "fieldPath": "alarmQueType",
             "columnName": "alarmQueType",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -200,7 +200,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b66c9b713aa66846b0eeb39b74e1d4db')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f3f4f5b47acb6dd6fd60898f36c9ebd')"
     ]
   }
 }

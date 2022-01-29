@@ -2,7 +2,6 @@ package com.example.hiclass.schedule
 
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
@@ -10,18 +9,13 @@ import android.view.*
 import android.widget.*
 import android.widget.ListPopupWindow.WRAP_CONTENT
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.hiclass.*
-import com.example.hiclass.alarm.SetAlarm
+import com.example.hiclass.alarm_set.SetAlarm
 import com.example.hiclass.data_class.ItemDataBean
-import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.item_edit.ItemEdit
 import com.example.hiclass.utils.ChangeItem.AddItemList
 import com.example.hiclass.utils.ChangeItem.changedItem
@@ -33,9 +27,6 @@ import com.example.hiclass.utils.ChangeItem.itemUpdateFlag
 import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
-import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_item_edit.*
-import kotlinx.android.synthetic.main.popup_class_window.*
 import java.util.regex.Pattern
 
 
@@ -140,7 +131,7 @@ class ScheduleFragment : Fragment() {
         val week = item.itemWeek
         val address = item.itemAddress
         val teacher = item.itemTeacher
-        val time = item.getTimeString3()
+        val time = item.getTimeString2()
         val p = Pattern.compile("[0-9]")
         var classStart = 0
         var classEnd = 0
@@ -230,7 +221,7 @@ class ScheduleFragment : Fragment() {
             buttonItemClock.text = App.context.resources.getString(R.string.icon_set_clock)
 
             buttonItemClock.setOnClickListener {
-                val intent = Intent(activity,SetAlarm::class.java)
+                val intent = Intent(activity, SetAlarm::class.java)
                 intent.putExtra("term_day",item.getTimeString3())
                 intent.putExtra("name",item.itemName)
                 startActivity(intent)
@@ -272,7 +263,7 @@ class ScheduleFragment : Fragment() {
             val popTextView3: TextView = popView.findViewById(R.id.popclasstext_view3)
             val popTextView4: TextView = popView.findViewById(R.id.popclasstext_view4)
             val popTextView5: TextView = popView.findViewById(R.id.popclasstext_view5)
-            popTextView1.text = time
+            popTextView1.text = item.getTimeString3()
             popTextView2.text = name
             popTextView3.text = teacher
             popTextView4.text = address

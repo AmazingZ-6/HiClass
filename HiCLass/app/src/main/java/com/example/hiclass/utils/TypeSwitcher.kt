@@ -71,4 +71,31 @@ object TypeSwitcher {
         }
         return '一'
     }
+
+    fun intToWeekday(int: Int): String {
+        when (int) {
+            0 -> {
+                return "周一"
+            }
+            1->{
+                return "周二"
+            }
+            2->{
+                return "周三"
+            }
+            3->{
+                return "周四"
+            }
+            4->{
+                return "周五"
+            }
+            5->{
+                return "周六"
+            }
+            6->{
+                return "周日"
+            }
+        }
+        return "周一"
+    }
 }

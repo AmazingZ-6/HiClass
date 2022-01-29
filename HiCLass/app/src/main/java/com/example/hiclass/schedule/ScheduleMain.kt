@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewpager.widget.ViewPager
 import com.example.hiclass.*
+import com.example.hiclass.alarm_single.SetAlarmSingle
 import com.example.hiclass.dao.ItemDao
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.item_add.ItemAdd
@@ -141,6 +142,10 @@ class ScheduleMain : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_add -> {
                 val intent = Intent(this, ItemAdd::class.java)
+                startActivity(intent)
+            }
+            R.id.menu_clock ->{
+                val intent = Intent(this, SetAlarmSingle::class.java)
                 startActivity(intent)
             }
         }

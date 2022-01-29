@@ -29,7 +29,10 @@
         android:roundIcon="@drawable/ic_launcher_playstore_2"
         android:supportsRtl="true"
         android:theme="@style/Theme.HiClass">
-        <activity android:name=".alarm.SetAlarm"></activity>
+        <activity
+            android:name=".alarm_single.SetAlarmSingle"
+            android:exported="false" />
+        <activity android:name=".alarm_set.SetAlarm" />
 
         <service
             android:name=".alarm.AlarmService"

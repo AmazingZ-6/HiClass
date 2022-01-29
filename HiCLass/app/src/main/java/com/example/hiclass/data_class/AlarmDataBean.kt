@@ -5,11 +5,13 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class AlarmDataBean(
+    var alarmType:Int,
     var alarmName: String,
     var alarmTermDay: String,
+    var alarmWeekday:MutableList<Int>,
     var alarmTime: String,
     var alarmQueType:Int,
-    var alarmInterval:String,
+    var alarmInterval:Int,
     var alarmSwitch: Boolean
 ){
     @PrimaryKey(autoGenerate = true)
