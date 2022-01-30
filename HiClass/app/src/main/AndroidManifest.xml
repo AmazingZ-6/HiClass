@@ -30,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiClass">
         <activity
+            android:name=".alarm.ClockRing"
+            android:exported="false" />
+        <activity
             android:name=".alarm_single.SetAlarmSingle"
             android:exported="false" />
         <activity android:name=".alarm_set.SetAlarm" />

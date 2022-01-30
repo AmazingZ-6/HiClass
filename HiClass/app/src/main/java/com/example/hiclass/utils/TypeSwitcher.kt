@@ -77,23 +77,29 @@ object TypeSwitcher {
             0 -> {
                 return "周一"
             }
-            1->{
+            1 -> {
                 return "周二"
             }
-            2->{
+            2 -> {
                 return "周三"
             }
-            3->{
+            3 -> {
                 return "周四"
             }
-            4->{
+            4 -> {
                 return "周五"
             }
-            5->{
+            5 -> {
                 return "周六"
             }
-            6->{
+            6 -> {
                 return "周日"
+            }
+            7 -> {
+                return "明天"
+            }
+            8 -> {
+                return "今天"
             }
         }
         return "周一"

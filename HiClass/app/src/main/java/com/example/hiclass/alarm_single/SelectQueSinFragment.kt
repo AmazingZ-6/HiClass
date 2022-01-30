@@ -13,13 +13,16 @@ import com.example.hiclass.alarm_set.SelectQueFragment
 import kotlinx.android.synthetic.main.fragment_select_que.*
 
 class SelectQueSinFragment : DialogFragment() {
-    private lateinit var viewModel: SetSingleViewModel
+
+//    private lateinit var viewModel: SetSingleViewModel
     private lateinit var queName: List<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
-        viewModel = ViewModelProvider(activity as SetAlarmSingle).get(SetSingleViewModel::class.java)
+//        viewModel =
+//            ViewModelProvider(activity as SetAlarmSingle).get(SetSingleViewModel::class.java)
 
     }
 
@@ -44,7 +47,8 @@ class SelectQueSinFragment : DialogFragment() {
     }
 
     private fun initEvents() {
-        val adapter = SelectQueSinAdapter(queName, this, this)
+        val adapter =
+            SelectQueSinAdapter(queName, activity as SetAlarmSingle, activity as SetAlarmSingle)
         rv_select_que.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
         rv_select_que.layoutManager = layoutManager

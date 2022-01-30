@@ -76,10 +76,11 @@
                 android:layout_gravity="center"
                 android:background="?android:attr/selectableItemBackground">
 
+
                 <androidx.appcompat.widget.AppCompatTextView
 
                     android:layout_width="120dp"
-                    android:layout_height="48dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
 
                     android:gravity="center_vertical"
@@ -89,14 +90,14 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/alarm_selected_weekday"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="center_vertical|end"
                     android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/alarm_set_term_day_next_single"
-                    android:layout_width="40dp"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:gravity="end|center_vertical"
                     android:textSize="12sp" />
@@ -176,14 +177,14 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/alarm_selected_que_type_single"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="center_vertical|end"
                     android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/alarm_set_que_next_single"
-                    android:layout_width="40dp"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:gravity="end|center_vertical"
                     android:textSize="12sp" />

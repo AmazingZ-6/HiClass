@@ -1,0 +1,175 @@
+package com.example.hiclass.alarm
+
+import android.app.KeyguardManager
+import android.content.Context
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
+import com.example.hiclass.R
+import com.example.hiclass.alarmList
+import com.example.hiclass.data_class.AlarmDataBean
+import com.example.hiclass.data_class.DeliverInfoBean
+import com.example.hiclass.data_class.ResourceBean
+import com.example.hiclass.utils.StatusUtil
+import kotlinx.android.synthetic.main.activity_clock_ring.*
+import kotlinx.android.synthetic.main.item_add_base.*
+
+class ClockRing : AppCompatActivity() {
+
+    private val mediaPlayer = MediaPlayer()
+    lateinit var alarm: AlarmDataBean
+    private var right = ""
+    private var alarmId = -1L
+    private var a = ""
+    private var b =""
+    private var c =""
+    private var d =""
+    private var content =""
+    private var correct =""
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
+        alarmId = intent.getLongExtra("alarm_id",-1L)
+        content = intent.getStringExtra("que_content").toString()
+        a = intent.getStringExtra("que_a").toString()
+        b = intent.getStringExtra("que_b").toString()
+        d = intent.getStringExtra("que_d").toString()
+        c = intent.getStringExtra("que_c").toString()
+        correct = intent.getStringExtra("que_correct").toString()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+            val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            keyguardManager.requestDismissKeyguard(this, null)
+            Log.d("time", "clock!")
+        } else {
+            this.window.addFlags(
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            )
+        }
+        setContentView(R.layout.activity_clock_ring)
+        initInfo()
+        initOption()
+        initMediaPlayer()
+        mediaPlayer.start()
+    }
+
+    private fun initInfo() {
+        for (entity in alarmList) {
+            if (entity.id == alarmId) {
+                alarm = entity
+                break
+            }
+        }
+        val timeT = "    " + alarm.alarmTime
+        ring_time.text = timeT
+        val nameT = "                " + alarm.alarmName
+        ring_name.text = nameT
+        ring_que_content.text = content
+        ring_que_a.text = a
+        ring_que_b.text = b
+        ring_que_c.text = c
+        ring_que_d.text = d
+        right = correct
+    }
+
+    private fun initMediaPlayer() {
+        val assetManager = assets
+        val fd = assetManager.openFd("coldwind.mp3")
+        mediaPlayer.setAudioAttributes(
+            AudioAttributes
+                .Builder()
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build()
+        )
+        mediaPlayer.setDataSource(fd.fileDescriptor, fd.startOffset, fd.length)
+        mediaPlayer.prepare()
+        mediaPlayer.setVolume(0.7f, 0.7f)
+    }
+
+    private fun initOption() {
+        val list = arrayListOf<androidx.appcompat.widget.AppCompatTextView>(
+            ring_que_a, ring_que_b, ring_que_c, ring_que_d
+        )
+        when (right) {
+            "A" -> {
+                list[0].setOnClickListener {
+                    stopRing()
+                }
+                for (i in 1..3) {
+                    list[i].setOnClickListener {
+                        chooseWrong()
+                    }
+                }
+            }
+            "B" -> {
+                list[1].setOnClickListener {
+                    stopRing()
+                }
+                for (i in listOf(0, 2, 3)) {
+                    list[i].setOnClickListener {
+                        chooseWrong()
+                    }
+                }
+            }
+            "C" -> {
+                list[2].setOnClickListener {
+                    stopRing()
+                }
+                for (i in listOf(0, 1, 3)) {
+                    chooseWrong()
+                }
+            }
+            "D" -> {
+                list[3].setOnClickListener {
+                    stopRing()
+                }
+                for (i in listOf(0, 1, 2)) {
+                    chooseWrong()
+                }
+            }
+        }
+    }
+
+    private fun stopRing() {
+        mediaPlayer.stop()
+        mediaPlayer.release()
+        finish()
+    }
+
+    private fun chooseWrong() {
+        AlertDialog.Builder(this).apply {
+            setTitle("答题正确才可以关闭闹钟噢！")
+            setMessage("若有紧急情况可以连续点击右下方按钮强制关闭")
+            setCancelable(false)
+            setPositiveButton("确定") { _, _ ->
+
+            }
+        }.show()
+    }
+
+    override fun onBackPressed() {
+        AlertDialog.Builder(this).apply {
+            setTitle("答题正确才可以关闭闹钟噢！")
+            setMessage("若有紧急情况可以连续点击右下方按钮强制关闭")
+            setCancelable(false)
+            setPositiveButton("确定") { _, _ ->
+
+            }
+        }.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.stop()
+        mediaPlayer.release()
+    }
+}

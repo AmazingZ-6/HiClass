@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5f3f4f5b47acb6dd6fd60898f36c9ebd",
+    "identityHash": "ab9891e7c0148d27c5249ad7a55d7073",
     "entities": [
       {
         "tableName": "ItemDataBean",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `itemWeek` INTEGER NOT NULL, `itemWeekDay` TEXT NOT NULL, `itemTime` TEXT NOT NULL, `itemName` TEXT NOT NULL, `itemAddress` TEXT NOT NULL, `itemTeacher` TEXT NOT NULL, `itemRemarks` TEXT NOT NULL, `isSetAlarm` INTEGER NOT NULL, `itemAlarmTime` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemWeek` INTEGER NOT NULL, `itemWeekDay` TEXT NOT NULL, `itemTime` TEXT NOT NULL, `itemName` TEXT NOT NULL, `itemAddress` TEXT NOT NULL, `itemTeacher` TEXT NOT NULL, `itemRemarks` TEXT NOT NULL, `isSetAlarm` INTEGER NOT NULL, `itemAlarmTime` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "itemWeek",
             "columnName": "itemWeek",
@@ -67,6 +61,12 @@
             "columnName": "itemAlarmTime",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -80,14 +80,8 @@
       },
       {
         "tableName": "ResourceBean",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT NOT NULL, `content` TEXT NOT NULL, `A` TEXT NOT NULL, `B` TEXT NOT NULL, `C` TEXT NOT NULL, `D` TEXT NOT NULL, `correct` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `content` TEXT NOT NULL, `A` TEXT NOT NULL, `B` TEXT NOT NULL, `C` TEXT NOT NULL, `D` TEXT NOT NULL, `correct` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "type",
             "columnName": "type",
@@ -129,6 +123,12 @@
             "columnName": "correct",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -142,11 +142,11 @@
       },
       {
         "tableName": "AlarmDataBean",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `alarmName` TEXT NOT NULL, `alarmTermDay` TEXT NOT NULL, `alarmTime` TEXT NOT NULL, `alarmQueType` INTEGER NOT NULL, `alarmInterval` TEXT NOT NULL, `alarmSwitch` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`alarmType` INTEGER NOT NULL, `alarmName` TEXT NOT NULL, `alarmTermDay` TEXT NOT NULL, `alarmWeekday` TEXT NOT NULL, `alarmTime` TEXT NOT NULL, `alarmQueType` INTEGER NOT NULL, `alarmInterval` INTEGER NOT NULL, `alarmSwitch` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "alarmType",
+            "columnName": "alarmType",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -159,6 +159,12 @@
           {
             "fieldPath": "alarmTermDay",
             "columnName": "alarmTermDay",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmWeekday",
+            "columnName": "alarmWeekday",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -177,12 +183,18 @@
           {
             "fieldPath": "alarmInterval",
             "columnName": "alarmInterval",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "alarmSwitch",
             "columnName": "alarmSwitch",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -200,7 +212,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f3f4f5b47acb6dd6fd60898f36c9ebd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab9891e7c0148d27c5249ad7a55d7073')"
     ]
   }
 }

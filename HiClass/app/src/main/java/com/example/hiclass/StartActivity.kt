@@ -69,6 +69,7 @@ class StartActivity : AppCompatActivity() {
         val file = File(applicationContext.filesDir, "load_info")
         initInfo()
         getAlarmInfo()
+        getResourceInfo()
 
 
         Timer().schedule(object : TimerTask() {
@@ -110,6 +111,10 @@ class StartActivity : AppCompatActivity() {
                 alarmList.add(entity)
             }
         }
+    }
+
+    private fun getResourceInfo(){
+        resourceDao = AppDatabase.getDatabase(this).resourceDao()
     }
 
     private fun initInfo() {

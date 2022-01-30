@@ -8,7 +8,7 @@ data class AlarmDataBean(
     var alarmType:Int,
     var alarmName: String,
     var alarmTermDay: String,
-    var alarmWeekday:MutableList<Int>,
+    var alarmWeekday:String,
     var alarmTime: String,
     var alarmQueType:Int,
     var alarmInterval:Int,

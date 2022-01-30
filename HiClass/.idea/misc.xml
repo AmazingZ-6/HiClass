@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/HiClass/app/src/main/res/drawable/layout_background.xml" value="0.1" />
+        <entry key="..\:/HiClass/app/src/main/res/layout/activity_clock_ring.xml" value="0.16666666666666666" />
         <entry key="..\:/HiClass/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
         <entry key="..\:/HiClass/app/src/main/res/layout/activity_set_alarm.xml" value="0.16666666666666666" />
-        <entry key="..\:/HiClass/app/src/main/res/layout/activity_set_alarm_single.xml" value="0.1" />
+        <entry key="..\:/HiClass/app/src/main/res/layout/activity_set_alarm_single.xml" value="0.17916666666666667" />
         <entry key="..\:/HiClass/app/src/main/res/layout/app_bar_main.xml" value="0.17916666666666667" />
         <entry key="..\:/HiClass/app/src/main/res/layout/class_view.xml" value="0.17916666666666667" />
         <entry key="..\:/HiClass/app/src/main/res/layout/fragment_select_que.xml" value="0.17916666666666667" />

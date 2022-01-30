@@ -27,7 +27,7 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="64e409c4-cbd1-44ed-8891-2cd57ac0a963">
+    <connection id="a59a25d9-76a9-4c33-aa8c-254c0075fc24">
       <console name="Connection" type="STANDARD" schema="main" session="Main" />
     </connection>
   </component>
@@ -35,10 +35,10 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="64e409c4-cbd1-44ed-8891-2cd57ac0a963" />
+    <connection id="a59a25d9-76a9-4c33-aa8c-254c0075fc24" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="64e409c4-cbd1-44ed-8891-2cd57ac0a963" dataset="main.ResourceBean" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a59a25d9-76a9-4c33-aa8c-254c0075fc24" dataset="main.ResourceBean" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -69,7 +69,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="64e409c4-cbd1-44ed-8891-2cd57ac0a963" active="true">
+      <connection id="a59a25d9-76a9-4c33-aa8c-254c0075fc24" active="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -84,7 +84,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="C:\Users\27659\Documents\AndroidStudio\DeviceExplorer\huawei-pct_al10-5EN0219403000652\data\data\com.example.hiClass\databases\app_database" schema="main" />
+            <file path="C:\Users\27659\Documents\AndroidStudio\DeviceExplorer\huawei-pct_al10-5EN0219403000652\data\data\com.example.hiClass\databases\app_database.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
@@ -113,10 +113,10 @@
           <charset value="UTF-8" />
           <session-management value="true" />
           <ddl-file-binding value="true" />
-          <database-logging value="false" />
+          <database-logging value="true" />
           <connect-automatically value="true" />
           <restore-workspace value="true" />
-          <restore-workspace-deep value="true" />
+          <restore-workspace-deep value="false" />
           <environment-type value="default" />
           <connectivity-timeout value="5" />
           <idle-time-to-disconnect value="30" />

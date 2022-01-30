@@ -38,7 +38,8 @@ class SelectTermDayFragment : DialogFragment() {
     }
 
     private fun initEvents() {
-        val adapter = SelectTermDayAdapter(dayList, this, this)
+        val adapter =
+            SelectTermDayAdapter(dayList, activity as SetAlarmSingle, activity as SetAlarmSingle)
         rv_select_term_day.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
         rv_select_term_day.layoutManager = layoutManager
