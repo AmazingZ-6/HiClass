@@ -21,7 +21,7 @@ import com.example.hiclass.utils.TypeSwitcher
 
 class ItemAddAdapter(
     private val addList: List<Int>, private val supportManager: FragmentManager,
-    private val owner: ViewModelStoreOwner, private val lifecycleOwner: LifecycleOwner
+    owner: ViewModelStoreOwner, private val lifecycleOwner: LifecycleOwner
 ) :
     RecyclerView.Adapter<ItemAddAdapter.ViewHolder>() {
 
