@@ -12,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import com.example.hiclass.R
+import com.example.hiclass.alarmDao
 import com.example.hiclass.alarmList
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.DeliverInfoBean
@@ -19,6 +20,7 @@ import com.example.hiclass.data_class.ResourceBean
 import com.example.hiclass.utils.StatusUtil
 import kotlinx.android.synthetic.main.activity_clock_ring.*
 import kotlinx.android.synthetic.main.item_add_base.*
+import kotlin.concurrent.thread
 
 class ClockRing : AppCompatActivity() {
 
@@ -125,7 +127,10 @@ class ClockRing : AppCompatActivity() {
                     stopRing()
                 }
                 for (i in listOf(0, 1, 3)) {
-                    chooseWrong()
+                    list[i].setOnClickListener {
+                        chooseWrong()
+                    }
+
                 }
             }
             "D" -> {
@@ -133,7 +138,9 @@ class ClockRing : AppCompatActivity() {
                     stopRing()
                 }
                 for (i in listOf(0, 1, 2)) {
-                    chooseWrong()
+                    list[i].setOnClickListener {
+                        chooseWrong()
+                    }
                 }
             }
         }
@@ -142,16 +149,28 @@ class ClockRing : AppCompatActivity() {
     private fun stopRing() {
         mediaPlayer.stop()
         mediaPlayer.release()
+        updateAlarm()
         finish()
+    }
+
+    private fun updateAlarm(){
+        thread {
+            for (i in alarmList){
+                if (i.id == alarmId){
+                    i.alarmSwitch = false
+                    alarmDao.updateAlarm(i)
+                    break
+                }
+            }
+        }
     }
 
     private fun chooseWrong() {
         AlertDialog.Builder(this).apply {
-            setTitle("答题正确才可以关闭闹钟噢！")
-            setMessage("若有紧急情况可以连续点击右下方按钮强制关闭")
+            setTitle("选择了错误的答案噢！")
+            setMessage("闹钟将以低音量持续响铃3分钟，请等待片刻后再次答题")
             setCancelable(false)
             setPositiveButton("确定") { _, _ ->
-
             }
         }.show()
     }
@@ -162,14 +181,13 @@ class ClockRing : AppCompatActivity() {
             setMessage("若有紧急情况可以连续点击右下方按钮强制关闭")
             setCancelable(false)
             setPositiveButton("确定") { _, _ ->
-
             }
         }.show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mediaPlayer.stop()
-        mediaPlayer.release()
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        mediaPlayer.stop()
+//        mediaPlayer.release()
+//    }
 }

@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp">
         <androidx.appcompat.widget.AppCompatTextView
+            android:textSize="20sp"
             android:gravity="center"
             android:id="@+id/ring_que_content"
             android:layout_width="match_parent"
@@ -61,6 +62,7 @@
         android:layout_height="50dp">
         <androidx.appcompat.widget.AppCompatTextView
             android:gravity="center"
+            android:textSize="20sp"
             android:id="@+id/ring_que_a"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -75,6 +77,7 @@
         android:layout_height="50dp">
         <androidx.appcompat.widget.AppCompatTextView
             android:gravity="center"
+            android:textSize="20sp"
             android:id="@+id/ring_que_b"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -88,6 +91,7 @@
         android:layout_height="50dp">
         <androidx.appcompat.widget.AppCompatTextView
             android:gravity="center"
+            android:textSize="20sp"
             android:id="@+id/ring_que_c"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -102,6 +106,7 @@
         android:layout_height="50dp">
         <androidx.appcompat.widget.AppCompatTextView
             android:gravity="center"
+            android:textSize="20sp"
             android:id="@+id/ring_que_d"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

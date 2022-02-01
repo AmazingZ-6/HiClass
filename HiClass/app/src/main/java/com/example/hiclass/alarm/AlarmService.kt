@@ -20,7 +20,7 @@ import kotlin.concurrent.thread
 class AlarmService : Service() {
 
     private lateinit var alarm: AlarmDataBean
-    private val piMap = mutableMapOf<AlarmDataBean,PendingIntent>()
+    private val piMap = mutableMapOf<Long,ResourceBean>()
 
 
     override fun onBind(intent: Intent): IBinder {
@@ -79,7 +79,7 @@ class AlarmService : Service() {
         intent.putExtra("que_d",que.D)
         intent.putExtra("que_correct",que.correct)
         val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, 0)
-        piMap[alarm] = pi
+        piMap[alarm.id] = que
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         calendar.timeZone = TimeZone.getTimeZone("GMT+8")
@@ -100,7 +100,17 @@ class AlarmService : Service() {
 
     private fun cancelClock() {
         val mAlarmManager: AlarmManager = getSystemService(Service.ALARM_SERVICE) as AlarmManager
-        val pi = piMap[alarm]
+        val que = piMap[alarm.id]
+        piMap.remove(alarm.id)
+        val intent = Intent(this, ClockRing::class.java)
+        intent.putExtra("alarm_id",alarm.id)
+        intent.putExtra("que_content",que!!.content)
+        intent.putExtra("que_a",que.A)
+        intent.putExtra("que_b",que.B)
+        intent.putExtra("que_c",que.C)
+        intent.putExtra("que_d",que.D)
+        intent.putExtra("que_correct",que.correct)
+        val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, 0)
         mAlarmManager.cancel(pi)
     }
 }

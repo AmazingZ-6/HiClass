@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewpager.widget.ViewPager
 import com.example.hiclass.*
+import com.example.hiclass.alarm.AlarmDisplay
 import com.example.hiclass.alarm_single.SetAlarmSingle
 import com.example.hiclass.dao.ItemDao
 import com.example.hiclass.data_class.ItemDataBean
@@ -145,7 +146,7 @@ class ScheduleMain : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.menu_clock ->{
-                val intent = Intent(this, SetAlarmSingle::class.java)
+                val intent = Intent(this, AlarmDisplay::class.java)
                 startActivity(intent)
             }
         }
@@ -153,7 +154,8 @@ class ScheduleMain : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        android.os.Process.killProcess(android.os.Process.myPid())
+//        android.os.Process.killProcess(android.os.Process.myPid())
+        finish()
     }
 
     companion object {
