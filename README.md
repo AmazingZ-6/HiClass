@@ -3,6 +3,8 @@
  基于 JetPack + MVVM 架构对HiClass代码进行重构
  
  #HiClass Refactor 2022/1/19
+ 
+ 弃用原版本数据库操作模块 启用room
   
  解决编辑数据更新UI时白屏延迟现象
  
@@ -10,7 +12,7 @@
  
  #HiClass Refactor 2022/1/20
  
- 更新添加事项UI
+ 通过阿里巴巴iconfont更新添加事项UI
  
  #HiClass Refactor 2022/1/21
  
@@ -18,7 +20,7 @@
  
  重构返回主页面课表刷新模块代码
  
- 重构ItemAddAdapter ItemAddViewModel SelectViewModel SelectAdapter
+ 启用MVVM机构重构ItemAddAdapter ItemAddViewModel SelectViewModel SelectAdapter
  
  #HiClass Refactor 2022/1/21
  
@@ -40,6 +42,8 @@
  
  重构TCP python服务端及Android客户端 弃用UDP传输
  
+ UDP在相当一部分wifi情况下会出现全丢包现象 更换服务器端口后仍无法解决问题 猜测是路由器进行某种不为我所知的丢弃操作
+ 
  完成题库存储及通过python后端获取题库
  
  #HiClass Refactor 2022/1/25
@@ -52,19 +56,41 @@
  
  #HiClass Refactor 2022/1/28
  
- 重构闹钟模块：..
+ 解决通过thread数据库操作导致无法在onResume中正常实现数据刷新问题
+ 
+ 1.主线程强制等待\TimerTask -> 简单有效 但很蠢
+ 
+ 2.handle\AsyncTask -> 有效 但司马谷歌已弃用
+ 
+ 3.通过viewmodel livedata postValue方法在线程中设立完成标记，observe方法实现finish返回 -> 巧妙且有效 MVVM来作用了
+ 
+ 4.kotlin协程 通过suspend将函数挂起在协程中进行数据库工作 -> 未尝试 有理论可行性 用法相当高级 但需要对Dao模块进行大量再重构
  
  #HiClass Refactor 2022/1/29
  
  重构闹钟模块：..
  
+ 建立 activity + fragment + adapter + viewmodel + model 架构
+ 
  #HiClass Refactor 2022/1/30
  
- 重构闹钟模块：..
+ 重构闹钟模块：.. 解决 data class 在paecelize序列化后仍无法在activity之间传递的问题：
+ 
+ 分解后传递
  
  #HiClass Refactor 2022/1/31
  
  重构闹钟模块：..
+ 
+ #HiClass Refactor 2022/2/1
+ 
+ 重构闹钟模块：解决recyclerview中动态更改item样式出现复用问题：
+ 
+ 当进行item删除操作后需同时调用notifyItemRemoved. notifyItemRangeChanged 两接口 否则会出现position错乱等问题
+ 
+ 但 notifyItemRangeChanged 会回调 adapter 中的 onBindViewHolder 方法 导致界面会出现一些十分奇怪的现象（奇怪得跟谷歌死了吗一样）
+ 
+ 通过监听事件实现 viewmodel livedata observe 进行曲线更改 成功解决问题
  
  
  
