@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.hiclass.alarmList
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.itemDao
 import com.example.hiclass.utils.ChangeItem
@@ -20,6 +21,10 @@ class ScheduleViewModel : ViewModel() {
 
     val position: LiveData<Int>
         get() = _position
+
+    val exitFlag:LiveData<Boolean>
+    get() = _exitFlag
+    private val _exitFlag = MutableLiveData<Boolean>()
 
     private val _position = MutableLiveData<Int>()
 
@@ -92,6 +97,13 @@ class ScheduleViewModel : ViewModel() {
 
     fun updatePosition(index: Int) {
         _position.value = index
+    }
+
+    fun exit(){
+        for (i in weekList){
+            i.dayItemList.clear()
+        }
+        alarmList.clear()
     }
 
 

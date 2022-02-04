@@ -1,12 +1,18 @@
 package com.example.hiclass.schedule
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.media.Image
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -33,24 +39,25 @@ import java.io.File
 import kotlin.concurrent.thread
 
 
-
 private lateinit var mainOwner: ViewModelStoreOwner
 
 class ScheduleMain : AppCompatActivity() {
 
     private lateinit var viewModel: ScheduleViewModel
+    private lateinit var headerImage: ImageView
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         mainOwner = this
         super.onCreate(savedInstanceState)
-        StatusUtil.setStatusBarMode(this,true,R.color.little_white)
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.view_pager)
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout_fragment)
         val navView: NavigationView = findViewById(R.id.nav_view)
+        val headerView = navView.inflateHeaderView(R.layout.nav_header_main)
         viewPager.adapter = sectionsPagerAdapter
         viewPager.currentItem = 15
         val titleTemp = "第16周"
@@ -119,18 +126,24 @@ class ScheduleMain : AppCompatActivity() {
 //                            startActivity(intent)
 //                            true
 //                        }
-                R.id.nav_load ->{
-                    val intent = Intent(this,LoadQue::class.java)
+                R.id.nav_load -> {
+                    val intent = Intent(this, LoadQue::class.java)
                     startActivity(intent)
                     true
                 }
-//                R.id.image_header ->{
-//                    Toast.makeText(this,"fuck",Toast.LENGTH_LONG)
-//                    true
-//                }
 
                 else -> false
             }
+        }
+
+        val imageHeader = headerView.findViewById<ImageView>(R.id.image_header)
+        headerImage = imageHeader
+        val usernameHeader = headerView.findViewById<TextView>(R.id.text_header)
+        imageHeader.setOnClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            startActivityForResult(intent, 1)
         }
     }
 
@@ -145,7 +158,7 @@ class ScheduleMain : AppCompatActivity() {
                 val intent = Intent(this, ItemAdd::class.java)
                 startActivity(intent)
             }
-            R.id.menu_clock ->{
+            R.id.menu_clock -> {
                 val intent = Intent(this, AlarmDisplay::class.java)
                 startActivity(intent)
             }
@@ -155,11 +168,32 @@ class ScheduleMain : AppCompatActivity() {
 
     override fun onBackPressed() {
 //        android.os.Process.killProcess(android.os.Process.myPid())
+        viewModel.exit()
         finish()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            1 -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    data.data?.let {
+                        val bitmap = getBitmapForUri(it)
+                        headerImage.setImageBitmap(bitmap)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getBitmapForUri(uri: Uri) = contentResolver
+        .openFileDescriptor(uri, "r")?.use {
+            BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
+        }
+
+
     companion object {
-        fun supplyOwner() : ViewModelStoreOwner{
+        fun supplyOwner(): ViewModelStoreOwner {
             return mainOwner
         }
     }

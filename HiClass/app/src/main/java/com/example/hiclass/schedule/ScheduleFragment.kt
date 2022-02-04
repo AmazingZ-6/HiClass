@@ -87,6 +87,15 @@ class ScheduleFragment : Fragment() {
             weekNum = getInt(ARG_SECTION_NUMBER)
             Log.d("testing", weekNum.toString() + "onViewCreated!")
 
+//            pageViewModel.exitFlag.observe(viewLifecycleOwner, Observer {
+//                if (it){
+//                    for (v in viewList){
+//                        v.re.removeView(v.vi)
+//                    }
+//                    viewList.clear()
+//                }
+//            })
+
             pageViewModel.changeFlag.observe(viewLifecycleOwner, Observer {
                 when (it) {
                     1 -> {
@@ -100,7 +109,7 @@ class ScheduleFragment : Fragment() {
                     3 -> {
                         addRefresh(view)
                     }
-                    4 ->{
+                    4 -> {
                         deleteBatchRefresh(view)
                     }
                 }
@@ -122,6 +131,7 @@ class ScheduleFragment : Fragment() {
 
         }
     }
+
 
 
     private fun createItemView(
@@ -199,11 +209,11 @@ class ScheduleFragment : Fragment() {
 
             val buttonItemEdit: AppCompatTextView = popView.findViewById(R.id.item_edit)
             val buttonItemDelete: AppCompatTextView = popView.findViewById(R.id.item_delete)
-            val buttonItemClock:AppCompatTextView = popView.findViewById(R.id.item_clock)
-            val popName:AppCompatTextView = popView.findViewById(R.id.pop_name)
-            val popAddress:AppCompatTextView = popView.findViewById(R.id.pop_address)
-            val popTeacher:AppCompatTextView = popView.findViewById(R.id.pop_teacher)
-            val popRemark:AppCompatTextView = popView.findViewById(R.id.pop_remark)
+            val buttonItemClock: AppCompatTextView = popView.findViewById(R.id.item_clock)
+            val popName: AppCompatTextView = popView.findViewById(R.id.pop_name)
+            val popAddress: AppCompatTextView = popView.findViewById(R.id.pop_address)
+            val popTeacher: AppCompatTextView = popView.findViewById(R.id.pop_teacher)
+            val popRemark: AppCompatTextView = popView.findViewById(R.id.pop_remark)
             val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
             popName.typeface = font
             popName.text = App.context.resources.getString(R.string.icon_name)
@@ -222,8 +232,8 @@ class ScheduleFragment : Fragment() {
 
             buttonItemClock.setOnClickListener {
                 val intent = Intent(activity, SetAlarm::class.java)
-                intent.putExtra("term_day",item.getTimeString3())
-                intent.putExtra("name",item.itemName)
+                intent.putExtra("term_day", item.getTimeString3())
+                intent.putExtra("name", item.itemName)
                 startActivity(intent)
                 popWindow.dismiss()
             }
@@ -376,10 +386,10 @@ class ScheduleFragment : Fragment() {
                 }
             }
         }
-        for (e in temp){
+        for (e in temp) {
             idList.remove(e)
         }
-        if (idList.size == 0){
+        if (idList.size == 0) {
             itemBatchDeleteFlag = 0
             itemUpdateFlag = 0
             itemDeleteFlag = 0
