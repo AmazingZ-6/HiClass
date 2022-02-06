@@ -104,4 +104,9 @@
  
  增加编辑头像等用户个性化资料功能
  
+ #HiClass Refactor 2022/2/6
+ 
+ 重构添加闹钟后刷新模块
+ 
+ 解决pendingIntent传值重复问题：标志位设置 FLAG_UPdATE_CURRENT
  
