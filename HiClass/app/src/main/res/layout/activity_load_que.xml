@@ -27,11 +27,11 @@
             android:id="@+id/item_que_english"
             android:layout_width="280dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="24dp"
             android:background="@null"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|start"
             android:text="考研英语词汇1000题"
             android:textColor="@color/black"
+            android:layout_marginStart="20dp"
             android:lines="1"
             android:singleLine="true"
             android:textSize="14sp" />

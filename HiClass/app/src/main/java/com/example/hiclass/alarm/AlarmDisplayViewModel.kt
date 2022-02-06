@@ -5,7 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.hiclass.App
+import com.example.hiclass.alarmDao
 import com.example.hiclass.alarmList
+import com.example.hiclass.data_class.AlarmDataBean
+import kotlin.concurrent.thread
 
 class AlarmDisplayViewModel : ViewModel() {
 
@@ -29,6 +32,13 @@ class AlarmDisplayViewModel : ViewModel() {
 
     fun editIndividualAlarm() {
 
+    }
+
+    fun deleteAlarm(alarm:AlarmDataBean){
+        alarmList.remove(alarm)
+        thread {
+            alarmDao.deleteAlarm(alarm)
+        }
     }
 
     fun startClock(alarmId: Long) {

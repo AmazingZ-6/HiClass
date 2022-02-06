@@ -32,7 +32,7 @@ class AlarmDisplayAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val visiView: LinearLayoutCompat =
-            view.findViewById(R.id.alarm_show_single_visibility)
+            view.findViewById(R.id.whole_single_view)
         val goneView: LinearLayoutCompat =
             view.findViewById(R.id.alarm_show_single_gone)
         val timeShow: AppCompatTextView = view.findViewById(R.id.alarm_show_single_time)
@@ -88,7 +88,7 @@ class AlarmDisplayAdapter(
         }
 
         val weekdayTemp = mutableListOf<Int>()
-        var nameTemp = alarm.alarmName + ", " + "不重复,"
+        var nameTemp = "   " + alarm.alarmName + " , " + "不重复 , "
         for (i in alarm.alarmWeekday.split(",")[0]) {
             weekdayTemp.add(charToInt(i))
             weekdayTemp.sort()
@@ -110,6 +110,7 @@ class AlarmDisplayAdapter(
         }
 
         holder.btnDel.setOnClickListener {
+            viewModel.deleteAlarm(alarm)
             alarmShow.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, alarmShow.size - position)  //回调onBindViewHolder

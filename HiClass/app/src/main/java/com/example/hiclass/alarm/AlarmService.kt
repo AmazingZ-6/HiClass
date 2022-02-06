@@ -1,6 +1,7 @@
 package com.example.hiclass.alarm
 
 import android.app.*
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
@@ -78,7 +79,7 @@ class AlarmService : Service() {
         intent.putExtra("que_c",que.C)
         intent.putExtra("que_d",que.D)
         intent.putExtra("que_correct",que.correct)
-        val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, 0)
+        val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, FLAG_UPDATE_CURRENT)
         piMap[alarm.id] = que
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
@@ -110,7 +111,7 @@ class AlarmService : Service() {
         intent.putExtra("que_c",que.C)
         intent.putExtra("que_d",que.D)
         intent.putExtra("que_correct",que.correct)
-        val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, 0)
+        val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, FLAG_UPDATE_CURRENT)
         mAlarmManager.cancel(pi)
     }
 }

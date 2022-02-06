@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ContentLoadingProgressBar
 import com.example.hiclass.utils.ConnectTcp
+import com.example.hiclass.utils.StatusUtil
 import es.dmoral.toasty.Toasty
 import java.util.*
 import java.util.regex.Pattern
@@ -20,6 +21,7 @@ class GetTcpInfo : AppCompatActivity() {
     private val classItem = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_getinfo)
         val btnLogin: Button = findViewById(R.id.login)
         val btnPass: Button = findViewById(R.id.pass)

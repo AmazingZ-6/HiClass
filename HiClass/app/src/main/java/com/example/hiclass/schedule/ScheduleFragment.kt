@@ -38,9 +38,11 @@ class ScheduleFragment : Fragment() {
         val id = i
     }
 
+
     private val viewList = mutableListOf<ViewMap>()
     private var weekNum = 0
     private lateinit var pageViewModel: ScheduleViewModel
+
 
     companion object {
 

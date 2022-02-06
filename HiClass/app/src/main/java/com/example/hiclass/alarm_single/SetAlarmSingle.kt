@@ -184,7 +184,9 @@ class SetAlarmSingle : AppCompatActivity() {
 
     private fun saveAlarm() {
         var alarmWeekday = ""
-        val alarmName = alarm_set_name_single.text.toString()
+        val alarmName = alarm_set_name_single.text.toString().ifEmpty {
+            "闹钟"
+        }
         for (i in viewModel.weekdaySelectedPosition.value!!) {
             alarmWeekday += "$i,"
         }

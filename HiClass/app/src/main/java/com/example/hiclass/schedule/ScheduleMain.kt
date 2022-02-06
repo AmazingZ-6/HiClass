@@ -3,39 +3,32 @@ package com.example.hiclass.schedule
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewpager.widget.ViewPager
 import com.example.hiclass.*
 import com.example.hiclass.alarm.AlarmDisplay
-import com.example.hiclass.alarm_single.SetAlarmSingle
-import com.example.hiclass.dao.ItemDao
-import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.load.LoadQue
-import com.example.hiclass.utils.ChangeItem.AddItemList
 import com.example.hiclass.utils.StatusUtil
-import com.example.hiclass.utils.TypeSwitcher
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import java.io.File
+import java.io.ByteArrayOutputStream
 import kotlin.concurrent.thread
 
 
@@ -145,6 +138,7 @@ class ScheduleMain : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, 1)
         }
+        getHeaderImage()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -180,6 +174,9 @@ class ScheduleMain : AppCompatActivity() {
                     data.data?.let {
                         val bitmap = getBitmapForUri(it)
                         headerImage.setImageBitmap(bitmap)
+                        if (bitmap != null) {
+                            saveHeaderImage(bitmap)
+                        }
                     }
                 }
             }
@@ -190,6 +187,28 @@ class ScheduleMain : AppCompatActivity() {
         .openFileDescriptor(uri, "r")?.use {
             BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
         }
+
+    private fun saveHeaderImage(bit: Bitmap) {
+        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
+        val editor = sharedPre.edit()
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bit.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream)
+        val headImg: String =
+            (Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT))
+        editor.putString("header_icon", headImg)
+        editor.apply()
+    }
+
+    private fun getHeaderImage(){
+        var bitmap: Bitmap? = null
+        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
+        val icon = sharedPre.getString("header_icon", "")
+        if (icon !== "") {
+            val decode = Base64.decode(icon!!.toByteArray(), 1)
+            bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.size)
+            headerImage.setImageBitmap(bitmap)
+        }
+    }
 
 
     companion object {

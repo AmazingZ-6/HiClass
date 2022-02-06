@@ -41,28 +41,40 @@ class AlarmDisplay : AppCompatActivity() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        alarmShow.clear()
+        initAlarmShow()
+        initRecycleView()
+    }
+
     private fun initAlarmShow() {
-        for (i in alarmList.indices) {
-            var maxHVal = 23
-            var maxMVal = 59
-            for (alarm in alarmList) {
+        val tempList = mutableListOf<AlarmDataBean>()
+        for (i in alarmList) {
+            tempList.add(i)
+        }
+        for (j in tempList.indices) {
+            var minHVal = 23
+            var minMVal = 59
+            var temp: AlarmDataBean? = null
+            for (alarm in tempList) {
                 val hourVal = charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1])
                 val minuteVal = charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
-                if (hourVal < maxHVal) {
-                    if (alarm !in alarmShow) {
-                        alarmShow.add(i, alarm)
-                        maxHVal = hourVal
-                        maxMVal = minuteVal
-                    }
-                } else if (hourVal == maxHVal) {
-                    if (minuteVal <= maxMVal) {
-                        if (alarm !in alarmShow) {
-                            alarmShow.add(i, alarm)
-                            maxHVal = hourVal
-                            maxMVal = minuteVal
-                        }
+                if (hourVal < minHVal) {
+                    temp = alarm
+                    minHVal = hourVal
+                    minMVal = minuteVal
+                } else if (hourVal == minHVal) {
+                    if (minuteVal <= minMVal) {
+                        temp = alarm
+                        minHVal = hourVal
+                        minMVal = minuteVal
                     }
                 }
+            }
+            if (temp != null) {
+                alarmShow.add(j, temp)
+                tempList.remove(temp)
             }
         }
     }
