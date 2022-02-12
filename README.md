@@ -110,3 +110,11 @@
  
  解决pendingIntent传值重复问题：标志位设置 FLAG_UPdATE_CURRENT
  
+ #HiClass Refactor 2022/2/12
+ 
+ 解决闹钟显示界面点击无反应现象：viewmodel lifeobserve 始终保持原有个数不改变 导致重复观察重复执行某段代码 通过date class 设置标志 治标不治本
+ 
+ 解决添加闹钟后页面刷新bug: 冒泡排序没写明白
+ 
+ 重构设置界面
+ 
