@@ -21,6 +21,8 @@
             android:layout_height="?actionBarSize"
             app:titleTextColor="@color/black"
             app:titleTextAppearance="@style/title"
+            app:subtitleTextColor="@color/black"
+            app:subtitleTextAppearance="@style/sub_title"
             app:popupTheme="@style/Theme.MenuTest.PopupOverlay" />
 
         <LinearLayout

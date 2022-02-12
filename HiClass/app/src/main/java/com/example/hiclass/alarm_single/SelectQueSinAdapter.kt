@@ -11,10 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hiclass.App
+import com.example.hiclass.setting.App
 import com.example.hiclass.R
-import com.example.hiclass.alarm_set.SelectQueAdapter
-import com.example.hiclass.alarm_set.SetAlarmViewModel
 
 class SelectQueSinAdapter(
     private val queList: List<String>, private val owner: ViewModelStoreOwner,

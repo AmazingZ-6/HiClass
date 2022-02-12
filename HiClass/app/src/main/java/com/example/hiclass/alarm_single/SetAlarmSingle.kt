@@ -4,15 +4,15 @@ import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.hiclass.App
+import com.example.hiclass.setting.App
 import com.example.hiclass.R
 import com.example.hiclass.alarm.AlarmService
 import com.example.hiclass.alarmList
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.utils.CalendarUtil.getNowTime
+import com.example.hiclass.utils.ChangeAlarm
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import com.example.hiclass.utils.TypeSwitcher.intToWeekday
@@ -48,6 +48,14 @@ class SetAlarmSingle : AppCompatActivity() {
                     val intent = Intent(this, AlarmService::class.java)
                     intent.putExtra("alarm_id", alarm.id)
                     startService(intent)
+                }
+                if (intent.getBooleanExtra("isAdd",false)){
+                    ChangeAlarm.alarmAddFlag = 1
+                    ChangeAlarm.changedAlarm = alarm
+                }
+                if (intent.getBooleanExtra("isUpdate",false)){
+                    ChangeAlarm.alarmUpdateFlag= 1
+                    ChangeAlarm.changedAlarm = alarm
                 }
                 finish()
             }

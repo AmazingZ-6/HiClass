@@ -1,29 +1,33 @@
 package com.example.hiclass.alarm
 
-import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.hiclass.App
 import com.example.hiclass.alarmDao
 import com.example.hiclass.alarmList
 import com.example.hiclass.data_class.AlarmDataBean
+import com.example.hiclass.data_class.ClickBean
+import com.example.hiclass.utils.ChangeAlarm
 import kotlin.concurrent.thread
 
 class AlarmDisplayViewModel : ViewModel() {
 
     var updateAlarmId = -1L
 
-    val clickedPos: MutableLiveData<Long>
+    val clickedPos: MutableLiveData<ClickBean>
         get() = _clickedPos
-    private val _clickedPos = MutableLiveData<Long>()
+    private val _clickedPos = MutableLiveData<ClickBean>()
 
-    val switchFlag:LiveData<Int>
-    get() = _switchFlag
+    val switchFlag: LiveData<Int>
+        get() = _switchFlag
     private val _switchFlag = MutableLiveData<Int>()
 
-    fun click(alarmId: Long) {
-        _clickedPos.value = alarmId
+    val refreshFlag: LiveData<Int>
+        get() = _refreshFlag
+    private val _refreshFlag = MutableLiveData<Int>()
+
+    fun click(ck: ClickBean) {
+        _clickedPos.value = ck
     }
 
     fun editClassAlarm() {
@@ -34,7 +38,7 @@ class AlarmDisplayViewModel : ViewModel() {
 
     }
 
-    fun deleteAlarm(alarm:AlarmDataBean){
+    fun deleteAlarm(alarm: AlarmDataBean) {
         alarmList.remove(alarm)
         thread {
             alarmDao.deleteAlarm(alarm)
@@ -58,6 +62,15 @@ class AlarmDisplayViewModel : ViewModel() {
                 updateAlarmId = alarmId
                 _switchFlag.value = 0
             }
+        }
+    }
+
+    fun refresh() {
+        if (ChangeAlarm.alarmAddFlag == 1){
+            _refreshFlag.value = 1
+        }
+        if (ChangeAlarm.alarmUpdateFlag == 1){
+            _refreshFlag.value = 2
         }
     }
 }

@@ -29,6 +29,15 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="sub_title">
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 <!--    &lt;!&ndash; 最外层样式 &ndash;&gt;-->
 <!--    <style name="wrap_layout">-->
 <!--        <item name="android:orientation">vertical</item>-->

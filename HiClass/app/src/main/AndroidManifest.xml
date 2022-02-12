@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.hiclass">
+    package="com.example.hiclass" >
 
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 允许应用程序改变WIFI连接状态 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 允许应用程序访问有关的网络信息 -->
@@ -22,13 +22,20 @@
     <uses-permission android:name="android.permission.USES_POLICY_FORCE_LOCK" />
 
     <application
-        android:name=".App"
+        android:name=".setting.App"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher_playstore_2"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_playstore_2"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HiClass">
+        android:theme="@style/Theme.HiClass" >
+        <activity
+            android:name=".setting.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".setting.AboutMe"
+            android:exported="false" />
         <activity
             android:name=".alarm.AlarmDisplay"
             android:exported="false" />
@@ -53,7 +60,7 @@
             android:name=".schedule.ScheduleFragment"
             tools:ignore="Instantiatable" /> <!-- <activity android:name=".GetClassInfo" /> -->
         <activity android:name=".schedule.ScheduleMain" />
-        <activity android:name=".StartActivity">
+        <activity android:name=".StartActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

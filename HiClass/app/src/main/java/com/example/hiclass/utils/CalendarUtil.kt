@@ -2,6 +2,7 @@ package com.example.hiclass.utils
 
 import java.util.*
 
+
 object CalendarUtil {
     fun getNowTime(): List<Int> {
         val cal = Calendar.getInstance()
@@ -24,5 +25,16 @@ object CalendarUtil {
             return min < m
         }
         return false
+    }
+
+    fun getTodayDate(): String {
+        var res = ""
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = System.currentTimeMillis()
+        cal.timeZone = TimeZone.getTimeZone("GMT+8")
+        res =
+            "${cal.get(Calendar.YEAR)}/${cal.get(Calendar.MONTH) + 1}/${cal.get(Calendar.DAY_OF_MONTH)}" +
+                    "  周${cal.get(Calendar.DAY_OF_WEEK)}"
+        return res
     }
 }

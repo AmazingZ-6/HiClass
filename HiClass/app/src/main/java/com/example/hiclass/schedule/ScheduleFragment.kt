@@ -17,6 +17,7 @@ import com.example.hiclass.*
 import com.example.hiclass.alarm_set.SetAlarm
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.item_edit.ItemEdit
+import com.example.hiclass.setting.App
 import com.example.hiclass.utils.ChangeItem.AddItemList
 import com.example.hiclass.utils.ChangeItem.changedItem
 import com.example.hiclass.utils.ChangeItem.deleteItemIdList

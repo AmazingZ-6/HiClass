@@ -1,20 +1,15 @@
 package com.example.hiclass.item_add
 
 import android.graphics.Typeface
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hiclass.App
+import com.example.hiclass.setting.App
 import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemEditBean
 import com.example.hiclass.utils.TypeSwitcher

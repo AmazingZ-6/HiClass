@@ -1,25 +1,20 @@
 package com.example.hiclass.item_edit
 
 
-import android.content.DialogInterface
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import com.example.hiclass.App
+import com.example.hiclass.setting.App
 import com.example.hiclass.R
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.schedule.ScheduleViewModel
 import com.example.hiclass.utils.StatusUtil
 import kotlinx.android.synthetic.main.activity_item_edit.*
-import java.util.*
 
 class ItemEdit : AppCompatActivity() {
 

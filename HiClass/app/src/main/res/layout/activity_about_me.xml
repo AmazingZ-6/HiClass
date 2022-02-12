@@ -5,13 +5,8 @@
     android:background="@drawable/aboutme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AboutMe">
+    tools:context=".setting.AboutMe">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ok"
-        tools:ignore="MissingConstraints" />
 
 
 

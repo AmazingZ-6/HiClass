@@ -1,7 +1,6 @@
 package com.example.hiclass.alarm
 
 import android.graphics.Typeface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -15,10 +14,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hiclass.App
+import com.example.hiclass.setting.App
 import com.example.hiclass.R
 import com.example.hiclass.data_class.AlarmDataBean
-import com.example.hiclass.data_class.AlarmShowBean
+import com.example.hiclass.data_class.ClickBean
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import com.example.hiclass.utils.TypeSwitcher.intToWeekday
 
@@ -44,6 +43,7 @@ class AlarmDisplayAdapter(
         val btnEdit: AppCompatTextView = view.findViewById(R.id.alarm_single_edit)
     }
 
+
     override fun getItemCount() = alarmShow.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -58,8 +58,8 @@ class AlarmDisplayAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val alarm = alarmShow[position]
         viewModel.clickedPos.observe(lifecycleOwner, Observer {
-            if (it == alarm.id) {
-                if (holder.goneView.visibility == GONE) {
+            if (it.alarmId == alarm.id) {
+                if (it.state) {
                     holder.goneView.visibility = VISIBLE
                 } else {
                     holder.goneView.visibility = GONE
@@ -98,7 +98,9 @@ class AlarmDisplayAdapter(
         }
         holder.nameShow.text = nameTemp
         holder.visiView.setOnClickListener {
-            viewModel.click(alarm.id)
+            val state = holder.goneView.visibility == GONE
+            val ckTemp = ClickBean(alarm.id, state)
+            viewModel.click(ckTemp)
         }
 
         holder.btnEdit.setOnClickListener {
@@ -111,9 +113,10 @@ class AlarmDisplayAdapter(
 
         holder.btnDel.setOnClickListener {
             viewModel.deleteAlarm(alarm)
-            alarmShow.removeAt(position)
+//            alarmShow.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, alarmShow.size - position)  //回调onBindViewHolder
+            alarmShow.removeAt(position)
         }
 
         holder.switcher.setOnCheckedChangeListener { buttonView, isChecked ->

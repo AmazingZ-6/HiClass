@@ -10,6 +10,7 @@ import com.example.hiclass.R
 import com.example.hiclass.alarmList
 import com.example.hiclass.alarm_single.SetAlarmSingle
 import com.example.hiclass.data_class.AlarmDataBean
+import com.example.hiclass.utils.ChangeAlarm
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import kotlinx.android.synthetic.main.activity_alarm_display.*
@@ -19,7 +20,7 @@ class AlarmDisplay : AppCompatActivity() {
 
     private val alarmShow = mutableListOf<AlarmDataBean>()
     private lateinit var viewModel: AlarmDisplayViewModel
-
+    private lateinit var adapter: AlarmDisplayAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
@@ -39,13 +40,18 @@ class AlarmDisplay : AppCompatActivity() {
                 }
             }
         })
+
+        viewModel.refreshFlag.observe(this, Observer {
+            when (it) {
+                1 -> addRefresh()
+                2 -> updateRefresh()
+            }
+        })
     }
 
     override fun onResume() {
         super.onResume()
-        alarmShow.clear()
-        initAlarmShow()
-        initRecycleView()
+        viewModel.refresh()
     }
 
     private fun initAlarmShow() {
@@ -74,7 +80,12 @@ class AlarmDisplay : AppCompatActivity() {
             }
             if (temp != null) {
                 alarmShow.add(j, temp)
-                tempList.remove(temp)
+                for (i in tempList.indices) {
+                    if (temp.id == tempList[i].id) {
+                        tempList.removeAt(i)
+                        break
+                    }
+                }
             }
         }
     }
@@ -82,7 +93,7 @@ class AlarmDisplay : AppCompatActivity() {
     private fun initRecycleView() {
         val layoutManager = LinearLayoutManager(this)
         alarm_show_recyclerView.layoutManager = layoutManager
-        val adapter = AlarmDisplayAdapter(alarmShow, this, this)
+        adapter = AlarmDisplayAdapter(alarmShow, this, this)
         alarm_show_recyclerView.adapter = adapter
 //        alarm_show_recyclerView.setItemViewCacheSize(10000)
     }
@@ -90,6 +101,7 @@ class AlarmDisplay : AppCompatActivity() {
     private fun initOptions() {
         alarm_show_fab.setOnClickListener {
             val intent = Intent(this, SetAlarmSingle::class.java)
+            intent.putExtra("isAdd", true)
             startActivity(intent)
         }
     }
@@ -104,5 +116,47 @@ class AlarmDisplay : AppCompatActivity() {
         val intent = Intent(this, AlarmService::class.java)
         intent.putExtra("alarm_id", alarmId)
         startService(intent)
+    }
+
+    private fun addRefresh() {
+        val addTemp = ChangeAlarm.changedAlarm!!
+        val hVal = charToInt(addTemp.alarmTime[0]) * 10 + charToInt(addTemp.alarmTime[1])
+        val mVal = charToInt(addTemp.alarmTime[3]) * 10 + charToInt(addTemp.alarmTime[4])
+        if (alarmShow.size == 0) {
+            alarmShow.add(0, addTemp)
+            adapter.notifyItemInserted(alarmShow.size - 1)
+        } else {
+            for (i in alarmShow.indices) {
+                val h =
+                    charToInt(alarmShow[i].alarmTime[0]) * 10 + charToInt(alarmShow[i].alarmTime[1])
+                val m =
+                    charToInt(alarmShow[i].alarmTime[3]) * 10 + charToInt(alarmShow[i].alarmTime[4])
+                if (hVal < h) {
+                    alarmShow.add(i, addTemp)
+                    adapter.notifyItemInserted(i)
+                    adapter.notifyItemRangeChanged(i, alarmShow.size - i)
+                    break
+                }
+                if (hVal == h) {
+                    if (mVal <= m) {
+                        alarmShow.add(i, addTemp)
+                        adapter.notifyItemInserted(i)
+                        adapter.notifyItemRangeChanged(i, alarmShow.size - i)
+                        break
+                    }
+                }
+                if (i == alarmShow.size - 1) {
+                    alarmShow.add(addTemp)
+                    adapter.notifyItemInserted(alarmShow.size - 1)
+                }
+            }
+        }
+        ChangeAlarm.alarmAddFlag = 0
+        ChangeAlarm.alarmUpdateFlag = 0
+        ChangeAlarm.changedAlarm = null
+    }
+
+    private fun updateRefresh() {
+
     }
 }

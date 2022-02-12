@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.hiclass.App
+import com.example.hiclass.setting.App
 import com.example.hiclass.AppDatabase
 import com.example.hiclass.R
 import com.example.hiclass.data_class.ResourceBean

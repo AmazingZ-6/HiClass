@@ -25,9 +25,10 @@ import com.example.hiclass.*
 import com.example.hiclass.alarm.AlarmDisplay
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.load.LoadQue
+import com.example.hiclass.setting.AboutMe
+import com.example.hiclass.setting.SettingsActivity
 import com.example.hiclass.utils.StatusUtil
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.nav_header_main.view.*
 import java.io.ByteArrayOutputStream
 import kotlin.concurrent.thread
 
@@ -55,6 +56,8 @@ class ScheduleMain : AppCompatActivity() {
         viewPager.currentItem = 15
         val titleTemp = "第16周"
         toolbar.title = titleTemp
+//        val titleTemp2 = CalendarUtil.getTodayDate()
+//        toolbar.subtitle = titleTemp2
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
@@ -114,11 +117,16 @@ class ScheduleMain : AppCompatActivity() {
 //                            startActivity(intent)
 //                            true
 //                        }
-//                        R.id.nav_about_me -> {
-//                            val intent = Intent(activity, AboutMe::class.java)
-//                            startActivity(intent)
-//                            true
-//                        }
+                R.id.nav_setting ->{
+                    val intent = Intent(this,SettingsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_about_me -> {
+                    val intent = Intent(this, AboutMe::class.java)
+                    startActivity(intent)
+                    true
+                }
                 R.id.nav_load -> {
                     val intent = Intent(this, LoadQue::class.java)
                     startActivity(intent)
@@ -199,7 +207,7 @@ class ScheduleMain : AppCompatActivity() {
         editor.apply()
     }
 
-    private fun getHeaderImage(){
+    private fun getHeaderImage() {
         var bitmap: Bitmap? = null
         val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
         val icon = sharedPre.getString("header_icon", "")

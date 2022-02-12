@@ -3,7 +3,7 @@ package com.example.hiclass.alarm_set
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.hiclass.App
+import com.example.hiclass.setting.App
 import com.example.hiclass.R
 import com.example.hiclass.utils.StatusUtil
 import kotlinx.android.synthetic.main.activity_set_alarm.*
