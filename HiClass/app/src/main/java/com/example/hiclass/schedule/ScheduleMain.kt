@@ -27,8 +27,10 @@ import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.load.LoadQue
 import com.example.hiclass.setting.AboutMe
 import com.example.hiclass.setting.SettingsActivity
+import com.example.hiclass.utils.CalendarUtil
 import com.example.hiclass.utils.StatusUtil
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.view_pager.*
 import java.io.ByteArrayOutputStream
 import kotlin.concurrent.thread
 
@@ -52,12 +54,32 @@ class ScheduleMain : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout_fragment)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val headerView = navView.inflateHeaderView(R.layout.nav_header_main)
+//        val dateShow1:TextView = findViewById(R.id.date_1)
+//        val dateShow2:TextView = findViewById(R.id.date_2)
+//        val dateShow3:TextView = findViewById(R.id.date_3)
+//        val dateShow1:TextView = findViewById(R.id.date_1)
         viewPager.adapter = sectionsPagerAdapter
         viewPager.currentItem = 15
         val titleTemp = "第16周"
         toolbar.title = titleTemp
 //        val titleTemp2 = CalendarUtil.getTodayDate()
 //        toolbar.subtitle = titleTemp2
+        val t0 = CalendarUtil.getDate(16, 1).split(".")[0]
+        val t1 = CalendarUtil.getDate(16, 1).split(".")[1] + "日"
+        val t2 = CalendarUtil.getDate(16, 2).split(".")[1] + "日"
+        val t3 = CalendarUtil.getDate(16, 3).split(".")[1] + "日"
+        val t4 = CalendarUtil.getDate(16, 4).split(".")[1] + "日"
+        val t5 = CalendarUtil.getDate(16, 5).split(".")[1] + "日"
+        val t6 = CalendarUtil.getDate(16, 6).split(".")[1] + "日"
+        val t7 = CalendarUtil.getDate(16, 7).split(".")[1] + "日"
+        date_month.text = t0
+        date_1.text = t1
+        date_2.text = t2
+        date_3.text = t3
+        date_4.text = t4
+        date_5.text = t5
+        date_6.text = t6
+        date_7.text = t7
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
@@ -68,16 +90,38 @@ class ScheduleMain : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 viewModel.updatePosition(position + 1)
+                viewModel.updateDate(position + 1)
             }
 
             override fun onPageScrollStateChanged(state: Int) {
             }
 
         })
+
         viewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
         viewModel.position.observe(this, Observer {
             toolbar.title = "第${viewModel.position.value}周"
         })
+
+        viewModel.dateShowIndex.observe(this, Observer {
+            val t0 = CalendarUtil.getDate(it, 1).split(".")[0]
+            val t1 = CalendarUtil.getDate(it, 1).split(".")[1] + "日"
+            val t2 = CalendarUtil.getDate(it, 2).split(".")[1] + "日"
+            val t3 = CalendarUtil.getDate(it, 3).split(".")[1] + "日"
+            val t4 = CalendarUtil.getDate(it, 4).split(".")[1] + "日"
+            val t5 = CalendarUtil.getDate(it, 5).split(".")[1] + "日"
+            val t6 = CalendarUtil.getDate(it, 6).split(".")[1] + "日"
+            val t7 = CalendarUtil.getDate(it, 7).split(".")[1] + "日"
+            date_month.text = t0
+            date_1.text = t1
+            date_2.text = t2
+            date_3.text = t3
+            date_4.text = t4
+            date_5.text = t5
+            date_6.text = t6
+            date_7.text = t7
+        })
+
         setSupportActionBar(toolbar)
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
@@ -117,8 +161,8 @@ class ScheduleMain : AppCompatActivity() {
 //                            startActivity(intent)
 //                            true
 //                        }
-                R.id.nav_setting ->{
-                    val intent = Intent(this,SettingsActivity::class.java)
+                R.id.nav_setting -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
                     startActivity(intent)
                     true
                 }

@@ -44,7 +44,7 @@ class SetSingleViewModel : ViewModel() {
         }
 
         if (tempDayList.size < 1) {
-            if (isDayOut.value == true) tempDayList.add(7)
+            if (_isDayOut.value == true) tempDayList.add(7)
             else tempDayList.add(8)
         }
 
@@ -59,6 +59,13 @@ class SetSingleViewModel : ViewModel() {
         thread {
             alarm.id = alarmDao.insertAlarm(alarm)
             alarmList.add(alarm)
+            _isFinished.postValue(true)
+        }
+    }
+
+    fun updateAlarm(alarm: AlarmDataBean){
+        thread {
+            alarmDao.updateAlarm(alarm)
             _isFinished.postValue(true)
         }
     }

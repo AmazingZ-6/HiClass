@@ -1,5 +1,6 @@
 package com.example.hiclass.alarm
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.example.hiclass.setting.App
 import com.example.hiclass.R
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ClickBean
+import com.example.hiclass.utils.CalendarUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import com.example.hiclass.utils.TypeSwitcher.intToWeekday
 
@@ -89,12 +91,32 @@ class AlarmDisplayAdapter(
 
         val weekdayTemp = mutableListOf<Int>()
         var nameTemp = "   " + alarm.alarmName + " , " + "不重复 , "
-        for (i in alarm.alarmWeekday.split(",")[0]) {
-            weekdayTemp.add(charToInt(i))
-            weekdayTemp.sort()
+        for (i in alarm.alarmWeekday.split(",")) {
+            if (i.isNotEmpty()) {
+                weekdayTemp.add(charToInt(i[0]))
+                weekdayTemp.sort()
+            }
         }
-        for (j in weekdayTemp) {
-            nameTemp = nameTemp + intToWeekday(j) + " "
+        if (weekdayTemp.size == 7) {
+            nameTemp += "每天"
+        } else {
+            for (j in weekdayTemp) {
+                nameTemp = if (j < 7) {
+                    nameTemp + intToWeekday(j) + " "
+                } else {
+                    val t = if (CalendarUtil.judgeDayOut(
+                            charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1]),
+                            charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
+                        )
+                    ) {
+                        "明天"
+                    } else {
+                        "今天"
+                    }
+                    "$nameTemp$t "
+                }
+
+            }
         }
         holder.nameShow.text = nameTemp
         holder.visiView.setOnClickListener {
@@ -104,10 +126,10 @@ class AlarmDisplayAdapter(
         }
 
         holder.btnEdit.setOnClickListener {
-            if (alarm.alarmType == 1) {
+            if (alarm.alarmType == 0) {
                 viewModel.editClassAlarm()
             } else {
-                viewModel.editIndividualAlarm()
+                viewModel.editIndividualAlarm(alarm.id)
             }
         }
 

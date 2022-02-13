@@ -24,23 +24,24 @@
             app:subtitleTextColor="@color/black"
             app:subtitleTextAppearance="@style/sub_title"
             app:popupTheme="@style/Theme.MenuTest.PopupOverlay" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="@color/little_white">
 
             <TextView
+                android:id="@+id/date_month"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="#272626"
-                android:textSize="12sp"
-                android:text="节" />
+                android:textSize="8sp"
+                android:text="节"
+                tools:ignore="SmallSp" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="#272626"
+                android:textColor="#070707"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
@@ -48,7 +49,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="#272626"
+                android:textColor="#070707"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
@@ -56,7 +57,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="#272626"
+                android:textColor="#070707"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
@@ -64,7 +65,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="#272626"
+                android:textColor="#070707"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
@@ -72,7 +73,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="#272626"
+                android:textColor="#070707"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
@@ -80,7 +81,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="#272626"
+                android:textColor="#070707"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
@@ -88,10 +89,95 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="#272626"
+                android:textColor="#070707"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="12sp"
+                android:text="周日"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/little_white">
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#272626"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:text="月"/>
+            <TextView
+                android:id="@+id/date_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#302F2F"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:text="周一"/>
+            <TextView
+                android:id="@+id/date_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#302F2F"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:text="周二"/>
+            <TextView
+                android:id="@+id/date_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#302F2F"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:text="周三"/>
+            <TextView
+                android:id="@+id/date_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#302F2F"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:text="周四"/>
+            <TextView
+                android:id="@+id/date_5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#302F2F"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:text="周五"/>
+            <TextView
+                android:id="@+id/date_6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#302F2F"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
+                android:text="周六"/>
+            <TextView
+                android:id="@+id/date_7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#302F2F"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                tools:ignore="SmallSp"
                 android:text="周日"/>
         </LinearLayout>
 

@@ -5,6 +5,12 @@
         app:title="闹钟设置">
 
         <SwitchPreferenceCompat
+            app:key="auto_clock"
+            app:title="根据课表自动设置闹钟"
+            app:summary="自动为每日上午首个事项设置闹钟"
+            app:defaultValue="true"/>
+
+        <SwitchPreferenceCompat
             app:key="urgent_stop"
             app:title="强制关闭闹钟权限"
             app:defaultValue="true"

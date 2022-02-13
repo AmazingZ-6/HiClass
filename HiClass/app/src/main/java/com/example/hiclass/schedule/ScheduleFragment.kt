@@ -128,7 +128,6 @@ class ScheduleFragment : Fragment() {
                 }
 
                 createLeftView(view)
-
             }
 
 
@@ -308,6 +307,7 @@ class ScheduleFragment : Fragment() {
             leftParentView.addView(leftView)
         }
     }
+
 
     private fun updateRefresh(view: View) {
 

@@ -1,5 +1,6 @@
 package com.example.hiclass.alarm
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
@@ -14,6 +15,7 @@ import com.example.hiclass.data_class.DeliverInfoBean
 import com.example.hiclass.data_class.ResourceBean
 import com.example.hiclass.resourceDao
 import com.example.hiclass.schedule.ScheduleMain
+import com.example.hiclass.utils.CalendarUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import java.util.*
 import kotlin.concurrent.thread
@@ -21,7 +23,7 @@ import kotlin.concurrent.thread
 class AlarmService : Service() {
 
     private lateinit var alarm: AlarmDataBean
-    private val piMap = mutableMapOf<Long,ResourceBean>()
+    private val piMap = mutableMapOf<Long, ResourceBean>()
 
 
     override fun onBind(intent: Intent): IBinder {
@@ -69,22 +71,27 @@ class AlarmService : Service() {
         return START_REDELIVER_INTENT
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun setClock(que: ResourceBean) {
         val mAlarmManager: AlarmManager = getSystemService(Service.ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, ClockRing::class.java)
-        intent.putExtra("alarm_id",alarm.id)
-        intent.putExtra("que_content",que.content)
-        intent.putExtra("que_a",que.A)
-        intent.putExtra("que_b",que.B)
-        intent.putExtra("que_c",que.C)
-        intent.putExtra("que_d",que.D)
-        intent.putExtra("que_correct",que.correct)
+        intent.putExtra("alarm_id", alarm.id)
+        intent.putExtra("que_content", que.content)
+        intent.putExtra("que_a", que.A)
+        intent.putExtra("que_b", que.B)
+        intent.putExtra("que_c", que.C)
+        intent.putExtra("que_d", que.D)
+        intent.putExtra("que_correct", que.correct)
         val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, FLAG_UPDATE_CURRENT)
         piMap[alarm.id] = que
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         calendar.timeZone = TimeZone.getTimeZone("GMT+8")
-        if ('7' in alarm.alarmWeekday) {
+        if (CalendarUtil.judgeDayOut(
+                charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1]),
+                charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
+            )
+        ) {
             calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1)
         }
         val hourTemp = charToInt(alarm.alarmTime.split(":")[0][0]) * 10 + charToInt(
@@ -94,24 +101,27 @@ class AlarmService : Service() {
             alarm.alarmTime.split(":")[1][1]
         )
         calendar.set(Calendar.HOUR_OF_DAY, hourTemp)
-        calendar.set(Calendar.MINUTE,minuteTemp)
+        calendar.set(Calendar.MINUTE, minuteTemp)
+        calendar.set(Calendar.SECOND, 1)
         Log.d("time", calendar.time.toString())
         mAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun cancelClock() {
         val mAlarmManager: AlarmManager = getSystemService(Service.ALARM_SERVICE) as AlarmManager
         val que = piMap[alarm.id]
         piMap.remove(alarm.id)
         val intent = Intent(this, ClockRing::class.java)
-        intent.putExtra("alarm_id",alarm.id)
-        intent.putExtra("que_content",que!!.content)
-        intent.putExtra("que_a",que.A)
-        intent.putExtra("que_b",que.B)
-        intent.putExtra("que_c",que.C)
-        intent.putExtra("que_d",que.D)
-        intent.putExtra("que_correct",que.correct)
+        intent.putExtra("alarm_id", alarm.id)
+        intent.putExtra("que_content", que!!.content)
+        intent.putExtra("que_a", que.A)
+        intent.putExtra("que_b", que.B)
+        intent.putExtra("que_c", que.C)
+        intent.putExtra("que_d", que.D)
+        intent.putExtra("que_correct", que.correct)
         val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, FLAG_UPDATE_CURRENT)
         mAlarmManager.cancel(pi)
     }
+
 }

@@ -14,6 +14,8 @@ class AlarmDisplayViewModel : ViewModel() {
 
     var updateAlarmId = -1L
 
+    var editAlarmId = -1L
+
     val clickedPos: MutableLiveData<ClickBean>
         get() = _clickedPos
     private val _clickedPos = MutableLiveData<ClickBean>()
@@ -26,6 +28,10 @@ class AlarmDisplayViewModel : ViewModel() {
         get() = _refreshFlag
     private val _refreshFlag = MutableLiveData<Int>()
 
+    val editFlag: LiveData<Int>
+        get() = _editFlag
+    private val _editFlag = MutableLiveData<Int>()
+
     fun click(ck: ClickBean) {
         _clickedPos.value = ck
     }
@@ -34,8 +40,9 @@ class AlarmDisplayViewModel : ViewModel() {
 
     }
 
-    fun editIndividualAlarm() {
-
+    fun editIndividualAlarm(id: Long) {
+        editAlarmId = id
+        _editFlag.value = 1
     }
 
     fun deleteAlarm(alarm: AlarmDataBean) {
@@ -66,10 +73,10 @@ class AlarmDisplayViewModel : ViewModel() {
     }
 
     fun refresh() {
-        if (ChangeAlarm.alarmAddFlag == 1){
+        if (ChangeAlarm.alarmAddFlag == 1) {
             _refreshFlag.value = 1
         }
-        if (ChangeAlarm.alarmUpdateFlag == 1){
+        if (ChangeAlarm.alarmUpdateFlag == 1) {
             _refreshFlag.value = 2
         }
     }

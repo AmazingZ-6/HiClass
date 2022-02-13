@@ -49,12 +49,12 @@ class SetAlarmSingle : AppCompatActivity() {
                     intent.putExtra("alarm_id", alarm.id)
                     startService(intent)
                 }
-                if (intent.getBooleanExtra("isAdd",false)){
+                if (intent.getBooleanExtra("isAdd", false)) {
                     ChangeAlarm.alarmAddFlag = 1
                     ChangeAlarm.changedAlarm = alarm
                 }
-                if (intent.getBooleanExtra("isUpdate",false)){
-                    ChangeAlarm.alarmUpdateFlag= 1
+                if (intent.getBooleanExtra("isUpdate", false)) {
+                    ChangeAlarm.alarmUpdateFlag = 1
                     ChangeAlarm.changedAlarm = alarm
                 }
                 finish()
@@ -100,15 +100,18 @@ class SetAlarmSingle : AppCompatActivity() {
             for (entity in alarmList) {
                 if (idT == entity.id) {
                     for (i in entity.alarmWeekday.split(",")) {
-                        viewModel.weekdaySelected(charToInt(i[0]))
+                        if (i.isNotEmpty()) {
+                            viewModel.weekdaySelected(charToInt(i[0]))
+                        }
                     }
 //                    for (i in entity.alarmWeekday) {
 //                        viewModel.weekdaySelected(i)
 //                    }
-
+                    alarm = entity
                     viewModel.typeSelected(entity.alarmQueType)
                     hourT = charToInt(entity.alarmTime[0]) * 10 + charToInt(entity.alarmTime[1])
                     minuteT = charToInt(entity.alarmTime[3]) * 10 + charToInt(entity.alarmTime[4])
+                    alarm_set_name_single.setText(entity.alarmName)
                     break
                 }
             }
@@ -186,7 +189,11 @@ class SetAlarmSingle : AppCompatActivity() {
         }
 
         btn_save_single_alarm.setOnClickListener {
-            saveAlarm()
+            if (isExisted){
+                updateAlarm()
+            }else{
+                saveAlarm()
+            }
         }
     }
 
@@ -206,5 +213,24 @@ class SetAlarmSingle : AppCompatActivity() {
             alarmQueType!!, 0, alarmSwitch
         )
         viewModel.saveAlarm(alarm)
+    }
+
+    private fun updateAlarm(){
+        var alarmWeekday = ""
+        val alarmName = alarm_set_name_single.text.toString().ifEmpty {
+            "闹钟"
+        }
+        for (i in viewModel.weekdaySelectedPosition.value!!) {
+            alarmWeekday += "$i,"
+        }
+        val alarmTime = "$hour:$minute"
+        val alarmQueType = viewModel.typeSelectedPosition.value
+        val alarmSwitch = alarm_set_switcher_single.isChecked
+        alarm.alarmName = alarmName
+        alarm.alarmWeekday = alarmWeekday
+        alarm.alarmTime = alarmTime
+        alarm.alarmQueType = alarmQueType!!
+        alarm.alarmSwitch = alarmSwitch
+        viewModel.updateAlarm(alarm)
     }
 }

@@ -22,8 +22,13 @@ class ScheduleViewModel : ViewModel() {
     val position: LiveData<Int>
         get() = _position
 
-    val exitFlag:LiveData<Boolean>
-    get() = _exitFlag
+    val dateShowIndex : LiveData<Int>
+        get() = _dateShowIndex
+    private val _dateShowIndex = MutableLiveData<Int>()
+
+    val exitFlag: LiveData<Boolean>
+        get() = _exitFlag
+
     private val _exitFlag = MutableLiveData<Boolean>()
 
     private val _position = MutableLiveData<Int>()
@@ -72,7 +77,7 @@ class ScheduleViewModel : ViewModel() {
                         temp.add(entity)
                     }
                 }
-                for(t in temp){
+                for (t in temp) {
                     weekList[i].dayItemList.remove(t)
                 }
             }
@@ -99,8 +104,12 @@ class ScheduleViewModel : ViewModel() {
         _position.value = index
     }
 
-    fun exit(){
-        for (i in weekList){
+    fun updateDate(index: Int) {
+        _dateShowIndex.value = index
+    }
+
+    fun exit() {
+        for (i in weekList) {
             i.dayItemList.clear()
         }
         alarmList.clear()

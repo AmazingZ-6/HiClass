@@ -30,6 +30,20 @@ class AlarmDisplay : AppCompatActivity() {
         initRecycleView()
         initOptions()
 
+        viewModel.editFlag.observe(this, Observer {
+            when (it) {
+                0 -> {
+
+                }
+                1 -> {
+                    val intent = Intent(this, SetAlarmSingle::class.java)
+                    intent.putExtra("alarm_id", viewModel.editAlarmId)
+                    intent.putExtra("isUpdate", true)
+                    startActivity(intent)
+                }
+            }
+        })
+
         viewModel.switchFlag.observe(this, Observer {
             when (it) {
                 0 -> {
@@ -157,6 +171,14 @@ class AlarmDisplay : AppCompatActivity() {
     }
 
     private fun updateRefresh() {
-
+        for (index in alarmShow.indices) {
+            if (alarmShow[index].id == ChangeAlarm.changedAlarm?.id) {
+                alarmShow.removeAt(index)
+                adapter.notifyItemRemoved(index)
+                adapter.notifyItemRangeChanged(index, alarmShow.size - index)
+                addRefresh()
+                break
+            }
+        }
     }
 }
