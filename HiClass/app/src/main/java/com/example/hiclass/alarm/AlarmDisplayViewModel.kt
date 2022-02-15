@@ -8,6 +8,8 @@ import com.example.hiclass.alarmList
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ClickBean
 import com.example.hiclass.utils.ChangeAlarm
+import com.example.hiclass.utils.TimeGapUtil.getTimeGap
+import com.example.hiclass.utils.TypeSwitcher
 import kotlin.concurrent.thread
 
 class AlarmDisplayViewModel : ViewModel() {
@@ -15,6 +17,10 @@ class AlarmDisplayViewModel : ViewModel() {
     var updateAlarmId = -1L
 
     var editAlarmId = -1L
+
+    val clockTime: LiveData<String>
+        get() = _clockTime
+    private val _clockTime = MutableLiveData<String>()
 
     val clickedPos: MutableLiveData<ClickBean>
         get() = _clickedPos
@@ -78,6 +84,21 @@ class AlarmDisplayViewModel : ViewModel() {
         }
         if (ChangeAlarm.alarmUpdateFlag == 1) {
             _refreshFlag.value = 2
+        }
+    }
+
+    fun refreshTime() {
+        val openAlarm = mutableListOf<AlarmDataBean>()
+        for (ala in alarmList) {
+            if (ala.alarmSwitch) {
+                openAlarm.add(ala)
+            }
+        }
+        if (openAlarm.size == 0) {
+            _clockTime.postValue("暂无开启闹钟")
+        } else {
+            val minGap = getTimeGap(openAlarm)
+            _clockTime.postValue("${minGap.dayGap} 天 ${minGap.hGap} 小时 ${minGap.mGap} 分钟后响铃")
         }
     }
 }

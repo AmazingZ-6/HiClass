@@ -25,6 +25,16 @@
             app:title="闹钟设置"
             app:titleTextColor="@color/black" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/next_clock_ring"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textColor="#3D3F40"
+            android:text="16 小时 55 分钟后响铃"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_height="60dp"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/alarm_show_recyclerView"

@@ -15,6 +15,7 @@ import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import kotlinx.android.synthetic.main.activity_alarm_display.*
 import kotlinx.android.synthetic.main.item_add_base.*
+import java.util.*
 
 class AlarmDisplay : AppCompatActivity() {
 
@@ -29,6 +30,11 @@ class AlarmDisplay : AppCompatActivity() {
         initAlarmShow()
         initRecycleView()
         initOptions()
+        initTime()
+
+        viewModel.clockTime.observe(this, Observer {
+            next_clock_ring.text = it
+        })
 
         viewModel.editFlag.observe(this, Observer {
             when (it) {
@@ -181,4 +187,14 @@ class AlarmDisplay : AppCompatActivity() {
             }
         }
     }
+
+    private fun initTime() {
+        viewModel.refreshTime()
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                viewModel.refreshTime()
+            }
+        }, 1000, 1000)
+    }
+
 }

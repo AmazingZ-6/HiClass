@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="45dp"
     android:layout_height="70dp"
     android:background="@color/little_white"
@@ -11,8 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="8sp"
-        android:textColor="@color/material_on_background_emphasis_medium"
-        android:gravity="center"/>
+        android:textStyle="bold"
+        android:textColor="#6D7070"
+        android:gravity="center"
+        tools:ignore="SmallSp" />
+
+<!--    android:textColor="@color/material_on_background_emphasis_medium"-->
 
 
 
