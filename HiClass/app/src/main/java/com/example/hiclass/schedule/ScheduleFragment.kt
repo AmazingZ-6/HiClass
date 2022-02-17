@@ -25,6 +25,7 @@ import com.example.hiclass.utils.ChangeItem.itemAddFlag
 import com.example.hiclass.utils.ChangeItem.itemBatchDeleteFlag
 import com.example.hiclass.utils.ChangeItem.itemDeleteFlag
 import com.example.hiclass.utils.ChangeItem.itemUpdateFlag
+import com.example.hiclass.utils.TypeSwitcher.charToInt
 import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
@@ -135,7 +136,6 @@ class ScheduleFragment : Fragment() {
     }
 
 
-
     private fun createItemView(
         view: View, item: ItemDataBean
     ) {
@@ -236,6 +236,9 @@ class ScheduleFragment : Fragment() {
                 val intent = Intent(activity, SetAlarm::class.java)
                 intent.putExtra("term_day", item.getTimeString3())
                 intent.putExtra("name", item.itemName)
+                val tableId =
+                    weekNum * 7 + charToInt(item.itemWeekDay[2]) + charToInt(item.itemTime[1])
+                intent.putExtra("table_id", tableId)
                 startActivity(intent)
                 popWindow.dismiss()
             }

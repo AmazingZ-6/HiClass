@@ -9,9 +9,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.hiclass.dao.AlarmDao
 import com.example.hiclass.dao.ItemDao
+import com.example.hiclass.dao.MatchDao
 import com.example.hiclass.dao.ResourceDao
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ItemDataBean
+import com.example.hiclass.data_class.MatchInfoBean
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher
@@ -25,6 +27,7 @@ var hasAskClassInfo: Boolean = false
 lateinit var itemDao: ItemDao
 lateinit var resourceDao: ResourceDao
 lateinit var alarmDao: AlarmDao
+lateinit var matchDao: MatchDao
 
 
 class WeekItemList(week: Int) {
@@ -33,6 +36,7 @@ class WeekItemList(week: Int) {
 }
 
 val alarmList: MutableList<AlarmDataBean> = mutableListOf()
+val matchList: MutableList<MatchInfoBean> = mutableListOf()
 val weekList: MutableList<WeekItemList> = mutableListOf(
     WeekItemList(1),
     WeekItemList(2),
@@ -70,6 +74,7 @@ class StartActivity : AppCompatActivity() {
         initInfo()
         getAlarmInfo()
         getResourceInfo()
+        getMatchInfo()
 
 
         Timer().schedule(object : TimerTask() {
@@ -107,14 +112,23 @@ class StartActivity : AppCompatActivity() {
     private fun getAlarmInfo() {
         alarmDao = AppDatabase.getDatabase(this).alarmDao()
         thread {
-            for(entity in alarmDao.loadAllAlarms()){
+            for (entity in alarmDao.loadAllAlarms()) {
                 alarmList.add(entity)
             }
         }
     }
 
-    private fun getResourceInfo(){
+    private fun getResourceInfo() {
         resourceDao = AppDatabase.getDatabase(this).resourceDao()
+    }
+
+    private fun getMatchInfo() {
+        matchDao = AppDatabase.getDatabase(this).matchDao()
+        thread {
+            for (entity in matchDao.loadAllInfo()) {
+                matchList.add(entity)
+            }
+        }
     }
 
     private fun initInfo() {

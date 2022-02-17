@@ -7,15 +7,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hiclass.R
+import com.example.hiclass.alarmDao
 import com.example.hiclass.alarmList
 import com.example.hiclass.alarm_single.SetAlarmSingle
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.utils.ChangeAlarm
+import com.example.hiclass.utils.ClockedAlarm
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import kotlinx.android.synthetic.main.activity_alarm_display.*
 import kotlinx.android.synthetic.main.item_add_base.*
 import java.util.*
+import kotlin.concurrent.thread
 
 class AlarmDisplay : AppCompatActivity() {
 
@@ -67,11 +70,23 @@ class AlarmDisplay : AppCompatActivity() {
                 2 -> updateRefresh()
             }
         })
+
+        viewModel.clockedFlag.observe(this, Observer {
+            for (index in alarmShow.indices) {
+                if (alarmShow[index].id == it) {
+                    adapter.notifyItemChanged(index)
+                    ClockedAlarm.cFlag = false
+                    ClockedAlarm.cAlarm = null
+                    break
+                }
+            }
+        })
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.refresh()
+        viewModel.clocked()
     }
 
     private fun initAlarmShow() {
@@ -127,12 +142,28 @@ class AlarmDisplay : AppCompatActivity() {
     }
 
     private fun startAlarm(alarmId: Long) {
+        thread {
+            for (a in alarmShow) {
+                if (a.id == alarmId) {
+                    alarmDao.updateAlarm(a)
+                    break
+                }
+            }
+        }
         val intent = Intent(this, AlarmService::class.java)
         intent.putExtra("alarm_id", alarmId)
         startService(intent)
     }
 
     private fun cancelAlarm(alarmId: Long) {
+        thread {
+            for (a in alarmShow) {
+                if (a.id == alarmId) {
+                    alarmDao.updateAlarm(a)
+                    break
+                }
+            }
+        }
         val intent = Intent(this, AlarmService::class.java)
         intent.putExtra("alarm_id", alarmId)
         startService(intent)

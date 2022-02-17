@@ -17,8 +17,10 @@ import com.example.hiclass.setting.App
 import com.example.hiclass.R
 
 
-class SelectQueAdapter(private val queList: List<String>, private val owner: ViewModelStoreOwner,
-private val lifecycleOwner: LifecycleOwner) :
+class SelectQueAdapter(
+    private val queList: List<String>, private val owner: ViewModelStoreOwner,
+    private val lifecycleOwner: LifecycleOwner
+) :
     RecyclerView.Adapter<SelectQueAdapter.ViewHolder>() {
 
     private lateinit var viewModel: SetAlarmViewModel
@@ -27,7 +29,7 @@ private val lifecycleOwner: LifecycleOwner) :
         val nameView: AppCompatTextView = view.findViewById(R.id.que_name)
         val iconView: AppCompatTextView = view.findViewById(R.id.que_name_icon)
         val lineView: LinearLayoutCompat = view.findViewById(R.id.que_select_single)
-        val selectedView :AppCompatTextView = view.findViewById(R.id.que_name_select)
+        val selectedView: AppCompatTextView = view.findViewById(R.id.que_name_select)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,9 +50,9 @@ private val lifecycleOwner: LifecycleOwner) :
             viewModel.selectedChange(position)
         }
         viewModel.typeSelectedPosition.observe(lifecycleOwner, Observer {
-            if (viewModel.typeSelectedPosition.value != position){
+            if (viewModel.typeSelectedPosition.value != position) {
                 holder.selectedView.visibility = INVISIBLE
-            }else{
+            } else {
                 holder.selectedView.visibility = VISIBLE
             }
         })

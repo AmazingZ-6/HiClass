@@ -36,16 +36,16 @@ class SelectQueFragment : DialogFragment() {
         initEvents()
     }
 
-    private fun initQueInfo(){
-        val prefs = activity?.getSharedPreferences("resource_settings",Context.MODE_PRIVATE)
-        val isEngLoaded = prefs?.getBoolean("english_1000",false)
-        if (isEngLoaded == true){
-            queName = arrayListOf("无(默认常识题库)","考研英语词汇1000题")
+    private fun initQueInfo() {
+        val prefs = activity?.getSharedPreferences("resource_settings", Context.MODE_PRIVATE)
+        val isEngLoaded = prefs?.getBoolean("english_1000", false)
+        if (isEngLoaded == true) {
+            queName = arrayListOf("无(默认常识题库)", "考研英语词汇1000题")
         }
     }
 
-    private fun initEvents(){
-        val adapter = SelectQueAdapter(queName,this,this)
+    private fun initEvents() {
+        val adapter = SelectQueAdapter(queName, activity as SetAlarm, activity as SetAlarm)
         rv_select_que.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
         rv_select_que.layoutManager = layoutManager

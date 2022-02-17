@@ -17,6 +17,7 @@ import com.example.hiclass.alarmList
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.DeliverInfoBean
 import com.example.hiclass.data_class.ResourceBean
+import com.example.hiclass.utils.ClockedAlarm
 import com.example.hiclass.utils.StatusUtil
 import kotlinx.android.synthetic.main.activity_clock_ring.*
 import kotlinx.android.synthetic.main.item_add_base.*
@@ -29,15 +30,15 @@ class ClockRing : AppCompatActivity() {
     private var right = ""
     private var alarmId = -1L
     private var a = ""
-    private var b =""
-    private var c =""
-    private var d =""
-    private var content =""
-    private var correct =""
+    private var b = ""
+    private var c = ""
+    private var d = ""
+    private var content = ""
+    private var correct = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
-        alarmId = intent.getLongExtra("alarm_id",-1L)
+        alarmId = intent.getLongExtra("alarm_id", -1L)
         content = intent.getStringExtra("que_content").toString()
         a = intent.getStringExtra("que_a").toString()
         b = intent.getStringExtra("que_b").toString()
@@ -153,12 +154,14 @@ class ClockRing : AppCompatActivity() {
         finish()
     }
 
-    private fun updateAlarm(){
+    private fun updateAlarm() {
         thread {
-            for (i in alarmList){
-                if (i.id == alarmId){
+            for (i in alarmList) {
+                if (i.id == alarmId) {
                     i.alarmSwitch = false
                     alarmDao.updateAlarm(i)
+                    ClockedAlarm.cAlarm = i
+                    ClockedAlarm.cFlag = true
                     break
                 }
             }

@@ -6,18 +6,24 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.hiclass.dao.AlarmDao
 import com.example.hiclass.dao.ItemDao
+import com.example.hiclass.dao.MatchDao
 import com.example.hiclass.dao.ResourceDao
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ItemDataBean
+import com.example.hiclass.data_class.MatchInfoBean
 import com.example.hiclass.data_class.ResourceBean
 
 
-@Database(version = 1, entities = [ItemDataBean::class, ResourceBean::class, AlarmDataBean::class])
+@Database(
+    version = 1,
+    entities = [ItemDataBean::class, ResourceBean::class, AlarmDataBean::class, MatchInfoBean::class]
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
     abstract fun resourceDao(): ResourceDao
-    abstract fun alarmDao() :AlarmDao
+    abstract fun alarmDao(): AlarmDao
+    abstract fun matchDao(): MatchDao
 
     companion object {
         private var instance: AppDatabase? = null
