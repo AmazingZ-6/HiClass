@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a8620c44c46d6164f0b0dbc5dd294a48",
+    "identityHash": "5c8c8b7d4d84e6c8f980b568e9db6f78",
     "entities": [
       {
         "tableName": "ItemDataBean",
@@ -210,7 +210,7 @@
       },
       {
         "tableName": "MatchInfoBean",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`alarmId` INTEGER NOT NULL, `tableId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`alarmId` INTEGER NOT NULL, `tableId` INTEGER NOT NULL, `itemId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "alarmId",
@@ -221,6 +221,12 @@
           {
             "fieldPath": "tableId",
             "columnName": "tableId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "itemId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -244,7 +250,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a8620c44c46d6164f0b0dbc5dd294a48')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5c8c8b7d4d84e6c8f980b568e9db6f78')"
     ]
   }
 }

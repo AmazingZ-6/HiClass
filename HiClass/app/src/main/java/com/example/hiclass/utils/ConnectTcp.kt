@@ -22,13 +22,13 @@ object ConnectTcp {
     //    //图片交互流
 //    private val imageInputStream: InputStream? = null
 //    private val imageFileOutputSteam: DataOutputStream? = null
-    var isConnect = false
+    private var isConnect = false
 //    var ImageConncet = false
 
-    private fun initConnect(type:Int) {
-        val port = if (type == 0){
+    private fun initConnect(type: Int) {
+        val port = if (type == 0) {
             port_login
-        }else{
+        } else {
             port_load
         }
         try {

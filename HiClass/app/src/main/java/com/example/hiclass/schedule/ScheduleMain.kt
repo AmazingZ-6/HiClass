@@ -6,12 +6,15 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -25,6 +28,7 @@ import com.example.hiclass.*
 import com.example.hiclass.alarm.AlarmDisplay
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.load.LoadQue
+import com.example.hiclass.schedule.apply.ApplyPowersFragment
 import com.example.hiclass.setting.AboutMe
 import com.example.hiclass.setting.SettingsActivity
 import com.example.hiclass.utils.CalendarUtil
@@ -32,6 +36,7 @@ import com.example.hiclass.utils.StatusUtil
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.view_pager.*
 import java.io.ByteArrayOutputStream
+import java.util.*
 import kotlin.concurrent.thread
 
 
@@ -104,22 +109,22 @@ class ScheduleMain : AppCompatActivity() {
         })
 
         viewModel.dateShowIndex.observe(this, Observer {
-            val t0 = CalendarUtil.getDate(it, 1).split(".")[0]
-            val t1 = CalendarUtil.getDate(it, 1).split(".")[1] + "日"
-            val t2 = CalendarUtil.getDate(it, 2).split(".")[1] + "日"
-            val t3 = CalendarUtil.getDate(it, 3).split(".")[1] + "日"
-            val t4 = CalendarUtil.getDate(it, 4).split(".")[1] + "日"
-            val t5 = CalendarUtil.getDate(it, 5).split(".")[1] + "日"
-            val t6 = CalendarUtil.getDate(it, 6).split(".")[1] + "日"
-            val t7 = CalendarUtil.getDate(it, 7).split(".")[1] + "日"
-            date_month.text = t0
-            date_1.text = t1
-            date_2.text = t2
-            date_3.text = t3
-            date_4.text = t4
-            date_5.text = t5
-            date_6.text = t6
-            date_7.text = t7
+            val t01 = CalendarUtil.getDate(it, 1).split(".")[0]
+            val t11 = CalendarUtil.getDate(it, 1).split(".")[1] + "日"
+            val t21 = CalendarUtil.getDate(it, 2).split(".")[1] + "日"
+            val t31 = CalendarUtil.getDate(it, 3).split(".")[1] + "日"
+            val t41 = CalendarUtil.getDate(it, 4).split(".")[1] + "日"
+            val t51 = CalendarUtil.getDate(it, 5).split(".")[1] + "日"
+            val t61 = CalendarUtil.getDate(it, 6).split(".")[1] + "日"
+            val t71 = CalendarUtil.getDate(it, 7).split(".")[1] + "日"
+            date_month.text = t01
+            date_1.text = t11
+            date_2.text = t21
+            date_3.text = t31
+            date_4.text = t41
+            date_5.text = t51
+            date_6.text = t61
+            date_7.text = t71
         })
 
         setSupportActionBar(toolbar)
@@ -191,6 +196,7 @@ class ScheduleMain : AppCompatActivity() {
             startActivityForResult(intent, 1)
         }
         getHeaderImage()
+        applyPowers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -214,7 +220,7 @@ class ScheduleMain : AppCompatActivity() {
 
     override fun onBackPressed() {
 //        android.os.Process.killProcess(android.os.Process.myPid())
-        viewModel.exit()
+//        viewModel.exit()
         finish()
     }
 
@@ -230,6 +236,19 @@ class ScheduleMain : AppCompatActivity() {
                             saveHeaderImage(bitmap)
                         }
                     }
+                }
+            }
+
+            2 -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                    && Settings.canDrawOverlays(this)
+                ) {
+                    val editor = getSharedPreferences("apply_settings", MODE_PRIVATE).edit()
+                    editor.putBoolean("apply_power", true)
+                    editor.apply()
+                    viewModel.applyHasFinished()
+                } else {
+                    Toast.makeText(this, "授权失败！", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -259,6 +278,21 @@ class ScheduleMain : AppCompatActivity() {
             val decode = Base64.decode(icon!!.toByteArray(), 1)
             bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.size)
             headerImage.setImageBitmap(bitmap)
+        }
+    }
+
+    private fun applyPowers() {
+        val sp = getSharedPreferences("apply_settings", MODE_PRIVATE)
+        val isApply = Settings.canDrawOverlays(this)
+        val isIgnored = sp.getBoolean("ignore_apply", false)
+        if (!isApply && !isIgnored) {
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    val applyPowersFragment = ApplyPowersFragment.newInstance()
+                    applyPowersFragment.isCancelable = false
+                    applyPowersFragment.show(supportFragmentManager, "apply_power")
+                }
+            }, 1000)
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hiclass.R
 import com.example.hiclass.alarmDao
 import com.example.hiclass.alarmList
+import com.example.hiclass.alarm_set.SetAlarm
 import com.example.hiclass.alarm_single.SetAlarmSingle
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.utils.ChangeAlarm
@@ -42,7 +43,10 @@ class AlarmDisplay : AppCompatActivity() {
         viewModel.editFlag.observe(this, Observer {
             when (it) {
                 0 -> {
-
+                    val intent = Intent(this,SetAlarm::class.java)
+                    intent.putExtra("alarm_id",viewModel.editAlarmId)
+                    intent.putExtra("isUpdate", true)
+                    startActivity(intent)
                 }
                 1 -> {
                     val intent = Intent(this, SetAlarmSingle::class.java)

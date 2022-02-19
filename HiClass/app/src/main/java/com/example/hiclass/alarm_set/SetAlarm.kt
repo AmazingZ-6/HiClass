@@ -30,6 +30,7 @@ class SetAlarm : AppCompatActivity() {
     private lateinit var alarm: AlarmDataBean
     private var isExited = false
     private var tableId = -1
+    private var itemId = -1L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
@@ -71,6 +72,7 @@ class SetAlarm : AppCompatActivity() {
     }
 
     private fun initInfo() {
+        itemId = intent.getLongExtra("item_id", -1)
         tableId = intent.getIntExtra("table_id", -1)
         val alarmId = intent.getLongExtra("alarm_id", -1)
         if (tableId != -1 && !isExited) {
@@ -188,10 +190,22 @@ class SetAlarm : AppCompatActivity() {
             0, alarmName, alarmTermDay as String, "", alarmTime,
             alarmQueType, 0, alarmSwitch
         )
-        viewModel.saveAlarm(alarm, tableId)
+        viewModel.saveAlarm(alarm, tableId, itemId)
     }
 
     private fun updateAlarm() {
-
+        val alarmName = alarm_set_name.text.toString().ifEmpty {
+            "闹钟"
+        }
+        val alarmTermDay = alarm_set_term_day.text.toString()
+        val alarmTime = "$hour:$minute"
+        val alarmQueType = viewModel.typeSelectedPosition.value!!
+        val alarmSwitch = alarm_set_switcher.isChecked
+        alarm.alarmName = alarmName
+        alarm.alarmSwitch = alarmSwitch
+        alarm.alarmQueType = alarmQueType
+        alarm.alarmTime = alarmTime
+        alarm.alarmTermDay = alarmTermDay
+        viewModel.updateAlarm(alarm)
     }
 }

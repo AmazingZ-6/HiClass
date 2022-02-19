@@ -1,9 +1,6 @@
 package com.example.hiclass.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.hiclass.data_class.MatchInfoBean
 
 @Dao
@@ -16,4 +13,7 @@ interface MatchDao {
 
     @Delete
     fun deleteAInfo(match: MatchInfoBean)
+
+    @Update
+    fun updateInfo(match: MatchInfoBean)
 }

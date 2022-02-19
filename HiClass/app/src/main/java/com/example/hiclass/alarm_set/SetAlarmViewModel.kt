@@ -25,14 +25,22 @@ class SetAlarmViewModel : ViewModel() {
         _typeSelectedPosition.value = position
     }
 
-    fun saveAlarm(alarm: AlarmDataBean, tableId: Int) {
+    fun saveAlarm(alarm: AlarmDataBean, tableId: Int, itemId: Long) {
         thread {
             alarm.id = alarmDao.insertAlarm(alarm)
             alarmList.add(alarm)
-            val m = MatchInfoBean(alarm.id, tableId)
+            val m = MatchInfoBean(alarm.id, tableId, itemId)
             m.id = matchDao.insertInfo(m)
             matchList.add(m)
             _isFinished.postValue(true)
         }
+    }
+
+    fun updateAlarm(alarm: AlarmDataBean) {
+        thread {
+            alarmDao.updateAlarm(alarm)
+            _isFinished.postValue(true)
+        }
+
     }
 }

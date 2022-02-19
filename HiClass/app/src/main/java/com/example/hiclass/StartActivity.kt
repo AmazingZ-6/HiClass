@@ -28,6 +28,7 @@ lateinit var itemDao: ItemDao
 lateinit var resourceDao: ResourceDao
 lateinit var alarmDao: AlarmDao
 lateinit var matchDao: MatchDao
+private var isInfoExited = false
 
 
 class WeekItemList(week: Int) {
@@ -69,12 +70,12 @@ class StartActivity : AppCompatActivity() {
         window.statusBarColor = Color.TRANSPARENT
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_start)
-        itemDao = initDatabase()
         val file = File(applicationContext.filesDir, "load_info")
-        initInfo()
-        getAlarmInfo()
-        getResourceInfo()
-        getMatchInfo()
+        if (!isInfoExited) {
+            getAllInfo()
+        }
+
+
 
 
         Timer().schedule(object : TimerTask() {
@@ -103,6 +104,18 @@ class StartActivity : AppCompatActivity() {
                 }
             }
         }, 1000)
+    }
+
+    private fun getAllInfo() {
+        val file = File(applicationContext.filesDir, "load_info")
+        itemDao = initDatabase()
+        initInfo()
+        getAlarmInfo()
+        getResourceInfo()
+        getMatchInfo()
+        if (file.exists()){
+            isInfoExited = true
+        }
     }
 
     private fun initDatabase(): ItemDao {

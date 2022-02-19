@@ -1,6 +1,5 @@
 package com.example.hiclass.alarm
 
-import android.content.Intent
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +19,7 @@ import com.example.hiclass.R
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ClickBean
 import com.example.hiclass.utils.CalendarUtil
+import com.example.hiclass.utils.TypeSwitcher
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import com.example.hiclass.utils.TypeSwitcher.intToWeekday
 
@@ -97,26 +97,34 @@ class AlarmDisplayAdapter(
                 weekdayTemp.sort()
             }
         }
-        if (weekdayTemp.size == 7) {
-            nameTemp += "每天"
-        } else {
-            for (j in weekdayTemp) {
-                nameTemp = if (j < 7) {
-                    nameTemp + intToWeekday(j) + " "
-                } else {
-                    val t = if (CalendarUtil.judgeDayOut(
-                            charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1]),
-                            charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
-                        )
-                    ) {
-                        "明天"
+        if (alarm.alarmType == 1) {
+            if (weekdayTemp.size == 7) {
+                nameTemp += "每天"
+            } else {
+                for (j in weekdayTemp) {
+                    nameTemp = if (j < 7) {
+                        nameTemp + intToWeekday(j) + " "
                     } else {
-                        "今天"
+                        val t = if (CalendarUtil.judgeDayOut(
+                                charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1]),
+                                charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
+                            )
+                        ) {
+                            "明天"
+                        } else {
+                            "今天"
+                        }
+                        "$nameTemp$t "
                     }
-                    "$nameTemp$t "
-                }
 
+                }
             }
+        }
+        if (alarm.alarmType == 0) {
+            nameTemp =
+                "   " + alarm.alarmName + " , " + TypeSwitcher.subStTermDay(alarm.alarmTermDay)[1] + "周 , " + TypeSwitcher.subStTermDay(
+                    alarm.alarmTermDay
+                )[0]
         }
         holder.nameShow.text = nameTemp
         holder.visiView.setOnClickListener {
@@ -127,7 +135,7 @@ class AlarmDisplayAdapter(
 
         holder.btnEdit.setOnClickListener {
             if (alarm.alarmType == 0) {
-                viewModel.editClassAlarm()
+                viewModel.editClassAlarm(alarm.id)
             } else {
                 viewModel.editIndividualAlarm(alarm.id)
             }

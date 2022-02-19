@@ -7,6 +7,8 @@ import com.example.hiclass.alarmDao
 import com.example.hiclass.alarmList
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ClickBean
+import com.example.hiclass.matchDao
+import com.example.hiclass.matchList
 import com.example.hiclass.utils.ChangeAlarm
 import com.example.hiclass.utils.ClockedAlarm
 import com.example.hiclass.utils.TimeGapUtil.getTimeGap
@@ -47,8 +49,9 @@ class AlarmDisplayViewModel : ViewModel() {
         _clickedPos.value = ck
     }
 
-    fun editClassAlarm() {
-
+    fun editClassAlarm(id: Long) {
+        editAlarmId = id
+        _editFlag.value = 0
     }
 
     fun editIndividualAlarm(id: Long) {
@@ -60,6 +63,17 @@ class AlarmDisplayViewModel : ViewModel() {
         alarmList.remove(alarm)
         thread {
             alarmDao.deleteAlarm(alarm)
+        }
+        if (alarm.alarmType == 0){
+            for (i in matchList.indices){
+                if (alarm.id == matchList[i].alarmId){
+                    val m = matchList.removeAt(i)
+                    thread {
+                        matchDao.deleteAInfo(m)
+                    }
+                    break
+                }
+            }
         }
     }
 

@@ -22,7 +22,7 @@ class ScheduleViewModel : ViewModel() {
     val position: LiveData<Int>
         get() = _position
 
-    val dateShowIndex : LiveData<Int>
+    val dateShowIndex: LiveData<Int>
         get() = _dateShowIndex
     private val _dateShowIndex = MutableLiveData<Int>()
 
@@ -36,6 +36,10 @@ class ScheduleViewModel : ViewModel() {
     private val _changeFlag = MutableLiveData<Int>()
 
     private val _index = MutableLiveData<Int>()
+
+    val isApply: LiveData<Boolean>
+        get() = _isApply
+    private val _isApply = MutableLiveData<Boolean>()
 
 
     fun updateFlag() {
@@ -113,6 +117,10 @@ class ScheduleViewModel : ViewModel() {
             i.dayItemList.clear()
         }
         alarmList.clear()
+    }
+
+    fun applyHasFinished() {
+        _isApply.value = true
     }
 
 

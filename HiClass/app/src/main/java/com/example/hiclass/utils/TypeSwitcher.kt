@@ -104,4 +104,10 @@ object TypeSwitcher {
         }
         return "周一"
     }
+
+    fun subStTermDay(termDay: String): List<String> {
+        val nTemp = termDay.split("周")[1].substring(1)
+        val wTemp = termDay.split("周")[0]
+        return listOf(nTemp, wTemp)
+    }
 }

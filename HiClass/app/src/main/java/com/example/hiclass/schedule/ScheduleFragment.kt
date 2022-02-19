@@ -6,10 +6,13 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import android.widget.ListPopupWindow.WRAP_CONTENT
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.motion.widget.Key.VISIBILITY
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +32,7 @@ import com.example.hiclass.utils.TypeSwitcher.charToInt
 import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
+import kotlinx.android.synthetic.main.course_card_1.view.*
 import java.util.regex.Pattern
 
 
@@ -64,6 +68,7 @@ class ScheduleFragment : Fragment() {
         super.onResume()
         pageViewModel.updateFlag()
         pageViewModel.addFlag()
+        hasClockRefresh()
     }
 
 
@@ -177,15 +182,22 @@ class ScheduleFragment : Fragment() {
         }
 
         v.y = height.toFloat()
-        val viewMapEntity = ViewMap(re, v, item.id)
-        viewList.add(viewMapEntity)
+
         val textView: TextView = v.findViewById(R.id.text_view)
+        val hasClockView: TextView = v.findViewById(R.id.has_clock_view)
         val params = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             (180) * (classEnd - classStart + 1) - 8
         ) //设置布局高度,即跨多少节课
         v.isClickable = true
-
+        val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
+        hasClockView.typeface = font
+        hasClockView.text = App.context.resources.getString(R.string.icon_has_alarm)
+        hasClockView.visibility = if (judgeHasClock(item.id)) {
+            VISIBLE
+        } else {
+            GONE
+        }
         textView.text = name
         v.setOnClickListener {
             val screenH = getScreenHeight(this.requireContext())
@@ -216,7 +228,6 @@ class ScheduleFragment : Fragment() {
             val popAddress: AppCompatTextView = popView.findViewById(R.id.pop_address)
             val popTeacher: AppCompatTextView = popView.findViewById(R.id.pop_teacher)
             val popRemark: AppCompatTextView = popView.findViewById(R.id.pop_remark)
-            val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
             popName.typeface = font
             popName.text = App.context.resources.getString(R.string.icon_name)
             popAddress.typeface = font
@@ -239,6 +250,7 @@ class ScheduleFragment : Fragment() {
                 val tableId =
                     weekNum * 7 + charToInt(item.itemWeekDay[2]) + charToInt(item.itemTime[1])
                 intent.putExtra("table_id", tableId)
+                intent.putExtra("item_id", item.id)
                 startActivity(intent)
                 popWindow.dismiss()
             }
@@ -289,6 +301,8 @@ class ScheduleFragment : Fragment() {
 //                popTextView5.text = timeToString
 //            }
         }
+        val viewMapEntity = ViewMap(re, v, item.id)
+        viewList.add(viewMapEntity)
         v.layoutParams = params
         re.addView(v)
 
@@ -401,6 +415,28 @@ class ScheduleFragment : Fragment() {
             itemDeleteFlag = 0
             itemAddFlag = 0
             changedItem = null
+        }
+    }
+
+    private fun judgeHasClock(itemId: Long): Boolean {
+        for (i in matchList) {
+            if (itemId == i.itemId) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun hasClockRefresh(){
+        for (z in viewList){
+            z.vi.has_clock_view.visibility = GONE
+        }
+        for (i in matchList){
+            for (j in viewList){
+                if (i.itemId == j.id){
+                    j.vi.has_clock_view.visibility = VISIBLE
+                }
+            }
         }
     }
 

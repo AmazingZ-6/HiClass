@@ -16,7 +16,15 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textStyle="bold"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:visibility="gone"
         android:textColor="#FFFFFF"
-         />
+        android:textStyle="bold"
+        android:gravity="center_vertical|end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/has_clock_view"/>
 
 </androidx.cardview.widget.CardView>

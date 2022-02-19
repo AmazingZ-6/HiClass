@@ -61,7 +61,7 @@ class AlarmService : Service() {
             }
         }
         thread {
-            if (alarm.alarmSwitch) {
+            if (alarm.alarmSwitch && this::alarm.isInitialized) {
                 val random = (0..900).random()
                 val randomQue = resourceDao.getRandomQue(random.toLong(), "english")
                 if (alarm.alarmType == 1) {
