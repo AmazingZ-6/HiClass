@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".setting.BackImageSelect">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/little_white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:popupTheme="@style/Theme.MenuTest.PopupOverlay"
+            app:title="课表外观" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/select_from_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="从图库中选择"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bg_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+</LinearLayout>

@@ -24,8 +24,12 @@ import kotlin.concurrent.thread
 
 class AlarmService : Service() {
 
+
     private lateinit var alarm: AlarmDataBean
-    private val piMap = mutableMapOf<Long, ResourceBean>()
+    private val piMap = mutableMapOf<Long, MutableMap<Int, ResourceBean>>()
+    private val existedPiId = mutableListOf<Int>()
+    private val dateMap = mutableMapOf<Int, Int>()
+    private val dateMap2 = mutableMapOf<Int, Int>()
 
 
     override fun onBind(intent: Intent): IBinder {
@@ -50,6 +54,7 @@ class AlarmService : Service() {
             .setContentIntent(pi)
             .build()
         startForeground(1, notification)
+        initDateMap()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -61,18 +66,17 @@ class AlarmService : Service() {
             }
         }
         thread {
-            if (alarm.alarmSwitch && this::alarm.isInitialized) {
-                val random = (0..900).random()
-                val randomQue = resourceDao.getRandomQue(random.toLong(), "english")
-                if (alarm.alarmType == 1) {
-                    analyseWeekday(randomQue)
+            if (this::alarm.isInitialized) {
+                if (alarm.alarmSwitch) {
+                    if (alarm.alarmType == 1) {
+                        analyseWeekday()
+                    } else {
+                        analyseTermDay()
+                    }
                 } else {
-                    analyseTermDay(randomQue)
+                    cancelClock()
                 }
-            } else {
-                cancelClock()
             }
-
         }
         return START_REDELIVER_INTENT
     }
@@ -88,29 +92,40 @@ class AlarmService : Service() {
         intent.putExtra("que_c", que.C)
         intent.putExtra("que_d", que.D)
         intent.putExtra("que_correct", que.correct)
-        val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, FLAG_UPDATE_CURRENT)
-        piMap[alarm.id] = que
+        val piId = isRepeated((0..3000).random())
+        existedPiId.add(piId)
+        if (piMap[alarm.id] == null) {
+            piMap[alarm.id] = mutableMapOf()
+            piMap[alarm.id]?.put(piId,que)
+        } else {
+            piMap[alarm.id]?.put(piId, que)
+        }
+        val pi = PendingIntent.getActivity(this, piId, intent, FLAG_UPDATE_CURRENT)
         mAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pi)
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
     private fun cancelClock() {
         val mAlarmManager: AlarmManager = getSystemService(Service.ALARM_SERVICE) as AlarmManager
-        val que = piMap[alarm.id]
+        for (i in piMap[alarm.id]?.entries!!) {
+            val que = i.value
+            val intent = Intent(this, ClockRing::class.java)
+            intent.putExtra("alarm_id", alarm.id)
+            intent.putExtra("que_content", que.content)
+            intent.putExtra("que_a", que.A)
+            intent.putExtra("que_b", que.B)
+            intent.putExtra("que_c", que.C)
+            intent.putExtra("que_d", que.D)
+            intent.putExtra("que_correct", que.correct)
+            val pi = PendingIntent.getActivity(this, i.key, intent, FLAG_UPDATE_CURRENT)
+            mAlarmManager.cancel(pi)
+        }
         piMap.remove(alarm.id)
-        val intent = Intent(this, ClockRing::class.java)
-        intent.putExtra("alarm_id", alarm.id)
-        intent.putExtra("que_content", que!!.content)
-        intent.putExtra("que_a", que.A)
-        intent.putExtra("que_b", que.B)
-        intent.putExtra("que_c", que.C)
-        intent.putExtra("que_d", que.D)
-        intent.putExtra("que_correct", que.correct)
-        val pi = PendingIntent.getActivity(this, alarm.id.toInt(), intent, FLAG_UPDATE_CURRENT)
-        mAlarmManager.cancel(pi)
     }
 
-    private fun analyseTermDay(que: ResourceBean) {
+    private fun analyseTermDay() {
+        val random = (0..900).random()
+        val que = resourceDao.getRandomQue(random.toLong(), "english")
         val hVal = charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1])
         val mVal = charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
         val weekSt = alarm.alarmTermDay.split("周")[0].subSequence(
@@ -147,7 +162,7 @@ class AlarmService : Service() {
         }
     }
 
-    private fun analyseWeekday(que: ResourceBean) {
+    private fun analyseWeekday() {
         val hVal = charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1])
         val mVal = charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
         val weekdayT = mutableListOf<Int>()
@@ -157,14 +172,16 @@ class AlarmService : Service() {
             }
         }
         weekdayT.sort()
-        for (i in weekdayT) {
-            if (i > 6) {
+        for (wd in weekdayT) {
+            val random = (0..900).random()
+            val que = resourceDao.getRandomQue(random.toLong(), "english")
+            if (wd > 6) {
                 val calendar: Calendar = Calendar.getInstance()
                 calendar.timeInMillis = System.currentTimeMillis()
                 calendar.timeZone = TimeZone.getTimeZone("GMT+8")
                 if (CalendarUtil.judgeDayOut(hVal, mVal)) calendar.set(
-                    Calendar.DAY_OF_MONTH,
-                    calendar.get(Calendar.DAY_OF_MONTH) + 1
+                    Calendar.DAY_OF_YEAR,
+                    calendar.get(Calendar.DAY_OF_YEAR) + 1
                 )
                 calendar.set(Calendar.HOUR_OF_DAY, hVal)
                 calendar.set(Calendar.MINUTE, mVal)
@@ -175,16 +192,19 @@ class AlarmService : Service() {
                 val calendar: Calendar = Calendar.getInstance()
                 calendar.timeInMillis = System.currentTimeMillis()
                 calendar.timeZone = TimeZone.getTimeZone("GMT+8")
-                val wdNow = calendar.get(Calendar.DAY_OF_WEEK) - 1
-                if (i + 1 > wdNow) {
-                    calendar.set(Calendar.DAY_OF_WEEK, i + 2)
+                val wdNow = dateMap[calendar.get(Calendar.DAY_OF_WEEK)]!!
+                if (wd > wdNow) {
+                    calendar.set(Calendar.DAY_OF_WEEK, dateMap2[wd]!!)
+                    if (wd == 6) {
+                        calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR) + 1)
+                    }
                     calendar.set(Calendar.HOUR_OF_DAY, hVal)
                     calendar.set(Calendar.MINUTE, mVal)
                     calendar.set(Calendar.SECOND, 1)
                     Log.d("time", calendar.time.toString())
                     setClock(que, calendar)
-                } else if (i + 1 < wdNow) {
-                    calendar.set(Calendar.DAY_OF_WEEK, i + 2)
+                } else if (wd < wdNow) {
+                    calendar.set(Calendar.DAY_OF_WEEK, dateMap2[wd]!!)
                     calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR) + 1)
                     calendar.set(Calendar.HOUR_OF_DAY, hVal)
                     calendar.set(Calendar.MINUTE, mVal)
@@ -193,7 +213,6 @@ class AlarmService : Service() {
                     setClock(que, calendar)
                 } else {
                     if (CalendarUtil.judgeDayOut(hVal, mVal)) {
-                        calendar.set(Calendar.DAY_OF_WEEK, i + 2)
                         calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR) + 1)
                         calendar.set(Calendar.HOUR_OF_DAY, hVal)
                         calendar.set(Calendar.MINUTE, mVal)
@@ -201,7 +220,6 @@ class AlarmService : Service() {
                         Log.d("time", calendar.time.toString())
                         setClock(que, calendar)
                     } else {
-                        calendar.set(Calendar.DAY_OF_WEEK, i + 2)
                         calendar.set(Calendar.HOUR_OF_DAY, hVal)
                         calendar.set(Calendar.MINUTE, mVal)
                         calendar.set(Calendar.SECOND, 1)
@@ -211,6 +229,26 @@ class AlarmService : Service() {
                 }
             }
         }
+    }
+
+    private fun isRepeated(num: Int): Int {
+        for (entry in existedPiId) {
+            if (entry == num) {
+                return isRepeated((0..3000).random())
+            }
+        }
+        return num
+    }
+
+    private fun initDateMap() {
+        for (i in 2..7) {
+            dateMap[i] = i - 2
+        }
+        dateMap[1] = 6
+        for (j in 0..5) {
+            dateMap2[j] = j + 2
+        }
+        dateMap2[6] = 1
     }
 
 }

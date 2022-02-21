@@ -5,6 +5,9 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -30,9 +33,15 @@ import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.load.LoadQue
 import com.example.hiclass.schedule.apply.ApplyPowersFragment
 import com.example.hiclass.setting.AboutMe
+import com.example.hiclass.setting.BackImageSelect
 import com.example.hiclass.setting.SettingsActivity
+import com.example.hiclass.utils.BitMapScale
 import com.example.hiclass.utils.CalendarUtil
+import com.example.hiclass.utils.MakeStatusBarTransparent
 import com.example.hiclass.utils.StatusUtil
+import com.example.hiclass.utils.ViewUtil.getScreenHeight
+import com.example.hiclass.utils.ViewUtil.getScreenWidth
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.view_pager.*
 import java.io.ByteArrayOutputStream
@@ -46,13 +55,17 @@ class ScheduleMain : AppCompatActivity() {
 
     private lateinit var viewModel: ScheduleViewModel
     private lateinit var headerImage: ImageView
+    private val bgMap = mutableMapOf<Int, Int>()
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         mainOwner = this
         super.onCreate(savedInstanceState)
-        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
+        initStatus()
+//        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
+//        MakeStatusBarTransparent.makeStatusBarTransparent(this)
         setContentView(R.layout.view_pager)
+        getBackImage()
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)
@@ -161,11 +174,11 @@ class ScheduleMain : AppCompatActivity() {
                     }.show()
                     true
                 }
-//                        R.id.nav_timer -> {
-//                            val intent = Intent(activity, AlarmEdit::class.java)
-//                            startActivity(intent)
-//                            true
-//                        }
+                R.id.nav_select_bg -> {
+                    val intent = Intent(this, BackImageSelect::class.java)
+                    startActivity(intent)
+                    true
+                }
                 R.id.nav_setting -> {
                     val intent = Intent(this, SettingsActivity::class.java)
                     startActivity(intent)
@@ -251,6 +264,8 @@ class ScheduleMain : AppCompatActivity() {
                     Toast.makeText(this, "授权失败！", Toast.LENGTH_LONG).show()
                 }
             }
+
+
         }
     }
 
@@ -281,6 +296,29 @@ class ScheduleMain : AppCompatActivity() {
         }
     }
 
+    private fun getBackImage() {
+        var bitmap: Bitmap? = null
+        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
+        val icon = sharedPre.getString("background", "")
+        val isInitBg = sharedPre.getInt("init_bg", R.color.little_white)
+        if (isInitBg >= 0) {
+            val bg = findViewById<AppBarLayout>(R.id.main_view)
+            bg.setBackgroundResource(isInitBg)
+        } else {
+            if (icon !== "") {
+                val decode = Base64.decode(icon!!.toByteArray(), 1)
+                bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.size)
+                val bg = findViewById<AppBarLayout>(R.id.main_view)
+                val newBitmap = BitMapScale.imageCompress(
+                    bitmap, getScreenHeight(this),
+                    getScreenWidth(this)
+                )
+                bg.background = BitmapDrawable(resources, newBitmap)
+            }
+        }
+    }
+
+
     private fun applyPowers() {
         val sp = getSharedPreferences("apply_settings", MODE_PRIVATE)
         val isApply = Settings.canDrawOverlays(this)
@@ -294,6 +332,18 @@ class ScheduleMain : AppCompatActivity() {
                 }
             }, 1000)
         }
+    }
+
+    private fun initStatus() {
+        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
+        val isInitBg = sharedPre.getInt("init_bg", 0)
+        if (isInitBg == 0) {
+            StatusUtil.setStatusBarMode(this, true, R.color.little_white)
+        } else {
+            MakeStatusBarTransparent.makeStatusBarTransparent(this)
+        }
+        bgMap[0] = R.color.little_white
+        bgMap[1] = R.drawable.bg_1
     }
 
 

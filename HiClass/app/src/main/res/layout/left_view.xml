@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="45dp"
     android:layout_height="70dp"
-    android:background="@color/little_white"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <TextView

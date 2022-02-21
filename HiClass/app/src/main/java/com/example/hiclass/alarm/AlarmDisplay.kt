@@ -43,8 +43,8 @@ class AlarmDisplay : AppCompatActivity() {
         viewModel.editFlag.observe(this, Observer {
             when (it) {
                 0 -> {
-                    val intent = Intent(this,SetAlarm::class.java)
-                    intent.putExtra("alarm_id",viewModel.editAlarmId)
+                    val intent = Intent(this, SetAlarm::class.java)
+                    intent.putExtra("alarm_id", viewModel.editAlarmId)
                     intent.putExtra("isUpdate", true)
                     startActivity(intent)
                 }
@@ -84,6 +84,12 @@ class AlarmDisplay : AppCompatActivity() {
                     break
                 }
             }
+        })
+
+        viewModel.preDeleteFlag.observe(this, Observer {
+            val intent = Intent(this, AlarmService::class.java)
+            intent.putExtra("alarm_id", it)
+            startService(intent)
         })
     }
 

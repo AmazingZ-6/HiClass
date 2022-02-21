@@ -5,20 +5,26 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:icon="@drawable/ic_user"
             android:id="@+id/nav_login"
+            android:icon="@drawable/ic_user"
             android:title="切换登录" />
         <item
-            android:icon="@drawable/ic_baseline_cloud_download_24"
             android:id="@+id/nav_load"
-            android:title="题库资源"/>
+            android:icon="@drawable/ic_baseline_cloud_download_24"
+            android:title="题库资源" />
         <item
-            android:icon="@drawable/ic_baseline_settings_24"
+            android:id="@+id/nav_select_bg"
+            android:icon="@drawable/ic_baseline_image_24"
+            android:title="外观选择" />
+        <item
             android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_baseline_settings_24"
             android:title="全局设置" />
         <item
-            android:icon="@drawable/ic_readme"
             android:id="@+id/nav_about_me"
+            android:icon="@drawable/ic_readme"
             android:title="关于我们" />
+
+
     </group>
 </menu>

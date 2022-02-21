@@ -45,6 +45,10 @@ class AlarmDisplayViewModel : ViewModel() {
         get() = _clockedFlag
     private val _clockedFlag = MutableLiveData<Long>()
 
+    val preDeleteFlag: LiveData<Long>
+        get() = _preDeleteFlag
+    private val _preDeleteFlag = MutableLiveData<Long>()
+
     fun click(ck: ClickBean) {
         _clickedPos.value = ck
     }
@@ -59,14 +63,21 @@ class AlarmDisplayViewModel : ViewModel() {
         _editFlag.value = 1
     }
 
+    fun preDelete(alarm: AlarmDataBean) {
+        if (alarm.alarmSwitch) {
+            alarm.alarmSwitch = false
+            _preDeleteFlag.value = alarm.id
+        }
+    }
+
     fun deleteAlarm(alarm: AlarmDataBean) {
         alarmList.remove(alarm)
         thread {
             alarmDao.deleteAlarm(alarm)
         }
-        if (alarm.alarmType == 0){
-            for (i in matchList.indices){
-                if (alarm.id == matchList[i].alarmId){
+        if (alarm.alarmType == 0) {
+            for (i in matchList.indices) {
+                if (alarm.id == matchList[i].alarmId) {
                     val m = matchList.removeAt(i)
                     thread {
                         matchDao.deleteAInfo(m)
