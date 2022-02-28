@@ -141,3 +141,13 @@
  #HiClass Refacotr 2022/2/19
  
  开始重构申请权限模块
+ 
+ #HiClass Refactor 2022/2/22
+ 
+ 解决课表模块scrollview 滚动内容显示不全问题：增加content高度
+ 
+ 增加自定义背景模块：增加沉浸式状态栏
+ 
+ 初步解决获取图库内容bitmap拉伸问题
+ 
+ 
