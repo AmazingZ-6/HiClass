@@ -43,12 +43,12 @@ class AlarmService : Service() {
         val intent = Intent(this, ScheduleMain::class.java)
         val pi = PendingIntent.getActivity(this, 0, intent, 0)
         val channel = NotificationChannel(
-            "my_service",
+            "hiclass_service",
             "前台service通知",
             NotificationManager.IMPORTANCE_DEFAULT
         )
         manager.createNotificationChannel(channel)
-        val notification = NotificationCompat.Builder(this, "my_service")
+        val notification = NotificationCompat.Builder(this, "hiclass_service")
             .setContentTitle("Alarm")
             .setContentText("Alarm is running")
             .setContentIntent(pi)

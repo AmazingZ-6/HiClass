@@ -38,7 +38,9 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-<!--    &lt;!&ndash; 最外层样式 &ndash;&gt;-->
+
+
+    <!--    &lt;!&ndash; 最外层样式 &ndash;&gt;-->
 <!--    <style name="wrap_layout">-->
 <!--        <item name="android:orientation">vertical</item>-->
 <!--        <item name="android:layout_width">match_parent</item>-->

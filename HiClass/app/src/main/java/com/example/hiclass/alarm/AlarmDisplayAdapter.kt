@@ -90,7 +90,7 @@ class AlarmDisplayAdapter(
         }
 
         val weekdayTemp = mutableListOf<Int>()
-        var nameTemp = "   " + alarm.alarmName + " , " + "不重复 , "
+        var nameTemp = alarm.alarmName + " , " + "不重复 , "
         for (i in alarm.alarmWeekday.split(",")) {
             if (i.isNotEmpty()) {
                 weekdayTemp.add(charToInt(i[0]))
@@ -122,7 +122,7 @@ class AlarmDisplayAdapter(
         }
         if (alarm.alarmType == 0) {
             nameTemp =
-                "   " + alarm.alarmName + " , " + TypeSwitcher.subStTermDay(alarm.alarmTermDay)[1] + "周 , " + TypeSwitcher.subStTermDay(
+                alarm.alarmName + " , " + TypeSwitcher.subStTermDay(alarm.alarmTermDay)[1] + "周 , " + TypeSwitcher.subStTermDay(
                     alarm.alarmTermDay
                 )[0]
         }

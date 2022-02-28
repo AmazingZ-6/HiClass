@@ -10,10 +10,11 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/little_white">
+        android:background="@color/little_white"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/bg_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:popupTheme="@style/Theme.MenuTest.PopupOverlay"
@@ -23,18 +24,21 @@
             android:id="@+id/select_from_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="从图库中选择"/>
+            android:text="从图库中选择" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/select_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="恢复默认" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_bg_select"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
 
 
 </LinearLayout>

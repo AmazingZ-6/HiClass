@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/menu_mode"
+        android:title="单周模式"
+        android:icon="@drawable/ic_baseline_wifi_protected_setup_24"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/menu_add"
         android:title="@string/add_thing"
@@ -13,5 +20,7 @@
         android:title="@string/clock_set"
         android:icon="@drawable/ic_baseline_access_alarms_24"
         app:showAsAction="always"/>
+
+
 
 </menu>

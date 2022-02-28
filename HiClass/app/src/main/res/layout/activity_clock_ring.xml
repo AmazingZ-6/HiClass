@@ -2,24 +2,27 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clock_ring_main"
     android:layout_width="match_parent"
-    android:background="@drawable/bg_1"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_blur"
+    android:orientation="vertical"
     tools:context=".alarm.ClockRing">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:layout_marginTop="60dp">
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:gravity="center_vertical"
             android:id="@+id/ring_time"
-            android:textSize="60sp"
-            android:textStyle="bold"
-            android:textColor="#151515"
-            android:text="    16:30"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="16:30"
+            android:textColor="@color/little_white"
+            android:textSize="60sp"
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -31,85 +34,104 @@
             android:id="@+id/ring_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="                工程伦理"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="工程伦理"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ring_que_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_marginTop="40dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:textSize="20sp"
-            android:gravity="center"
-            android:id="@+id/ring_que_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="40dp"
-        android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:gravity="center"
-            android:textSize="20sp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+        <!--        android:background="?android:attr/selectableItemBackground"-->
+        <!--        android:clickable="true"-->
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_a"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="360dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_redius"
+            android:gravity="center"
+            android:text="asdasdsa"
+            android:textColor="@color/little_white"
+            android:textSize="16sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:background="?android:attr/selectableItemBackground"
         android:layout_width="match_parent"
-        android:clickable="true"
+        android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:layout_height="50dp">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:gravity="center"
-            android:textSize="20sp"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_b"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="360dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_redius"
+            android:gravity="center"
+            android:text="asdasdsa"
+            android:textColor="@color/little_white"
+            android:textSize="16sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:background="?android:attr/selectableItemBackground"
         android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:layout_height="50dp">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:gravity="center"
-            android:textSize="20sp"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_c"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="360dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_redius"
+            android:gravity="center"
+            android:text="asdasdsa"
+            android:textColor="@color/little_white"
+            android:textSize="16sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:background="?android:attr/selectableItemBackground"
         android:layout_width="match_parent"
-        android:clickable="true"
+        android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:layout_height="50dp">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:gravity="center"
-            android:textSize="20sp"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_d"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="360dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_redius"
+            android:gravity="center"
+            android:text="asdasdsa"
+            android:textColor="@color/little_white"
+            android:textSize="16sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

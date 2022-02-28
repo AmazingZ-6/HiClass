@@ -1,172 +1,76 @@
-package com.example.hiclass.schedule
+package com.example.hiclass.schedule_week
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Base64
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.viewpager.widget.ViewPager
-import com.example.hiclass.*
-import com.example.hiclass.alarm.AlarmDisplay
-import com.example.hiclass.item_add.ItemAdd
+import com.example.hiclass.GetTcpInfo
+import com.example.hiclass.R
+import com.example.hiclass.itemDao
 import com.example.hiclass.load.LoadQue
-import com.example.hiclass.ring_select.RingSelect
+import com.example.hiclass.schedule.ScheduleViewModel
 import com.example.hiclass.schedule.apply.ApplyPowersFragment
 import com.example.hiclass.setting.AboutMe
 import com.example.hiclass.setting.BackImageSelect
 import com.example.hiclass.setting.SettingsActivity
-import com.example.hiclass.utils.ActivityController.addActivity
-import com.example.hiclass.utils.BgHasChanged.isBgChanged
-import com.example.hiclass.utils.BitMapScale
-import com.example.hiclass.utils.CalendarUtil
-import com.example.hiclass.utils.CalendarUtil.getBoldDay
-import com.example.hiclass.utils.MakeStatusBarTransparent
-import com.example.hiclass.utils.StatusUtil
-import com.example.hiclass.utils.ViewUtil.getScreenHeight
-import com.example.hiclass.utils.ViewUtil.getScreenWidth
+import com.example.hiclass.utils.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.view_pager.*
-import org.w3c.dom.Text
+import kotlinx.android.synthetic.main.activity_schedule_week.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.concurrent.thread
 
+class ScheduleWeek : AppCompatActivity() {
 
-private lateinit var mainOwner: ViewModelStoreOwner
-
-class ScheduleMain : AppCompatActivity() {
-
-    private lateinit var viewModel: ScheduleViewModel
     private lateinit var headerImage: ImageView
-    private val bgMap = mutableMapOf<Int, Int>()
-    private lateinit var dateView: List<TextView>
-    private lateinit var weekdayView: List<TextView>
+    private lateinit var viewModel: ScheduleWeekViewModel
 
-
-    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
-        mainOwner = this
         super.onCreate(savedInstanceState)
         initStatus()
-//        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
-//        MakeStatusBarTransparent.makeStatusBarTransparent(this)
-        setContentView(R.layout.view_pager)
+        setContentView(R.layout.activity_schedule_week)
         getBackImage()
-        dateView =
-            listOf<TextView>(date_7, date_1, date_2, date_3, date_4, date_5, date_6)
-        weekdayView = listOf<TextView>(
-            weekday_7, weekday_1, weekday_2, weekday_3,
-            weekday_4, weekday_5, weekday_6
-        )
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
-        val toolbar: Toolbar = findViewById(R.id.toolbar_main)
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout_fragment)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        getHeaderImage()
+//        applyPowers()
+        viewModel = ViewModelProvider(this).get(ScheduleWeekViewModel::class.java)
+        val toolbar: Toolbar = findViewById(R.id.toolbar_main_week)
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout_fragment_week)
+        val navView: NavigationView = findViewById(R.id.nav_view_week)
         val headerView = navView.inflateHeaderView(R.layout.nav_header_main)
-        viewPager.adapter = sectionsPagerAdapter
-        val boldNow = getBoldDay()
-        val weekNow = if (boldNow[0] != -1) boldNow[0] + 1 else 1
-        val dayNow = boldNow[1]
-        viewPager.currentItem = weekNow - 1
-        val titleTemp = "第${weekNow}周"
-        toolbar.title = titleTemp
-//        val titleTemp2 = CalendarUtil.getTodayDate()
-//        toolbar.subtitle = titleTemp2
-        val t0 = CalendarUtil.getDate(weekNow + 1, 1).split(".")[0]
-        val t1 = CalendarUtil.getDate(weekNow + 1, 1).split(".")[1] + "日"
-        val t2 = CalendarUtil.getDate(weekNow + 1, 2).split(".")[1] + "日"
-        val t3 = CalendarUtil.getDate(weekNow + 1, 3).split(".")[1] + "日"
-        val t4 = CalendarUtil.getDate(weekNow + 1, 4).split(".")[1] + "日"
-        val t5 = CalendarUtil.getDate(weekNow + 1, 5).split(".")[1] + "日"
-        val t6 = CalendarUtil.getDate(weekNow + 1, 6).split(".")[1] + "日"
-        val t7 = CalendarUtil.getDate(weekNow + 1, 7).split(".")[1] + "日"
-        date_month.text = t0
-        date_1.text = t1
-        date_2.text = t2
-        date_3.text = t3
-        date_4.text = t4
-        date_5.text = t5
-        date_6.text = t6
-        date_7.text = t7
-        if (dayNow != -1) {
-            dateView[dayNow].setTextColor(getColor(R.color.black))
-            weekdayView[dayNow].setTextColor(getColor(R.color.black))
-        }
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                viewModel.updatePosition(position + 1)
-                viewModel.updateDate(position + 1)
-                viewModel.updateBold(position + 1)
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-        })
-
-        viewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
-        viewModel.position.observe(this, Observer {
-            toolbar.title = "第${viewModel.position.value}周"
-        })
-
-        viewModel.dateShowIndex.observe(this, Observer {
-            val t01 = CalendarUtil.getDate(it, 1).split(".")[0]
-            val t11 = CalendarUtil.getDate(it, 1).split(".")[1] + "日"
-            val t21 = CalendarUtil.getDate(it, 2).split(".")[1] + "日"
-            val t31 = CalendarUtil.getDate(it, 3).split(".")[1] + "日"
-            val t41 = CalendarUtil.getDate(it, 4).split(".")[1] + "日"
-            val t51 = CalendarUtil.getDate(it, 5).split(".")[1] + "日"
-            val t61 = CalendarUtil.getDate(it, 6).split(".")[1] + "日"
-            val t71 = CalendarUtil.getDate(it, 7).split(".")[1] + "日"
-            date_month.text = t01
-            date_1.text = t11
-            date_2.text = t21
-            date_3.text = t31
-            date_4.text = t41
-            date_5.text = t51
-            date_6.text = t61
-            date_7.text = t71
-        })
-
-        viewModel.updateBold.observe(this, Observer {
-            if (viewPager.currentItem == weekNow - 1) {
-                dateView[dayNow].setTextColor(getColor(R.color.black))
-                weekdayView[dayNow].setTextColor(getColor(R.color.black))
-            } else {
-                dateView[dayNow].setTextColor(getColor(R.color.no_bold))
-                weekdayView[dayNow].setTextColor(getColor(R.color.no_bold))
-            }
-        })
-
+        toolbar.title = CalendarUtil.getTodayDate()
+        val dateT = CalendarUtil.getWeekDate()
+        val t0 = "${dateT[0][1]}日"
+        val t1 = "${dateT[0][2]}日"
+        val t2 = "${dateT[0][3]}日"
+        val t3 = "${dateT[0][4]}日"
+        val t4 = "${dateT[0][5]}日"
+        val t5 = "${dateT[0][6]}日"
+        val t6 = "${dateT[0][0]}日"
+        val tm = "${dateT[1][0]}"
+        date_1_week.text = t0
+        date_2_week.text = t1
+        date_3_week.text = t2
+        date_4_week.text = t3
+        date_5_week.text = t4
+        date_6_week.text = t5
+        date_7_week.text = t6
+        date_month_week.text = tm
         setSupportActionBar(toolbar)
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
@@ -202,7 +106,7 @@ class ScheduleMain : AppCompatActivity() {
                     true
                 }
                 R.id.nav_select_bg -> {
-                    addActivity(this)
+                    ActivityController.addActivity(this)
                     val intent = Intent(this, BackImageSelect::class.java)
                     startActivity(intent)
                     true
@@ -222,16 +126,10 @@ class ScheduleMain : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
-                R.id.nav_select_ring -> {
-                    val intent = Intent(this, RingSelect::class.java)
-                    startActivity(intent)
-                    true
-                }
 
                 else -> false
             }
         }
-
         val imageHeader = headerView.findViewById<ImageView>(R.id.image_header)
         headerImage = imageHeader
         val usernameHeader = headerView.findViewById<TextView>(R.id.text_header)
@@ -241,38 +139,8 @@ class ScheduleMain : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, 1)
         }
-        getHeaderImage()
-        applyPowers()
+        createWeekView()
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_add -> {
-                val intent = Intent(this, ItemAdd::class.java)
-                startActivity(intent)
-            }
-            R.id.menu_clock -> {
-                val intent = Intent(this, AlarmDisplay::class.java)
-                startActivity(intent)
-            }
-//            R.id.menu_mode ->{
-//                modeChange()
-//            }
-        }
-        return true
-    }
-
-    override fun onBackPressed() {
-//        android.os.Process.killProcess(android.os.Process.myPid())
-//        viewModel.exit()
-        finish()
-    }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -333,6 +201,16 @@ class ScheduleMain : AppCompatActivity() {
         }
     }
 
+    private fun initStatus() {
+        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
+        val isInitBg = sharedPre.getInt("init_bg", R.color.little_white)
+        if (isInitBg == R.color.little_white) {
+            StatusUtil.setStatusBarMode(this, true, R.color.little_white)
+        } else {
+            MakeStatusBarTransparent.makeStatusBarTransparent(this)
+        }
+    }
+
     private fun getBackImage() {
         var bitmap: Bitmap? = null
         val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
@@ -347,14 +225,13 @@ class ScheduleMain : AppCompatActivity() {
                 bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.size)
                 val bg = findViewById<AppBarLayout>(R.id.main_view)
                 val newBitmap = BitMapScale.imageCompress(
-                    bitmap, getScreenHeight(this),
-                    getScreenWidth(this)
+                    bitmap, ViewUtil.getScreenHeight(this),
+                    ViewUtil.getScreenWidth(this)
                 )
                 bg.background = BitmapDrawable(resources, newBitmap)
             }
         }
     }
-
 
     private fun applyPowers() {
         val sp = getSharedPreferences("apply_settings", MODE_PRIVATE)
@@ -371,27 +248,7 @@ class ScheduleMain : AppCompatActivity() {
         }
     }
 
-    private fun initStatus() {
-        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
-        val isInitBg = sharedPre.getInt("init_bg", R.color.little_white)
-        if (isInitBg == R.color.little_white) {
-            StatusUtil.setStatusBarMode(this, true, R.color.little_white)
-        } else {
-            MakeStatusBarTransparent.makeStatusBarTransparent(this)
-        }
-        bgMap[0] = R.color.little_white
-        bgMap[1] = R.drawable.bg_1
-    }
-
-    private fun modeChange() {
+    private fun createWeekView(){
 
     }
-
-
-    companion object {
-        fun supplyOwner(): ViewModelStoreOwner {
-            return mainOwner
-        }
-    }
-
 }

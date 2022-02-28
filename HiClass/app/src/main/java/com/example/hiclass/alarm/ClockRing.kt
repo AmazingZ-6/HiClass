@@ -2,11 +2,14 @@ package com.example.hiclass.alarm
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -18,7 +21,10 @@ import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.DeliverInfoBean
 import com.example.hiclass.data_class.ResourceBean
 import com.example.hiclass.utils.ClockedAlarm
+import com.example.hiclass.utils.FastBlurUtility
+import com.example.hiclass.utils.MakeStatusBarTransparent
 import com.example.hiclass.utils.StatusUtil
+import kotlinx.android.synthetic.main.activity_about_me.*
 import kotlinx.android.synthetic.main.activity_clock_ring.*
 import kotlinx.android.synthetic.main.item_add_base.*
 import kotlin.concurrent.thread
@@ -36,8 +42,8 @@ class ClockRing : AppCompatActivity() {
     private var content = ""
     private var correct = ""
     override fun onCreate(savedInstanceState: Bundle?) {
+        MakeStatusBarTransparent.makeStatusBarTransparent(this)
         super.onCreate(savedInstanceState)
-        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         alarmId = intent.getLongExtra("alarm_id", -1L)
         content = intent.getStringExtra("que_content").toString()
         a = intent.getStringExtra("que_a").toString()
@@ -59,10 +65,21 @@ class ClockRing : AppCompatActivity() {
             )
         }
         setContentView(R.layout.activity_clock_ring)
+        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
+        val isInitBg = sharedPre.getInt("init_bg", R.color.little_white)
+        val blurBg = sharedPre.getString("background_blur", "")
+        if (isInitBg >= 0) {
+            clock_ring_main.setBackgroundResource(R.drawable.bg_blur)
+        } else {
+            val decode = Base64.decode(blurBg!!.toByteArray(), 1)
+            val bmp = BitmapFactory.decodeByteArray(decode, 0, decode.size)
+            clock_ring_main.background = BitmapDrawable(resources, bmp)
+        }
         initInfo()
         initOption()
         initMediaPlayer()
         mediaPlayer.start()
+        mediaPlayer.isLooping = true
     }
 
     private fun initInfo() {
@@ -72,9 +89,9 @@ class ClockRing : AppCompatActivity() {
                 break
             }
         }
-        val timeT = "    " + alarm.alarmTime
+        val timeT = alarm.alarmTime
         ring_time.text = timeT
-        val nameT = "                " + alarm.alarmName
+        val nameT = alarm.alarmName
         ring_name.text = nameT
         ring_que_content.text = content
         ring_que_a.text = a
@@ -86,7 +103,7 @@ class ClockRing : AppCompatActivity() {
 
     private fun initMediaPlayer() {
         val assetManager = assets
-        val fd = assetManager.openFd("coldwind.mp3")
+        val fd = assetManager.openFd("default.wav")
         mediaPlayer.setAudioAttributes(
             AudioAttributes
                 .Builder()
@@ -99,7 +116,7 @@ class ClockRing : AppCompatActivity() {
     }
 
     private fun initOption() {
-        val list = arrayListOf<androidx.appcompat.widget.AppCompatTextView>(
+        val list = arrayListOf<androidx.appcompat.widget.AppCompatButton>(
             ring_que_a, ring_que_b, ring_que_c, ring_que_d
         )
         when (right) {

@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="little_white">#F3F3F3</color>
+    <color name="no_bold">#A6AAAA</color>
 <!--    FAFAFA-->
 </resources>

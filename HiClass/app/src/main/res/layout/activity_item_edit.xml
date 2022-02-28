@@ -151,10 +151,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginTop="60dp"
-            android:orientation="horizontal"
             android:layout_below="@+id/ll_edit_remark"
-            android:gravity="center">
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_edit_delete"
@@ -169,8 +169,7 @@
                 android:includeFontPadding="false"
                 android:text=""
                 android:textColor="#3F51B5"
-                android:textSize="30sp"/>
-
+                android:textSize="30sp" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -187,7 +186,6 @@
                 android:text=""
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="30sp" />
-
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

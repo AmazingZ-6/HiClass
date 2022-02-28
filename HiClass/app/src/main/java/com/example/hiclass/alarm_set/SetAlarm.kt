@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.hiclass.setting.App
@@ -18,6 +19,7 @@ import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher
 import kotlinx.android.synthetic.main.activity_set_alarm.*
 import kotlinx.android.synthetic.main.activity_set_alarm_single.*
+import kotlinx.android.synthetic.main.tab_layout.*
 
 class SetAlarm : AppCompatActivity() {
     private lateinit var viewModel: SetAlarmViewModel
@@ -45,6 +47,13 @@ class SetAlarm : AppCompatActivity() {
             when (it) {
                 0 -> alarm_selected_que_type.text = "常识题库"
                 1 -> alarm_selected_que_type.text = "考研英语词汇题库"
+            }
+        })
+
+        viewModel.interVal.observe(this, Observer {
+            when (it) {
+                0 -> alarm_selected_interval_type.text = "单周"
+                1 -> alarm_selected_interval_type.text = "整学期"
             }
         })
 
@@ -103,6 +112,7 @@ class SetAlarm : AppCompatActivity() {
             alarm_set_term_day.text = alarm.alarmTermDay
             alarm_set_name.setText(alarm.alarmName)
             viewModel.selectedChange(alarm.alarmQueType)
+            viewModel.interValChange(alarm.alarmInterval)
             hourT = TypeSwitcher.charToInt(alarm.alarmTime[0]) * 10 + TypeSwitcher.charToInt(
                 alarm.alarmTime[1]
             )
@@ -117,6 +127,7 @@ class SetAlarm : AppCompatActivity() {
             alarm_set_term_day.text = alarmTermDay.toString()
             alarm_set_name.setText(alarmName.toString())
             viewModel.selectedChange(0)
+            viewModel.interValChange(0)
         }
         hour = if (hourT < 10) "0$hourT"
         else "$hourT"
@@ -163,6 +174,7 @@ class SetAlarm : AppCompatActivity() {
     }
 
     private fun initOptions() {
+        val selectItems = arrayOf("单周", "整学期")
         alarm_set_que.setOnClickListener {
             val queSelection = SelectQueFragment.newInstance()
             queSelection.isCancelable = false
@@ -176,6 +188,30 @@ class SetAlarm : AppCompatActivity() {
                 saveAlarm()
             }
         }
+
+        alarm_set_repeat.setOnClickListener {
+            var selection = 0
+            AlertDialog.Builder(this).apply {
+                setSingleChoiceItems(
+                    selectItems, 0
+                ) { _, which -> selection = which }
+                setCancelable(false)
+                setPositiveButton("确认") { _, _ ->
+                    when (selection) {
+                        0 -> {
+                            viewModel.interValChange(0)
+                        }
+                        1 -> {
+                            viewModel.interValChange(1)
+                        }
+                    }
+                }
+
+                setNegativeButton("取消") { _, _ ->
+
+                }
+            }.show()
+        }
     }
 
     private fun saveAlarm() {
@@ -186,9 +222,10 @@ class SetAlarm : AppCompatActivity() {
         val alarmTime = "$hour:$minute"
         val alarmQueType = viewModel.typeSelectedPosition.value!!
         val alarmSwitch = alarm_set_switcher.isChecked
+        val alarmInterval = viewModel.interVal.value!!
         alarm = AlarmDataBean(
             0, alarmName, alarmTermDay as String, "", alarmTime,
-            alarmQueType, 0, alarmSwitch
+            alarmQueType, alarmInterval, alarmSwitch
         )
         viewModel.saveAlarm(alarm, tableId, itemId)
     }
@@ -201,11 +238,13 @@ class SetAlarm : AppCompatActivity() {
         val alarmTime = "$hour:$minute"
         val alarmQueType = viewModel.typeSelectedPosition.value!!
         val alarmSwitch = alarm_set_switcher.isChecked
+        val alarmInterval = viewModel.interVal.value!!
         alarm.alarmName = alarmName
         alarm.alarmSwitch = alarmSwitch
         alarm.alarmQueType = alarmQueType
         alarm.alarmTime = alarmTime
         alarm.alarmTermDay = alarmTermDay
+        alarm.alarmInterval = alarmInterval
         viewModel.updateAlarm(alarm)
     }
 }

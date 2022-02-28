@@ -41,6 +41,10 @@ class ScheduleViewModel : ViewModel() {
         get() = _isApply
     private val _isApply = MutableLiveData<Boolean>()
 
+    val updateBold: LiveData<Int>
+        get() = _updateBold
+    private val _updateBold = MutableLiveData<Int>()
+
 
     fun updateFlag() {
         if (ChangeItem.itemUpdateFlag != 0) {
@@ -123,5 +127,8 @@ class ScheduleViewModel : ViewModel() {
         _isApply.value = true
     }
 
+    fun updateBold(index: Int) {
+        _updateBold.value = index
+    }
 
 }

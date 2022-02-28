@@ -33,6 +33,7 @@ import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
 import kotlinx.android.synthetic.main.course_card_1.view.*
+import splitties.resources.color
 import java.util.regex.Pattern
 
 
@@ -168,6 +169,10 @@ class ScheduleFragment : Fragment() {
         if (s.size == 4) {
             classStart = s[1]
             classEnd = s[2] * 10 + s[3]
+        }
+        if (s.size == 5) {
+            classStart = s[1] * 10 + s[2]
+            classEnd = s[3] * 10 + s[4]
         }
         val height = ((classStart + 1) / 2 - 1) * 360 //1-0 3-360 5-720 7-1080
         var v: View = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null)
@@ -344,7 +349,6 @@ class ScheduleFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun deleteRefresh(view: View) {
@@ -427,13 +431,13 @@ class ScheduleFragment : Fragment() {
         return false
     }
 
-    private fun hasClockRefresh(){
-        for (z in viewList){
+    private fun hasClockRefresh() {
+        for (z in viewList) {
             z.vi.has_clock_view.visibility = GONE
         }
-        for (i in matchList){
-            for (j in viewList){
-                if (i.itemId == j.id){
+        for (i in matchList) {
+            for (j in viewList) {
+                if (i.itemId == j.id) {
                     j.vi.has_clock_view.visibility = VISIBLE
                 }
             }

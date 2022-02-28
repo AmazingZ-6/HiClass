@@ -17,12 +17,20 @@ class SetAlarmViewModel : ViewModel() {
         get() = _typeSelectedPosition
     private val _typeSelectedPosition = MutableLiveData<Int>()
 
+    val interVal: LiveData<Int>
+        get() = _interVal
+    private val _interVal = MutableLiveData<Int>()
+
     val isFinished: LiveData<Boolean>
         get() = _isFinished
     private val _isFinished = MutableLiveData<Boolean>()
 
     fun selectedChange(position: Int) {
         _typeSelectedPosition.value = position
+    }
+
+    fun interValChange(interval: Int) {
+        _interVal.value = interval
     }
 
     fun saveAlarm(alarm: AlarmDataBean, tableId: Int, itemId: Long) {
