@@ -30,13 +30,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiClass">
         <activity
-            android:name=".ring_select.RingSelect"
+            android:name=".setting.ring_select.RingFromUser"
+            android:exported="false" />
+        <activity
+            android:name=".setting.ring_select.RingSelect"
             android:exported="false" />
         <activity
             android:name=".schedule_week.ScheduleWeek"
             android:exported="false" />
         <activity
-            android:name=".setting.BackImageSelect"
+            android:name=".setting.bg_select.BackImageSelect"
             android:exported="false" />
         <activity
             android:name=".setting.SettingsActivity"

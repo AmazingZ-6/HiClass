@@ -23,10 +23,9 @@ import com.example.hiclass.GetTcpInfo
 import com.example.hiclass.R
 import com.example.hiclass.itemDao
 import com.example.hiclass.load.LoadQue
-import com.example.hiclass.schedule.ScheduleViewModel
 import com.example.hiclass.schedule.apply.ApplyPowersFragment
 import com.example.hiclass.setting.AboutMe
-import com.example.hiclass.setting.BackImageSelect
+import com.example.hiclass.setting.bg_select.BackImageSelect
 import com.example.hiclass.setting.SettingsActivity
 import com.example.hiclass.utils.*
 import com.google.android.material.appbar.AppBarLayout

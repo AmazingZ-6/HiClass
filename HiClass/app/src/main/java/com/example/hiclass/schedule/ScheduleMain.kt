@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -30,13 +29,12 @@ import com.example.hiclass.*
 import com.example.hiclass.alarm.AlarmDisplay
 import com.example.hiclass.item_add.ItemAdd
 import com.example.hiclass.load.LoadQue
-import com.example.hiclass.ring_select.RingSelect
+import com.example.hiclass.setting.ring_select.RingSelect
 import com.example.hiclass.schedule.apply.ApplyPowersFragment
 import com.example.hiclass.setting.AboutMe
-import com.example.hiclass.setting.BackImageSelect
+import com.example.hiclass.setting.bg_select.BackImageSelect
 import com.example.hiclass.setting.SettingsActivity
 import com.example.hiclass.utils.ActivityController.addActivity
-import com.example.hiclass.utils.BgHasChanged.isBgChanged
 import com.example.hiclass.utils.BitMapScale
 import com.example.hiclass.utils.CalendarUtil
 import com.example.hiclass.utils.CalendarUtil.getBoldDay
@@ -47,7 +45,6 @@ import com.example.hiclass.utils.ViewUtil.getScreenWidth
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.view_pager.*
-import org.w3c.dom.Text
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.concurrent.thread

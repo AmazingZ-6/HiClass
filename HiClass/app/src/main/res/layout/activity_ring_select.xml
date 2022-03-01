@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ring_select.RingSelect">
+    tools:context=".setting.ring_select.RingSelect">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -26,13 +26,14 @@
             android:text="从手机音频中选择" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/select_line_1"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="300dp"
+                android:layout_width="240dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="  默认铃声"
@@ -40,10 +41,19 @@
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/start_ring_1"
+                android:id="@+id/select_ring_1"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="invisible" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/start_ring_1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -54,24 +64,34 @@
             android:src="#BFBEBE" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/select_line_2"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="  IOS Robot"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/select_ring_2"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_width="300dp"
-                android:layout_height="match_parent" />
+                android:visibility="invisible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/start_ring_2"
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -82,24 +102,34 @@
             android:src="#BFBEBE" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/select_line_3"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="  赌神出场"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/select_ring_3"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_width="300dp"
-                android:layout_height="match_parent" />
+                android:visibility="invisible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/start_ring_3"
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -110,24 +140,34 @@
             android:src="#BFBEBE" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/select_line_4"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="  冲锋号"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/select_ring_4"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_width="300dp"
-                android:layout_height="match_parent" />
+                android:visibility="invisible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/start_ring_4"
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -138,24 +178,34 @@
             android:src="#BFBEBE" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/select_line_5"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="  渐强滴滴声"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/select_ring_5"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_width="300dp"
-                android:layout_height="match_parent" />
+                android:visibility="invisible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/start_ring_5"
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -166,24 +216,34 @@
             android:src="#BFBEBE" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/select_line_6"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="  悠扬"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/select_ring_6"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_width="300dp"
-                android:layout_height="match_parent" />
+                android:visibility="invisible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/start_ring_6"
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
