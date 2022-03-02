@@ -102,17 +102,38 @@ class ClockRing : AppCompatActivity() {
     }
 
     private fun initMediaPlayer() {
-        val assetManager = assets
-        val fd = assetManager.openFd("default.wav")
-        mediaPlayer.setAudioAttributes(
-            AudioAttributes
-                .Builder()
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .build()
-        )
-        mediaPlayer.setDataSource(fd.fileDescriptor, fd.startOffset, fd.length)
-        mediaPlayer.prepare()
-        mediaPlayer.setVolume(0.7f, 0.7f)
+        val sp = getSharedPreferences("user_data", MODE_PRIVATE)
+        val flag = sp.getBoolean("is_local_ring", false)
+        if (flag) {
+            val path = sp.getString("local_ring",null)
+            mediaPlayer.setAudioAttributes(
+                AudioAttributes
+                    .Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build()
+            )
+            mediaPlayer.setDataSource(path)
+            mediaPlayer.prepare()
+            mediaPlayer.setVolume(0.7f, 0.7f)
+        } else {
+            val assetManager = assets
+            val musicList = listOf<String>(
+                "default.wav", "robot.wav",
+                "dushen.wav", "chongfenghao.wav",
+                "jianqiang.wav", "youyang.wav"
+            )
+            val index = sp.getInt("ring", 0)
+            val fd = assetManager.openFd(musicList[index])
+            mediaPlayer.setAudioAttributes(
+                AudioAttributes
+                    .Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build()
+            )
+            mediaPlayer.setDataSource(fd.fileDescriptor, fd.startOffset, fd.length)
+            mediaPlayer.prepare()
+            mediaPlayer.setVolume(0.7f, 0.7f)
+        }
     }
 
     private fun initOption() {

@@ -9,12 +9,12 @@
         android:id="@+id/popclasstext_view1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="10dp"
         android:singleLine="true"
         android:text=""
-        android:textStyle="bold"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/ll_pop_name"
@@ -130,11 +130,40 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_pop_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/ll_pop_remark"
+        android:background="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pop_alarm"
+            style="@style/IconTextViewStyle"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:text="@string/icon_address"
+            android:textColor="#03A9F4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/popclasstext_view6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="未设置闹钟"
+            android:lines="1"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/ll_pop_remark"
+        android:layout_below="@+id/ll_pop_alarm"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"

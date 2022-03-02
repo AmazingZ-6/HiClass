@@ -6,8 +6,12 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="little_white">#F3F3F3</color>
     <color name="no_bold">#A6AAAA</color>
+
+<!--    <color name="white">#F5F9FB</color>-->
+<!--    <color name="little_white">#E3E9EC</color>-->
+<!--    #F3F3F3-->
 <!--    FAFAFA-->
 </resources>

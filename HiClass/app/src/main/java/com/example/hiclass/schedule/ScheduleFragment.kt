@@ -1,6 +1,7 @@
 package com.example.hiclass.schedule
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -12,7 +13,9 @@ import android.widget.*
 import android.widget.ListPopupWindow.WRAP_CONTENT
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.motion.widget.Key.VISIBILITY
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -149,6 +152,7 @@ class ScheduleFragment : Fragment() {
         val week = item.itemWeek
         val address = item.itemAddress
         val teacher = item.itemTeacher
+        val remarks = item.itemRemarks
         val time = item.getTimeString2()
         val p = Pattern.compile("[0-9]")
         var classStart = 0
@@ -175,16 +179,27 @@ class ScheduleFragment : Fragment() {
             classEnd = s[3] * 10 + s[4]
         }
         val height = ((classStart + 1) / 2 - 1) * 360 //1-0 3-360 5-720 7-1080
-        var v: View = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null)
+        var v: androidx.cardview.widget.CardView =
+            LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null) as CardView
         if (height <= 360) {
-            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null)
+            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_1, null) as CardView
+//            if (isDefaultBg) {
+//                v.setCardBackgroundColor(
+//                    getColor(
+//                        resources,
+//                        R.color.colorTrans1,
+//                        null
+//                    )
+//                )
+//            }
         }
         if (height in 361..1080) {
-            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_2, null)
+            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_2, null) as CardView
         }
         if (height > 1080) {
-            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_3, null)
+            v = LayoutInflater.from(this.context).inflate(R.layout.course_card_3, null) as CardView
         }
+
 
         v.y = height.toFloat()
 
@@ -233,6 +248,7 @@ class ScheduleFragment : Fragment() {
             val popAddress: AppCompatTextView = popView.findViewById(R.id.pop_address)
             val popTeacher: AppCompatTextView = popView.findViewById(R.id.pop_teacher)
             val popRemark: AppCompatTextView = popView.findViewById(R.id.pop_remark)
+            val popAlarm: AppCompatTextView = popView.findViewById(R.id.pop_alarm)
             popName.typeface = font
             popName.text = App.context.resources.getString(R.string.icon_name)
             popAddress.typeface = font
@@ -241,6 +257,8 @@ class ScheduleFragment : Fragment() {
             popTeacher.text = App.context.resources.getString(R.string.icon_user)
             popRemark.typeface = font
             popRemark.text = App.context.resources.getString(R.string.icon_remark)
+            popAlarm.typeface = font
+            popAlarm.text = App.context.resources.getString(R.string.icon_set_clock)
             buttonItemEdit.typeface = font
             buttonItemEdit.text = App.context.resources.getString(R.string.icon_edit)
             buttonItemDelete.typeface = font
@@ -295,10 +313,31 @@ class ScheduleFragment : Fragment() {
             val popTextView3: TextView = popView.findViewById(R.id.popclasstext_view3)
             val popTextView4: TextView = popView.findViewById(R.id.popclasstext_view4)
             val popTextView5: TextView = popView.findViewById(R.id.popclasstext_view5)
-            popTextView1.text = item.getTimeString3()
+            val popTextView6: TextView = popView.findViewById(R.id.popclasstext_view6)
+            popTextView1.text = item.getTimeString4()
             popTextView2.text = name
             popTextView3.text = teacher
             popTextView4.text = address
+            popTextView5.text = remarks
+            var alarmId = -1L
+            var alarmSt = ""
+            for (i in matchList) {
+                if (i.itemId == item.id) {
+                    alarmId = i.alarmId
+                    break
+                }
+            }
+            if (alarmId != -1L) {
+                for (i in alarmList) {
+                    if (i.id == alarmId) {
+                        alarmSt = i.alarmTime
+                        val swT = if (i.alarmSwitch) "    已开启" else "    未开启"
+                        alarmSt += swT
+                        break
+                    }
+                }
+            }
+            popTextView6.text = alarmSt
 //            popTextView5.text =
 //            if (isSetAlarm) {
 //                val timeToString =

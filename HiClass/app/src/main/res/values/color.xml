@@ -2,4 +2,7 @@
 <resources>
 
     <color name="colorAccent">@android:color/holo_red_light</color>
+    <color name="colorTrans1">#CCFDC083</color>
+    <color name="colorTrans2">#CCFB8784</color>
+    <color name="colorTrans3">#CC6783D5</color>
 </resources>

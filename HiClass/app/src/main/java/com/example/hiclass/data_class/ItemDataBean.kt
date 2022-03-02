@@ -35,4 +35,9 @@ data class ItemDataBean(
         return "第${itemWeek}周 星期$weekDay$itemTime"
     }
 
+    fun getTimeString4():String{
+        val weekDay = TypeSwitcher.charToChinese(itemWeekDay[2])
+        return "星期$weekDay  $itemTime"
+    }
+
 }

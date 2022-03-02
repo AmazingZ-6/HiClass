@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:popupTheme="@style/Theme.MenuTest.PopupOverlay"
-            app:title="铃声选择" />
+            app:title="铃声选择"
+            app:titleTextColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/select_ring_from_user"
@@ -28,8 +29,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/select_line_1"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -66,8 +67,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/select_line_2"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -104,8 +105,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/select_line_3"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -142,8 +143,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/select_line_4"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -180,8 +181,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/select_line_5"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -218,8 +219,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/select_line_6"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView

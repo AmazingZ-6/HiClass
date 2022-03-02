@@ -32,6 +32,10 @@ class RingSelect : AppCompatActivity() {
         setContentView(R.layout.activity_ring_select)
         val toolbar = findViewById<Toolbar>(R.id.ring_toolbar)
         setSupportActionBar(toolbar)
+        select_ring_from_user.setOnClickListener {
+            val intent = Intent(this, RingFromUser::class.java)
+            startActivity(intent)
+        }
         viewModel = ViewModelProvider(this).get(RingSelectViewModel::class.java)
         val clickList = listOf<androidx.appcompat.widget.AppCompatTextView>(
             start_ring_1, start_ring_2,
@@ -78,9 +82,9 @@ class RingSelect : AppCompatActivity() {
         viewModel.selectedPos.observe(this, Observer {
             for (i in lineList.indices) {
                 if (i == it) {
-                    lineList[i].visibility = VISIBLE
+                    selectList[i].visibility = VISIBLE
                 } else {
-                    lineList[i].visibility = INVISIBLE
+                    selectList[i].visibility = INVISIBLE
                 }
             }
         })
@@ -90,6 +94,7 @@ class RingSelect : AppCompatActivity() {
                 if (i != it.pos) {
                     clickList[i].text = App.context.resources.getString(R.string.icon_play)
                     clickBeanList[i].state = false
+                    selectList[i].visibility = INVISIBLE
                 } else {
                     selectList[i].visibility = VISIBLE
                     if (it.state) {
@@ -134,8 +139,11 @@ class RingSelect : AppCompatActivity() {
                 val editor = sharedPre.edit()
                 if (viewModel.selectedPos.value != null) {
                     editor.putInt("ring", viewModel.selectedPos.value!!)
+                    editor.putBoolean("is_local_ring", false)
                 }
                 editor.apply()
+                mediaPlayer.stop()
+                mediaPlayer.release()
                 finish()
             }
         }
