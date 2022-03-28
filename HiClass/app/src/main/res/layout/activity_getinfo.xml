@@ -24,6 +24,8 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="请输入学号"
+        android:backgroundTint="@android:color/darker_gray"
+        android:textCursorDrawable="@drawable/edit_cursor"
         android:maxLines="1"
         android:inputType="number"/>
 
@@ -51,21 +53,33 @@
 <!--        android:inputType="textPassword"-->
 <!--        android:maxLines="1" />-->
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:text="登录"
-        android:layout_height="wrap_content" />
+        android:textColor="#535353"
+        android:textStyle="bold"
+        app:backgroundTint="#E1E1E1"
+        app:rippleColor="#B1B1B1" />
 
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/pass"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:text="跳过"
-        android:layout_height="wrap_content" />
+        android:textColor="#535353"
+        android:textStyle="bold"
+        app:backgroundTint="#E1E1E1"
+        app:rippleColor="#B1B1B1" />
 
     <TextView
         android:layout_width="match_parent"

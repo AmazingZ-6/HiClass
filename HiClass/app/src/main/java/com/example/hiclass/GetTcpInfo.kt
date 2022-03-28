@@ -1,6 +1,7 @@
 package com.example.hiclass
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -8,7 +9,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.ContentLoadingProgressBar
+import com.example.hiclass.setting.App.Companion.context
 import com.example.hiclass.utils.ConnectTcp
 import com.example.hiclass.utils.StatusUtil
 import es.dmoral.toasty.Toasty
@@ -43,6 +46,9 @@ class GetTcpInfo : AppCompatActivity() {
                 Toast.makeText(this,"请输入正确的学号！",Toast.LENGTH_SHORT).show()
             }else{
                 loadingProgressBar.visibility = VISIBLE
+                loadingProgressBar.indeterminateDrawable.setColorFilter(ContextCompat.getColor(context,
+                    android.R.color.darker_gray
+                ), PorterDuff.Mode.MULTIPLY);
                 thread {
                     val userInfo = ConnectTcp.login(userSno.text.toString())
                     dealInfo(userInfo)

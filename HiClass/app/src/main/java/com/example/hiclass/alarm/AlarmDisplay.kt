@@ -3,21 +3,28 @@ package com.example.hiclass.alarm
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.hiclass.R
-import com.example.hiclass.alarmDao
-import com.example.hiclass.alarmList
+import com.example.hiclass.*
 import com.example.hiclass.alarm_set.SetAlarm
 import com.example.hiclass.alarm_single.SetAlarmSingle
 import com.example.hiclass.data_class.AlarmDataBean
+import com.example.hiclass.data_class.MatchInfoBean
+import com.example.hiclass.utils.CalendarUtil.getBoldDay
+import com.example.hiclass.utils.CalendarUtil.getClassAutoClockTime
+import com.example.hiclass.utils.CalendarUtil.judgeAlarmOff
 import com.example.hiclass.utils.ChangeAlarm
 import com.example.hiclass.utils.ClockedAlarm
+import com.example.hiclass.utils.GroupAlarm
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import kotlinx.android.synthetic.main.activity_alarm_display.*
-import kotlinx.android.synthetic.main.item_add_base.*
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -31,6 +38,8 @@ class AlarmDisplay : AppCompatActivity() {
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_alarm_display)
         viewModel = ViewModelProvider(this).get(AlarmDisplayViewModel::class.java)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar_alarm_show)
+        setSupportActionBar(toolbar)
         initAlarmShow()
         initRecycleView()
         initOptions()
@@ -89,7 +98,14 @@ class AlarmDisplay : AppCompatActivity() {
         viewModel.preDeleteFlag.observe(this, Observer {
             val intent = Intent(this, AlarmService::class.java)
             intent.putExtra("alarm_id", it)
+            intent.putExtra("isDelete", true)
             startService(intent)
+//            for (i in alarmList){
+//                if (i.id == it){
+//                    viewModel.deleteAlarm(i)
+//                    break
+//                }
+//            }
         })
     }
 
@@ -98,6 +114,44 @@ class AlarmDisplay : AppCompatActivity() {
         viewModel.refresh()
         viewModel.clocked()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.alarm_show, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val selectItems = arrayOf("本周", "下周")
+        var selection = 0
+        when (item.itemId) {
+            R.id.menu_alarm_auto -> {
+                AlertDialog.Builder(this).apply {
+                    setTitle("自动为上午事项设置闹钟")
+                    setSingleChoiceItems(
+                        selectItems, 0
+                    ) { _, which -> selection = which }
+                    setCancelable(false)
+                    setPositiveButton("确认") { _, _ ->
+                        when (selection) {
+                            0 -> {
+                                autoSetClock(0)
+                            }
+                            1 -> {
+                                autoSetClock(1)
+                            }
+                        }
+                    }
+
+                    setNegativeButton("取消") { _, _ ->
+
+                    }
+                }.show()
+            }
+
+        }
+        return true
+    }
+
 
     private fun initAlarmShow() {
         val tempList = mutableListOf<AlarmDataBean>()
@@ -238,4 +292,82 @@ class AlarmDisplay : AppCompatActivity() {
         }, 1000, 1000)
     }
 
+    private fun autoSetClock(weekFlag: Int) {
+        val alarms = mutableListOf<AlarmDataBean>()
+        val matches = mutableListOf<MatchInfoBean>()
+        val tables = mutableListOf<Int>()
+        val alarmIds = mutableListOf<Long>()
+        val itemIds = mutableListOf<Long>()
+        val sp = getSharedPreferences("com.example.hiClass_preferences", MODE_PRIVATE)
+        val advancedTime = sp.getInt("advanced_time", 0)
+        val queType = sp.getInt("que_type", 0)
+        val week = if (weekFlag == 0) getBoldDay()[0]
+        else getBoldDay()[0] + 1
+        for (item in weekList[week].dayItemList) {
+            val startClassT = item.getTimeString3().split("-")[0]
+            val startClass = charToInt(startClassT[startClassT.length - 1])
+            if (startClass <= 4) {
+                val alarmName = item.itemName
+                val alarmTermDay = item.getTimeString3()
+
+                val timeList = getClassAutoClockTime(startClass)
+                val time = when (advancedTime) {
+                    0 -> listOf(timeList[0] - 1, 0)
+                    else -> {
+                        listOf(timeList[0] - 1, 0)
+                    }
+                }
+                val hour = if (time[0] <= 10) "0${time[0]}"
+                else "${time[0]}"
+                val minute = if (time[1] <= 10) "0${time[1]}"
+                else "${time[1]}"
+                val alarmTime = "${hour}:${minute}"
+                val alarmInterval = 0
+                val alarm = AlarmDataBean(
+                    0, alarmName, alarmTermDay, "", alarmTime,
+                    queType, alarmInterval, true
+                )
+
+                val tableId =
+                    item.itemWeek * 7 + charToInt(item.itemWeekDay[2]) + charToInt(item.itemTime[1])
+                alarms.add(alarm)
+                tables.add(tableId)
+                itemIds.add(item.id)
+            }
+        }
+        thread {
+            val junkList = mutableListOf<AlarmDataBean>()
+            for (i in alarms.indices) {
+                if (!judgeAlarmOff(alarms[i])) {
+                    alarms[i].id = alarmDao.insertAlarm(alarms[i])
+                    alarmList.add(alarms[i])
+                    alarmIds.add(alarms[i].id)
+                } else {
+                    tables.removeAt(i)
+                    itemIds.removeAt(i)
+//                    junkList.add(alarms[i])
+                }
+//                ChangeAlarm.alarmAddFlag = 1
+//                ChangeAlarm.changedAlarm = i
+            }
+//            for (junk in junkList) {
+//                alarms.remove(junk)
+//            }
+            for (j in alarmIds.indices) {
+                val match = MatchInfoBean(alarmIds[j], tables[j], itemIds[j])
+                match.id = matchDao.insertInfo(match)
+                matchList.add(match)
+            }
+        }
+        GroupAlarm.addG(alarms)
+        val intent = Intent(this, AlarmService::class.java)
+        intent.putExtra("isGroup", true)
+        startService(intent)
+        for (changeA in alarms) {
+            if (!judgeAlarmOff(changeA)) {
+                ChangeAlarm.changedAlarm = changeA
+                addRefresh()
+            }
+        }
+    }
 }

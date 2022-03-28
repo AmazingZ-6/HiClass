@@ -67,6 +67,8 @@ class AlarmDisplayViewModel : ViewModel() {
         if (alarm.alarmSwitch) {
             alarm.alarmSwitch = false
             _preDeleteFlag.value = alarm.id
+        }else{
+            deleteAlarm(alarm)
         }
     }
 
@@ -137,4 +139,6 @@ class AlarmDisplayViewModel : ViewModel() {
             _clockedFlag.value = ClockedAlarm.cAlarm?.id
         }
     }
+
+
 }

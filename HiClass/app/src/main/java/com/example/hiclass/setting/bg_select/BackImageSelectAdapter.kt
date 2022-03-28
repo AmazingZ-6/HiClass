@@ -49,7 +49,7 @@ class BackImageSelectAdapter(
         viewModel = ViewModelProvider(owner).get(BackImageSelectViewModel::class.java)
         val image = imageInfo[position]
         holder.bgImage.setImageResource(image.imageId)
-        holder.bgName.text = image.name
+//        holder.bgName.text = image.name
         viewModel.selectedImage.observe(lifecycleOwner, Observer {
             if (it.imageId != image.imageId) {
                 holder.isChecked.visibility = GONE

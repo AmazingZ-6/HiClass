@@ -71,12 +71,14 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_a"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_redius"
             android:gravity="center"
             android:text="asdasdsa"
-            android:textColor="@color/little_white"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -89,7 +91,9 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_b"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_redius"
             android:gravity="center"
@@ -107,7 +111,9 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_c"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_redius"
             android:gravity="center"
@@ -125,7 +131,9 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_que_d"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_redius"
             android:gravity="center"

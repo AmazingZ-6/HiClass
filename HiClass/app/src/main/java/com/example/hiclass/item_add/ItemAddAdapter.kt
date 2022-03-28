@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +14,13 @@ import com.example.hiclass.setting.App
 import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemEditBean
 import com.example.hiclass.utils.TypeSwitcher
+import com.example.hiclass.widget.colorpicker.ColorPickerFragment
+import kotlinx.android.synthetic.main.activity_item_edit.*
 
 class ItemAddAdapter(
     private val addList: List<Int>, private val supportManager: FragmentManager,
-    owner: ViewModelStoreOwner, private val lifecycleOwner: LifecycleOwner
+    owner: ViewModelStoreOwner, private val lifecycleOwner: LifecycleOwner,
+    private val activity: FragmentActivity
 ) :
     RecyclerView.Adapter<ItemAddAdapter.ViewHolder>() {
 
@@ -35,6 +39,8 @@ class ItemAddAdapter(
         val remarkEdit: AppCompatEditText = view.findViewById(R.id.et_remark)
         val timeSelection: AppCompatTextView = view.findViewById(R.id.et_time)
         val weekSelection: AppCompatTextView = view.findViewById(R.id.et_week)
+//        val colorView: AppCompatTextView = view.findViewById(R.id.recycle_color)
+//        val colorText: AppCompatTextView = view.findViewById(R.id.item_color)
     }
 
 
@@ -71,6 +77,8 @@ class ItemAddAdapter(
         holder.addressView.text = App.context.resources.getString(R.string.icon_address)
         holder.remarkView.typeface = font
         holder.remarkView.text = App.context.resources.getString(R.string.icon_remark)
+//        holder.colorView.typeface = font
+//        holder.colorText.text = App.context.resources.getString(R.string.icon_color)
         holder.timeSelection.setOnClickListener {
             val timeSelection = SelectTimeFragment.newInstance(position)
             timeSelection.isCancelable = false
@@ -127,6 +135,19 @@ class ItemAddAdapter(
 
 
     override fun getItemCount() = addList.size
+
+    private fun buildColorPickerDialogBuilder(color: Int, id: Int) {
+        ColorPickerFragment.newBuilder()
+            .setShowAlphaSlider(true)
+            .setColor(color)
+            .setDialogId(id)
+            .show(activity)
+    }
+
+//    override fun onColorSelected(dialogId: Int, color: Int) {
+//        viewModel.bgColor = color
+//        item_edit_color.setTextColor(viewModel.bgColor)
+//    }
 
 
 }

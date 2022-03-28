@@ -37,7 +37,7 @@ class ItemAdd : AppCompatActivity() {
         initAdds()
         val layoutManager = LinearLayoutManager(this)
         item_add_recyclerView.layoutManager = layoutManager
-        val adapter = ItemAddAdapter(addList, supportFragmentManager, this, this)
+        val adapter = ItemAddAdapter(addList, supportFragmentManager, this, this, this)
         item_add_recyclerView.adapter = adapter
         recycle_fab.setOnClickListener {
             addList.add(1)

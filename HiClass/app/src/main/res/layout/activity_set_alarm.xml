@@ -204,11 +204,17 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/save_set_alarm"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
             android:text="保存"
-            android:layout_height="wrap_content"/>
+            android:textColor="#3F51B5"
+            app:backgroundTint="#E1E1E1"
+            app:rippleColor="#B1B1B1" />
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
 

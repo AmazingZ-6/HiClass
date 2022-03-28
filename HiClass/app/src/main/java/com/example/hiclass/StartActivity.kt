@@ -15,6 +15,7 @@ import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.data_class.MatchInfoBean
 import com.example.hiclass.schedule.ScheduleMain
+import com.example.hiclass.utils.GetDefaultColor
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher
 import kotlinx.android.synthetic.main.tab_layout.*
@@ -113,7 +114,7 @@ class StartActivity : AppCompatActivity() {
         getAlarmInfo()
         getResourceInfo()
         getMatchInfo()
-        if (file.exists()){
+        if (file.exists()) {
             isInfoExited = true
         }
     }
@@ -195,9 +196,10 @@ class StartActivity : AppCompatActivity() {
                 val t2 = TypeSwitcher.charToInt(classInfoSpilt[i][12])
                 t1 * 10 + t2
             }
+            val color = GetDefaultColor.returnColor(weekDay + time)
             val item = ItemDataBean(
                 week, weekDay, time, name, address, teacher, "",
-                false, ""
+                false, "", color
             )
             weekList[week - 1].dayItemList.add(item)
         }

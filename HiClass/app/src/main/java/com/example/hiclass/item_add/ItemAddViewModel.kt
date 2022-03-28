@@ -8,11 +8,13 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.data_class.ItemEditBean
 import com.example.hiclass.itemDao
 import com.example.hiclass.weekList
 import com.example.hiclass.utils.ChangeItem
+import com.example.hiclass.utils.GetDefaultColor
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
@@ -27,8 +29,8 @@ class ItemAddViewModel : ViewModel() {
     val addressViewGroup = mutableListOf<androidx.appcompat.widget.AppCompatEditText>()
     val remarkViewGroup = mutableListOf<androidx.appcompat.widget.AppCompatEditText>()
 
-    val isFinished :LiveData<Boolean>
-    get() = _isFinished
+    val isFinished: LiveData<Boolean>
+        get() = _isFinished
     private val _isFinished = MutableLiveData<Boolean>()
 
     fun judgeType(list: ArrayList<Int>): Int {
@@ -60,6 +62,12 @@ class ItemAddViewModel : ViewModel() {
             for (entry in editList) {
                 for (index in entry.itemWeekList.value!!) {
                     if (index != 0) {
+                        val color =
+                            GetDefaultColor.returnColor(
+                                entry.itemWeekDay.value.toString()
+                                    .substring(0, 3) + entry.itemWeekDay.value.toString()
+                                    .substring(3)
+                            )
                         val temp = ItemDataBean(
                             index,
                             entry.itemWeekDay.value.toString().substring(0, 3),
@@ -69,7 +77,8 @@ class ItemAddViewModel : ViewModel() {
                             entry.itemTeacher,
                             entry.itemRemarks,
                             false,
-                            ""
+                            "",
+                            color
                         )
                         temp.id = itemDao.insertItem(temp)
                         saveList.add(temp)

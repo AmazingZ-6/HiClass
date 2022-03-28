@@ -9,14 +9,14 @@ import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.hiclass.alarmList
+import com.example.hiclass.*
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.DeliverInfoBean
 import com.example.hiclass.data_class.ResourceBean
-import com.example.hiclass.resourceDao
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.utils.CalendarUtil
 import com.example.hiclass.utils.CalendarUtil.getDate
+import com.example.hiclass.utils.GroupAlarm
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import com.example.hiclass.utils.TypeSwitcher.chineseToInt
 import java.util.*
@@ -30,6 +30,7 @@ class AlarmService : Service() {
     private val existedPiId = mutableListOf<Int>()
     private val dateMap = mutableMapOf<Int, Int>()
     private val dateMap2 = mutableMapOf<Int, Int>()
+    private var isDelete: Boolean? = false
 
 
     override fun onBind(intent: Intent): IBinder {
@@ -59,23 +60,38 @@ class AlarmService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alarmId = intent?.getLongExtra("alarm_id", -1)
-        for (entity in alarmList) {
-            if (alarmId == entity.id) {
-                alarm = entity
-                break
+        val isGroup = intent?.getBooleanExtra("isGroup", false)
+        isDelete = intent?.getBooleanExtra("isDelete", false)
+        if (!isGroup!!) {
+            for (entity in alarmList) {
+                if (alarmId == entity.id) {
+                    alarm = entity
+                    break
+                }
             }
-        }
-        thread {
-            if (this::alarm.isInitialized) {
-                if (alarm.alarmSwitch) {
-                    if (alarm.alarmType == 1) {
-                        analyseWeekday()
+            thread {
+                if (this::alarm.isInitialized) {
+                    if (alarm.alarmSwitch) {
+                        if (alarm.alarmType == 1) {
+                            analyseWeekday()
+                        } else {
+                            analyseTermDay()
+                        }
                     } else {
+                        cancelClock()
+                    }
+                }
+            }
+        } else {
+            val group = GroupAlarm.readG()
+            thread {
+                for (al in group) {
+                    if (al.alarmSwitch) {
+                        alarm = al
                         analyseTermDay()
                     }
-                } else {
-                    cancelClock()
                 }
+                GroupAlarm.clearG()
             }
         }
         return START_REDELIVER_INTENT
@@ -96,7 +112,7 @@ class AlarmService : Service() {
         existedPiId.add(piId)
         if (piMap[alarm.id] == null) {
             piMap[alarm.id] = mutableMapOf()
-            piMap[alarm.id]?.put(piId,que)
+            piMap[alarm.id]?.put(piId, que)
         } else {
             piMap[alarm.id]?.put(piId, que)
         }
@@ -118,9 +134,14 @@ class AlarmService : Service() {
             intent.putExtra("que_d", que.D)
             intent.putExtra("que_correct", que.correct)
             val pi = PendingIntent.getActivity(this, i.key, intent, FLAG_UPDATE_CURRENT)
+            Log.d("time", "${alarm.id}+${i.key}+${i.value.id}")
             mAlarmManager.cancel(pi)
         }
         piMap.remove(alarm.id)
+        if (isDelete == true) {
+            deleteAlarm(alarm)
+            isDelete = false
+        }
     }
 
     private fun analyseTermDay() {
@@ -158,7 +179,11 @@ class AlarmService : Service() {
             calendar.set(Calendar.MINUTE, mVal)
             calendar.set(Calendar.SECOND, 1)
             Log.d("time", calendar.time.toString())
-            setClock(que, calendar)
+            val cal1 = Calendar.getInstance()
+            cal1.timeInMillis = System.currentTimeMillis()
+            if (calendar.timeInMillis >= cal1.timeInMillis){
+                setClock(que, calendar)
+            }
         }
     }
 
@@ -249,6 +274,30 @@ class AlarmService : Service() {
             dateMap2[j] = j + 2
         }
         dateMap2[6] = 1
+    }
+
+    private fun clearClock() {
+        for (alarm in alarmList) {
+            alarm.alarmSwitch = false
+        }
+    }
+
+    private fun deleteAlarm(ala: AlarmDataBean) {
+        alarmList.remove(ala)
+        thread {
+            alarmDao.deleteAlarm(ala)
+        }
+        if (ala.alarmType == 0) {
+            for (i in matchList.indices) {
+                if (ala.id == matchList[i].alarmId) {
+                    val m = matchList.removeAt(i)
+                    thread {
+                        matchDao.deleteAInfo(m)
+                    }
+                    break
+                }
+            }
+        }
     }
 
 }

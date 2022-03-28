@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp">
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_item"
@@ -201,6 +203,35 @@
             android:textSize="14sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!--    <androidx.appcompat.widget.LinearLayoutCompat-->
+    <!--        android:id="@+id/ll_color"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="64dp"-->
+    <!--        android:layout_below="@id/ll_remark"-->
+    <!--        android:background="?android:attr/selectableItemBackground">-->
+
+    <!--        <androidx.appcompat.widget.AppCompatTextView-->
+    <!--            android:id="@+id/recycle_color"-->
+    <!--            style="@style/IconTextViewStyle"-->
+    <!--            android:layout_width="56dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:text="@string/icon_address"-->
+    <!--            android:textColor="#4CAF50" />-->
+
+    <!--        <androidx.appcompat.widget.AppCompatTextView-->
+    <!--            android:id="@+id/item_color"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_marginEnd="24dp"-->
+    <!--            android:background="@null"-->
+    <!--            android:gravity="center_vertical"-->
+    <!--            android:lines="1"-->
+    <!--            android:singleLine="true"-->
+    <!--            android:text="点击设置课表颜色"-->
+    <!--            android:textSize="14sp" />-->
+
+    <!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
 
 
 </RelativeLayout>

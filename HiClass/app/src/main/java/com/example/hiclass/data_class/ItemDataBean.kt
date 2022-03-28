@@ -16,7 +16,8 @@ data class ItemDataBean(
     var itemTeacher: String,
     var itemRemarks: String,
     var isSetAlarm: Boolean,
-    var itemAlarmTime: String
+    var itemAlarmTime: String,
+    var itemColor: Int
 ) {
 
     @PrimaryKey(autoGenerate = true)
@@ -35,7 +36,7 @@ data class ItemDataBean(
         return "第${itemWeek}周 星期$weekDay$itemTime"
     }
 
-    fun getTimeString4():String{
+    fun getTimeString4(): String {
         val weekDay = TypeSwitcher.charToChinese(itemWeekDay[2])
         return "星期$weekDay  $itemTime"
     }

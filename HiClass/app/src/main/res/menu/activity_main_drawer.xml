@@ -14,8 +14,8 @@
             android:title="题库资源" />
         <item
             android:id="@+id/nav_select_bg"
-            android:icon="@drawable/ic_baseline_image_24"
-            android:title="外观选择" />
+            android:icon="@drawable/baseline_border_color_black_24dp"
+            android:title="个性定制" />
         <item
             android:id="@+id/nav_select_ring"
             android:icon="@drawable/ic_baseline_music_note_24"

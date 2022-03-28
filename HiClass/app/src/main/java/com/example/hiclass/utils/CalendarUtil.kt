@@ -1,5 +1,7 @@
 package com.example.hiclass.utils
 
+import android.util.Log
+import com.example.hiclass.data_class.AlarmDataBean
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -102,10 +104,82 @@ object CalendarUtil {
         for (i in dataList.indices) {
             if (dayNow == dataList[i]) {
                 val terDayNow = (i + 1) % 7
-                val termWeekNow = (i + 1 - terDayNow) / 7
+                val termWeekNow = if (terDayNow != 0) (i + 1 - terDayNow) / 7
+                else (i + 1 - terDayNow) / 7 - 1
                 return listOf(termWeekNow, terDayNow)
             }
         }
         return listOf(-1, -1)
+    }
+
+    fun getClassAutoClockTime(startClass: Int): List<Int> {
+        val timeList = listOf(
+            listOf(8, 0),
+            listOf(9, 0),
+            listOf(10, 0),
+            listOf(11, 0),
+            listOf(14, 0),
+            listOf(15, 0),
+            listOf(16, 0),
+            listOf(17, 0),
+            listOf(19, 0),
+            listOf(20, 0),
+            listOf(21, 0),
+            listOf(22, 0)
+        )
+        return timeList[startClass - 1]
+    }
+
+    fun judgeAlarmOff(alarm: AlarmDataBean): Boolean {
+        if (alarm.alarmType == 0) {
+            val hVal =
+                TypeSwitcher.charToInt(alarm.alarmTime[0]) * 10 + TypeSwitcher.charToInt(alarm.alarmTime[1])
+            val mVal =
+                TypeSwitcher.charToInt(alarm.alarmTime[3]) * 10 + TypeSwitcher.charToInt(alarm.alarmTime[4])
+            val weekSt = alarm.alarmTermDay.split("周")[0].subSequence(
+                1, alarm.alarmTermDay.split("周")[0].length
+            )
+            val week = if (weekSt.length > 1) {
+                TypeSwitcher.charToInt(weekSt[0]) * 10 + TypeSwitcher.charToInt(weekSt[1])
+            } else {
+                TypeSwitcher.charToInt(weekSt[0])
+            }
+            val weekday =
+                TypeSwitcher.chineseToInt(alarm.alarmTermDay[alarm.alarmTermDay.length - 6])
+            val date = getDate(week, weekday)
+            val month = if (date.split(".")[0].length > 1) {
+                TypeSwitcher.charToInt(date.split(".")[0][0]) * 10 + TypeSwitcher.charToInt(
+                    date.split(
+                        "."
+                    )[0][1]
+                )
+            } else {
+                TypeSwitcher.charToInt(date.split(".")[0][0])
+            }
+            val dayOfMonth = if (date.split(".")[1].length > 1) {
+                TypeSwitcher.charToInt(date.split(".")[1][0]) * 10 + TypeSwitcher.charToInt(
+                    date.split(
+                        "."
+                    )[1][1]
+                )
+            } else {
+                TypeSwitcher.charToInt(date.split(".")[1][0])
+            }
+            if (alarm.alarmInterval == 0) {
+                val calendar: Calendar = Calendar.getInstance()
+                calendar.timeInMillis = System.currentTimeMillis()
+                calendar.timeZone = TimeZone.getTimeZone("GMT+8")
+                calendar.set(Calendar.MONTH, month - 1)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                calendar.set(Calendar.HOUR_OF_DAY, hVal)
+                calendar.set(Calendar.MINUTE, mVal)
+                calendar.set(Calendar.SECOND, 1)
+                Log.d("time", calendar.time.toString())
+                val calNow = Calendar.getInstance()
+                calNow.timeInMillis = System.currentTimeMillis()
+                return calendar.timeInMillis < calNow.timeInMillis
+            }
+        }
+        return false
     }
 }

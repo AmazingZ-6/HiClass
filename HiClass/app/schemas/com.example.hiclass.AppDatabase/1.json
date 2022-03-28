@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5c8c8b7d4d84e6c8f980b568e9db6f78",
+    "identityHash": "f282853836ac139bc8782c9853a5a49e",
     "entities": [
       {
         "tableName": "ItemDataBean",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemWeek` INTEGER NOT NULL, `itemWeekDay` TEXT NOT NULL, `itemTime` TEXT NOT NULL, `itemName` TEXT NOT NULL, `itemAddress` TEXT NOT NULL, `itemTeacher` TEXT NOT NULL, `itemRemarks` TEXT NOT NULL, `isSetAlarm` INTEGER NOT NULL, `itemAlarmTime` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemWeek` INTEGER NOT NULL, `itemWeekDay` TEXT NOT NULL, `itemTime` TEXT NOT NULL, `itemName` TEXT NOT NULL, `itemAddress` TEXT NOT NULL, `itemTeacher` TEXT NOT NULL, `itemRemarks` TEXT NOT NULL, `isSetAlarm` INTEGER NOT NULL, `itemAlarmTime` TEXT NOT NULL, `itemColor` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "itemWeek",
@@ -60,6 +60,12 @@
             "fieldPath": "itemAlarmTime",
             "columnName": "itemAlarmTime",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemColor",
+            "columnName": "itemColor",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -250,7 +256,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5c8c8b7d4d84e6c8f980b568e9db6f78')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f282853836ac139bc8782c9853a5a49e')"
     ]
   }
 }

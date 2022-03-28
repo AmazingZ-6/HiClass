@@ -91,14 +91,14 @@ class ScheduleMain : AppCompatActivity() {
         toolbar.title = titleTemp
 //        val titleTemp2 = CalendarUtil.getTodayDate()
 //        toolbar.subtitle = titleTemp2
-        val t0 = CalendarUtil.getDate(weekNow + 1, 1).split(".")[0]
-        val t1 = CalendarUtil.getDate(weekNow + 1, 1).split(".")[1] + "日"
-        val t2 = CalendarUtil.getDate(weekNow + 1, 2).split(".")[1] + "日"
-        val t3 = CalendarUtil.getDate(weekNow + 1, 3).split(".")[1] + "日"
-        val t4 = CalendarUtil.getDate(weekNow + 1, 4).split(".")[1] + "日"
-        val t5 = CalendarUtil.getDate(weekNow + 1, 5).split(".")[1] + "日"
-        val t6 = CalendarUtil.getDate(weekNow + 1, 6).split(".")[1] + "日"
-        val t7 = CalendarUtil.getDate(weekNow + 1, 7).split(".")[1] + "日"
+        val t0 = CalendarUtil.getDate(weekNow, 1).split(".")[0]
+        val t1 = CalendarUtil.getDate(weekNow, 1).split(".")[1] + "日"
+        val t2 = CalendarUtil.getDate(weekNow, 2).split(".")[1] + "日"
+        val t3 = CalendarUtil.getDate(weekNow, 3).split(".")[1] + "日"
+        val t4 = CalendarUtil.getDate(weekNow, 4).split(".")[1] + "日"
+        val t5 = CalendarUtil.getDate(weekNow, 5).split(".")[1] + "日"
+        val t6 = CalendarUtil.getDate(weekNow, 6).split(".")[1] + "日"
+        val t7 = CalendarUtil.getDate(weekNow, 7).split(".")[1] + "日"
         date_month.text = t0
         date_1.text = t1
         date_2.text = t2
@@ -377,7 +377,7 @@ class ScheduleMain : AppCompatActivity() {
             MakeStatusBarTransparent.makeStatusBarTransparent(this)
         }
         bgMap[0] = R.color.little_white
-        bgMap[1] = R.drawable.bg_1
+        bgMap[1] = R.drawable.bg_1_by
     }
 
     private fun modeChange() {

@@ -38,6 +38,13 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Button" parent="Theme.AppCompat">
+        <!-- 点击颜色 -->
+        <item name="colorControlHighlight">#565757</item>
+        <!-- 背景颜色 -->
+        <item name="colorButtonNormal">#9B9C9C</item>
+    </style>
+
 
 
     <!--    &lt;!&ndash; 最外层样式 &ndash;&gt;-->

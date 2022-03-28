@@ -144,7 +144,7 @@ class AlarmDisplayAdapter(
 
         holder.btnDel.setOnClickListener {
             viewModel.preDelete(alarm)
-            viewModel.deleteAlarm(alarm)
+
 //            alarmShow.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, alarmShow.size - position)  //回调onBindViewHolder

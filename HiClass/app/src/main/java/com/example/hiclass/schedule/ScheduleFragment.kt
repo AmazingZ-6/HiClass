@@ -1,7 +1,6 @@
 package com.example.hiclass.schedule
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -14,8 +13,7 @@ import android.widget.ListPopupWindow.WRAP_CONTENT
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.motion.widget.Key.VISIBILITY
-import androidx.core.content.res.ResourcesCompat.getColor
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,7 +34,6 @@ import com.example.hiclass.utils.ViewUtil
 import com.example.hiclass.utils.ViewUtil.getScreenHeight
 import com.example.hiclass.utils.ViewUtil.getScreenWidth
 import kotlinx.android.synthetic.main.course_card_1.view.*
-import splitties.resources.color
 import java.util.regex.Pattern
 
 
@@ -192,12 +189,18 @@ class ScheduleFragment : Fragment() {
 //                    )
 //                )
 //            }
+            if (item.itemColor != R.color.colorTrans1)
+                v.setCardBackgroundColor(item.itemColor)
         }
         if (height in 361..1080) {
             v = LayoutInflater.from(this.context).inflate(R.layout.course_card_2, null) as CardView
+            if (item.itemColor != R.color.colorTrans2)
+                v.setCardBackgroundColor(item.itemColor)
         }
         if (height > 1080) {
             v = LayoutInflater.from(this.context).inflate(R.layout.course_card_3, null) as CardView
+            if (item.itemColor != R.color.colorTrans3)
+                v.setCardBackgroundColor(item.itemColor)
         }
 
 

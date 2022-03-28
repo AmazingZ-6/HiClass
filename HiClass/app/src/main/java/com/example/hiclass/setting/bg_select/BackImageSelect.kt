@@ -88,13 +88,12 @@ class BackImageSelect : AppCompatActivity() {
 
 
     private fun initImageInfo() {
-        imageList.add(ImageInfoBean(R.drawable.bg_1, "玉雪飞龙"))
-        imageList.add(ImageInfoBean(R.drawable.bg_2, "云海之上"))
+        imageList.add(ImageInfoBean(R.drawable.bg_1_by, "玉雪飞龙"))
         imageList.add(ImageInfoBean(R.drawable.bg_3, "镜中世界"))
         imageList.add(ImageInfoBean(R.drawable.bg_4, "雪压青松"))
         imageList.add(ImageInfoBean(R.drawable.bg_5, "慵懒假日"))
         imageList.add(ImageInfoBean(R.drawable.bg_6, "深邃林海"))
-
+        imageList.add(ImageInfoBean(R.drawable.bg_7, "22"))
     }
 
     private fun initAdapter() {
@@ -153,7 +152,7 @@ class BackImageSelect : AppCompatActivity() {
         saveBlurBackImage(bit)
     }
 
-    private fun saveBlurBackImage(bmp: Bitmap){
+    private fun saveBlurBackImage(bmp: Bitmap) {
         thread {
             val newBmp = FastBlurUtility.fastblur(bmp, 120)
             val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)

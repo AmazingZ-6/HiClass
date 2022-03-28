@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/little_white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@color/little_white">
 
     <androidx.appcompat.widget.Toolbar
-        android:background="@color/little_white"
         android:id="@+id/toolbar_item_edit"
-        app:title="编辑事项"
-        app:titleTextColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:popupTheme="@style/Theme.MenuTest.PopupOverlay" />
+        android:background="@color/little_white"
+        app:popupTheme="@style/Theme.MenuTest.PopupOverlay"
+        app:title="编辑事项"
+        app:titleTextColor="@color/black" />
 
     <RelativeLayout
-        android:background="@color/little_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:background="@color/little_white">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:gravity="center"
             android:id="@+id/item_edit_time"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
+            android:gravity="center"
             android:singleLine="true"
             android:text=""
             android:textSize="20sp" />
@@ -58,7 +58,6 @@
                 android:lines="1"
                 android:textSize="14sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -147,11 +146,40 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_edit_color"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@id/ll_edit_remark"
+            android:background="?android:attr/selectableItemBackground">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/recycle_edit_color"
+                style="@style/IconTextViewStyle"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:text="@string/icon_address"
+                android:textColor="#4CAF50" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_edit_color"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:singleLine="true"
+                android:text="点击设置课表颜色"
+                android:textSize="14sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_below="@+id/ll_edit_remark"
+            android:layout_below="@+id/ll_edit_color"
             android:layout_marginTop="60dp"
             android:gravity="center"
             android:orientation="horizontal">
@@ -191,17 +219,15 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/delete_progressbar"
-            android:layout_centerInParent="true"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-
+        <!--        <androidx.core.widget.ContentLoadingProgressBar-->
+        <!--            android:id="@+id/delete_progressbar"-->
+        <!--            style="?android:attr/progressBarStyleSmall"-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_centerInParent="true" />-->
 
 
     </RelativeLayout>
-
 
 
 </com.google.android.material.appbar.AppBarLayout>

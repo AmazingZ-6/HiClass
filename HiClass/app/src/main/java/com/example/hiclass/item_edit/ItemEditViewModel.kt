@@ -1,6 +1,7 @@
 package com.example.hiclass.item_edit
 
 import androidx.lifecycle.ViewModel
+import com.example.hiclass.R
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.itemDao
 import com.example.hiclass.weekList
@@ -20,6 +21,8 @@ class ItemEditViewModel : ViewModel() {
     var addressEdit = ""
     var teacherEdit = ""
     var remarksEdit = ""
+    var bgColor = 0
+    var defaultColor = 0
 
     fun getItem() {
         if (idi != -1L && weeki != -1) {
@@ -29,6 +32,14 @@ class ItemEditViewModel : ViewModel() {
                     name = itemi!!.itemName
                     address = itemi!!.itemAddress
                     teacher = itemi!!.itemTeacher
+                    bgColor = itemi!!.itemColor
+                    when(bgColor){
+                        R.color.colorTrans1 -> bgColor = -855785341
+                        R.color.colorTrans2 -> bgColor = -855931004
+                        R.color.colorTrans3 -> bgColor = -865631275
+                    }
+                    defaultColor = bgColor
+                    break
                 }
             }
         }
@@ -42,6 +53,7 @@ class ItemEditViewModel : ViewModel() {
                     entity.itemName = nameEdit
                     entity.itemAddress = addressEdit
                     entity.itemTeacher = teacherEdit
+                    entity.itemColor = bgColor
                     thread {
                         itemDao.updateItem(entity)
                     }
@@ -59,7 +71,7 @@ class ItemEditViewModel : ViewModel() {
         ChangeItem.itemBatchDeleteFlag = 1
     }
 
-    fun deleteInfo(){
+    fun deleteInfo() {
         ChangeItem.changedItem = itemi
         ChangeItem.itemDeleteFlag = 1
     }

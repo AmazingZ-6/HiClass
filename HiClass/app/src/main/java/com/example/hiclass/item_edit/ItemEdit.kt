@@ -14,24 +14,25 @@ import com.example.hiclass.R
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.schedule.ScheduleViewModel
 import com.example.hiclass.utils.StatusUtil
+import com.example.hiclass.widget.colorpicker.ColorPickerFragment
 import kotlinx.android.synthetic.main.activity_item_edit.*
 
-class ItemEdit : AppCompatActivity() {
+class ItemEdit : AppCompatActivity(), ColorPickerFragment.ColorPickerDialogListener {
 
-    private lateinit var viewModel : ItemEditViewModel
-    private lateinit var mainViewModel :ScheduleViewModel
+    private lateinit var viewModel: ItemEditViewModel
+    private lateinit var mainViewModel: ScheduleViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StatusUtil.setStatusBarMode(this,true,R.color.little_white)
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_item_edit)
-        delete_progressbar.visibility = GONE
+//        delete_progressbar.visibility = GONE
         viewModel = ViewModelProvider(this).get(ItemEditViewModel::class.java)
         mainViewModel =
             ViewModelProvider(ScheduleMain.supplyOwner()).get(ScheduleViewModel::class.java)
-        viewModel.idi = intent.getLongExtra("item_id",-1)
-        viewModel.weeki = intent.getIntExtra("item_week",-1)
+        viewModel.idi = intent.getLongExtra("item_id", -1)
+        viewModel.weeki = intent.getIntExtra("item_week", -1)
 
         viewModel.getItem()
 
@@ -50,6 +51,8 @@ class ItemEdit : AppCompatActivity() {
         teacherView.hint = "请输入备注或老师..."
         teacherView.setText(viewModel.teacher)
 
+        item_edit_color.setTextColor(viewModel.bgColor)
+
         val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
         recycle_edit_name.typeface = font
         recycle_edit_name.text = App.context.resources.getString(R.string.icon_name)
@@ -59,6 +62,8 @@ class ItemEdit : AppCompatActivity() {
         recycle_edit_teacher.text = App.context.resources.getString(R.string.icon_user)
         recycle_edit_remark.typeface = font
         recycle_edit_remark.text = App.context.resources.getString(R.string.icon_remark)
+        recycle_edit_color.typeface = font
+        recycle_edit_color.text = App.context.resources.getString(R.string.icon_color)
         item_edit_ok.typeface = font
         item_edit_ok.text = App.context.resources.getString(R.string.icon_save)
         item_edit_delete.typeface = font
@@ -66,7 +71,7 @@ class ItemEdit : AppCompatActivity() {
         item_edit_ok.isClickable = true
         item_edit_delete.isClickable = true
 
-        val selectItems = arrayOf("删除该事项","删除全部同名称事项")
+        val selectItems = arrayOf("删除该事项", "删除全部同名称事项")
 
         item_edit_ok.setOnClickListener {
             viewModel.nameEdit = nameView.text.toString()
@@ -80,17 +85,18 @@ class ItemEdit : AppCompatActivity() {
             var selection = 0
             AlertDialog.Builder(this).apply {
                 setTitle("请选择删除范围")
-                setSingleChoiceItems(selectItems,0
+                setSingleChoiceItems(
+                    selectItems, 0
                 ) { _, which -> selection = which }
                 setCancelable(false)
                 setPositiveButton("确认") { _, _ ->
-                    when(selection){
-                        0->{
+                    when (selection) {
+                        0 -> {
                             viewModel.deleteInfo()
                             mainViewModel.deleteFlag()
                             finish()
                         }
-                        1->{
+                        1 -> {
                             viewModel.deleteBatchInfo()
                             mainViewModel.deleteBatchFlag()
                             finish()
@@ -112,6 +118,16 @@ class ItemEdit : AppCompatActivity() {
 
         }
 
+        ll_edit_color.setOnClickListener {
+//            var colorT = 0
+//            when(viewModel.bgColor){
+//                R.color.colorTrans1 -> colorT = -855785341
+//                R.color.colorTrans2 -> colorT = -855931004
+//                R.color.colorTrans3 -> colorT = -865631275
+//            }
+            buildColorPickerDialogBuilder(viewModel.bgColor, 0)
+        }
+
     }
 
     override fun onBackPressed() {
@@ -127,6 +143,19 @@ class ItemEdit : AppCompatActivity() {
 
             }
         }.show()
+    }
+
+    override fun onColorSelected(dialogId: Int, color: Int) {
+        viewModel.bgColor = color
+        item_edit_color.setTextColor(viewModel.bgColor)
+    }
+
+    private fun buildColorPickerDialogBuilder(color: Int, id: Int) {
+        ColorPickerFragment.newBuilder()
+            .setShowAlphaSlider(true)
+            .setColor(color)
+            .setDialogId(id)
+            .show(this)
     }
 
 
