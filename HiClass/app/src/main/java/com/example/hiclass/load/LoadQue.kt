@@ -23,13 +23,19 @@ class LoadQue : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resourceDao = AppDatabase.getDatabase(this).resourceDao()
-        StatusUtil.setStatusBarMode(this,true,R.color.little_white)
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_load_que)
         viewModel = ViewModelProvider(this).get(LoadQueViewModel::class.java)
         val prefs = getSharedPreferences("resource_settings", Context.MODE_PRIVATE)
         val isEnglishLoad = prefs.getBoolean("english_1000", false)
+        val isMathLoad = prefs.getBoolean("math", false)
+        val isPhy = prefs.getBoolean("phy", false)
+        val isCommonLoad = prefs.getBoolean("common", false)
         val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
         load_que_btn.typeface = font
+        load_que_btn_math.typeface = font
+        load_que_btn_phy.typeface = font
+        load_que_btn_common.typeface = font
         if (isEnglishLoad) {
             load_que_btn.text = App.context.resources.getString(R.string.icon_load_ok)
             load_que_btn.isClickable = false
@@ -55,6 +61,22 @@ class LoadQue : AppCompatActivity() {
             }
         }
 
+        if (isMathLoad) {
+            load_que_btn_math.text = App.context.resources.getString(R.string.icon_load_ok)
+            load_que_btn_math.isClickable = false
+        } else {
+            load_que_btn_math.text = App.context.resources.getString(R.string.icon_load)
+        }
+
+        if (isPhy) {
+            load_que_btn_phy.text = App.context.resources.getString(R.string.icon_load_ok)
+            load_que_btn_phy.isClickable = false
+        } else {
+            load_que_btn_phy.text = App.context.resources.getString(R.string.icon_load)
+        }
+
+        load_que_btn_common.text = App.context.resources.getString(R.string.icon_load_ok)
+
         viewModel.loadFlag.observe(this, Observer {
             when (it) {
                 1 -> {
@@ -62,8 +84,9 @@ class LoadQue : AppCompatActivity() {
                 }
                 2 -> {
                     load_que_btn.text = App.context.resources.getString(R.string.icon_load_ok)
-                    val editor = getSharedPreferences("resource_settings",Context.MODE_PRIVATE).edit()
-                    editor.putBoolean("english_1000",true)
+                    val editor =
+                        getSharedPreferences("resource_settings", Context.MODE_PRIVATE).edit()
+                    editor.putBoolean("english_1000", true)
                     editor.apply()
                     load_que_btn.isClickable = false
                 }

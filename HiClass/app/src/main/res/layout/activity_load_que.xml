@@ -16,36 +16,148 @@
         app:popupTheme="@style/Theme.MenuTest.PopupOverlay" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/ll_que_english"
-        android:layout_gravity="center"
-        android:layout_width="380dp"
-        android:layout_height="64dp"
-        android:layout_below="@id/ll_edit_address"
-        android:background="?android:attr/selectableItemBackground">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/white"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_que_english"
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center_vertical|start"
-            android:text="考研英语词汇1000题"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"
-            android:lines="1"
-            android:singleLine="true"
-            android:textSize="14sp" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_que_english"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@id/ll_edit_address"
+            android:background="?android:attr/selectableItemBackground">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:gravity="center"
-            android:textSize="20sp"
-            android:id="@+id/load_que_btn"
-            style="@style/ButtonBackground"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:text="@string/icon_address"
-            android:textColor="@color/black" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_que_english"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="英语单词题库"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:lines="1"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/load_que_btn"
+                style="@style/ButtonBackground"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="@string/icon_address"
+                android:textColor="@color/black" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_que_math"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@id/ll_edit_address"
+            android:background="?android:attr/selectableItemBackground">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_que_math"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical|start"
+                android:text="高数题库"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:lines="1"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/load_que_btn_math"
+                style="@style/ButtonBackground"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="@string/icon_address"
+                android:textColor="@color/black" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_que_phy"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@id/ll_edit_address"
+            android:background="?android:attr/selectableItemBackground">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_que_phy"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical|start"
+                android:text="大物题库"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:lines="1"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/load_que_btn_phy"
+                style="@style/ButtonBackground"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="@string/icon_address"
+                android:textColor="@color/black" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_que_common"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@id/ll_edit_address"
+            android:background="?android:attr/selectableItemBackground">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_que_common"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical|start"
+                android:text="常识题库"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:lines="1"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/load_que_btn_common"
+                style="@style/ButtonBackground"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="@string/icon_address"
+                android:textColor="@color/black" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
 </com.google.android.material.appbar.AppBarLayout>

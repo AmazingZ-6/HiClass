@@ -41,6 +41,10 @@ class ScheduleViewModel : ViewModel() {
         get() = _isApply
     private val _isApply = MutableLiveData<Boolean>()
 
+    val isApplyStorage: LiveData<Boolean>
+        get() = _isApplyStorage
+    private val _isApplyStorage = MutableLiveData<Boolean>()
+
     val updateBold: LiveData<Int>
         get() = _updateBold
     private val _updateBold = MutableLiveData<Int>()
@@ -125,6 +129,10 @@ class ScheduleViewModel : ViewModel() {
 
     fun applyHasFinished() {
         _isApply.value = true
+    }
+
+    fun applyStoHasFinished() {
+        _isApplyStorage.value = true
     }
 
     fun updateBold(index: Int) {

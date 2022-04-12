@@ -134,7 +134,7 @@ class AlarmDisplayAdapter(
         }
 
         holder.btnEdit.setOnClickListener {
-            viewModel.preDelete(alarm)
+//            viewModel.preDelete(alarm)
             if (alarm.alarmType == 0) {
                 viewModel.editClassAlarm(alarm.id)
             } else {

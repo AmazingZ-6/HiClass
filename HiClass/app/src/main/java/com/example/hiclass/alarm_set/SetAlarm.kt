@@ -111,7 +111,7 @@ class SetAlarm : AppCompatActivity() {
         if (isExited) {
             alarm_set_term_day.text = alarm.alarmTermDay
             alarm_set_name.setText(alarm.alarmName)
-            viewModel.selectedChange(alarm.alarmQueType)
+            viewModel.selectedChange(1)
             viewModel.interValChange(alarm.alarmInterval)
             hourT = TypeSwitcher.charToInt(alarm.alarmTime[0]) * 10 + TypeSwitcher.charToInt(
                 alarm.alarmTime[1]
@@ -126,7 +126,7 @@ class SetAlarm : AppCompatActivity() {
             val alarmName = intent.getStringExtra("name")
             alarm_set_term_day.text = alarmTermDay.toString()
             alarm_set_name.setText(alarmName.toString())
-            viewModel.selectedChange(0)
+            viewModel.selectedChange(1)
             viewModel.interValChange(0)
         }
         hour = if (hourT < 10) "0$hourT"

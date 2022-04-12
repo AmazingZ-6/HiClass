@@ -1,6 +1,7 @@
 package com.example.hiclass.setting
 
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Base64
@@ -10,28 +11,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hiclass.R
 import com.example.hiclass.utils.FastBlurUtility.fastblur
 import com.example.hiclass.utils.MakeStatusBarTransparent
+import com.example.hiclass.utils.StatusUtil
 import kotlinx.android.synthetic.main.activity_about_me.*
 
 
 class AboutMe : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        MakeStatusBarTransparent.makeStatusBarTransparent(this)
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_about_me)
-        val sharedPre = getSharedPreferences("user_data", MODE_PRIVATE)
-        val isInitBg = sharedPre.getInt("init_bg", R.color.little_white)
-        val icon = sharedPre.getString("background", "")
-        if (isInitBg >= 0){
-
-        }else{
-            val decode = Base64.decode(icon!!.toByteArray(), 1)
-            val bmp = BitmapFactory.decodeByteArray(decode, 0, decode.size)
-            val newBmp = fastblur(bmp, 100)
-            about_me_main.background = BitmapDrawable(resources, newBmp)
-        }
+        val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
+        about_comment_icon.typeface = font
+        about_comment_icon.text = App.context.resources.getString(R.string.icon_next)
+        about_thank_icon.typeface = font
+        about_thank_icon.text = App.context.resources.getString(R.string.icon_next)
+        about_user_read_icon.typeface = font
+        about_user_read_icon.text = App.context.resources.getString(R.string.icon_next)
     }
 }

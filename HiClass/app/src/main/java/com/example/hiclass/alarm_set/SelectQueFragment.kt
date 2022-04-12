@@ -40,7 +40,7 @@ class SelectQueFragment : DialogFragment() {
         val prefs = activity?.getSharedPreferences("resource_settings", Context.MODE_PRIVATE)
         val isEngLoaded = prefs?.getBoolean("english_1000", false)
         if (isEngLoaded == true) {
-            queName = arrayListOf("无(默认常识题库)", "考研英语词汇1000题")
+            queName = arrayListOf("无(默认常识题库)", "英语单词题库")
         }
     }
 

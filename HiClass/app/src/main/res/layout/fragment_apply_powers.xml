@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:gravity="start"
-        android:text="  需要以下权限"
-        android:textSize="16sp"
+        android:gravity="center"
+        android:text="为确保程序正常运行，需要请求以下权限"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -50,6 +50,26 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/apply_overlay_icon"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/apply_storage"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:clickable="true">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="  ● 允许应用访问外部存储"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/apply_storage_icon"
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:gravity="center" />

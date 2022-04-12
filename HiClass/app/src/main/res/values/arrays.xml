@@ -13,4 +13,49 @@
         <item>3</item>
         <item>5</item>
     </string-array>
+
+    <string-array name="auto_clock_time_entries">
+        <item>上午</item>
+        <item>下午</item>
+        <item>晚上</item>
+    </string-array>
+
+    <string-array name="auto_clock_time_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="default_clock_value">
+        <item>0</item>
+    </string-array>
+
+    <string-array name="auto_que_entries">
+        <item>常识题库</item>
+        <item>英语单词题库</item>
+        <item>高数题库</item>
+        <item>大物题库</item>
+    </string-array>
+
+    <string-array name="auto_que_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="auto_advanced_entries">
+        <item>提前1小时响铃</item>
+        <item>提前45分钟响铃</item>
+        <item>提前30分钟响铃</item>
+        <item>提前15分钟响铃</item>
+    </string-array>
+
+    <string-array name="auto_advanced_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
 </resources>

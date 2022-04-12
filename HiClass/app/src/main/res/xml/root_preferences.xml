@@ -6,9 +6,34 @@
 
         <SwitchPreferenceCompat
             app:key="auto_clock"
-            app:title="根据课表自动设置闹钟"
-            app:summary="自动为每日上午首个事项设置闹钟"
-            app:defaultValue="true"/>
+            app:title="自动设置闹钟"
+            app:summary="在闹钟界面开启自动设置闹钟选项"
+            app:defaultValue="true"
+            app:useSimpleSummaryProvider="true"/>
+
+        <MultiSelectListPreference
+            app:key="auto_time"
+            app:title="自动闹钟涉及时间段"
+            app:entries="@array/auto_clock_time_entries"
+            app:entryValues="@array/auto_clock_time_values"
+            app:defaultValue="@array/default_clock_value"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="auto_que"
+            app:title="自动闹钟题库选择"
+            app:entries="@array/auto_que_entries"
+            app:entryValues="@array/auto_que_values"
+            app:defaultValue="0"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="auto_advanced"
+            app:title="自动闹钟时间设置"
+            app:entries="@array/auto_advanced_entries"
+            app:entryValues="@array/auto_advanced_values"
+            app:defaultValue="0"
+            app:useSimpleSummaryProvider="true"/>
 
         <SwitchPreferenceCompat
             app:key="urgent_stop"
@@ -25,6 +50,8 @@
             app:entryValues="@array/clock_interval_values"
             app:defaultValue="3"
             app:useSimpleSummaryProvider="true"/>
+
+
 
     </PreferenceCategory>
 

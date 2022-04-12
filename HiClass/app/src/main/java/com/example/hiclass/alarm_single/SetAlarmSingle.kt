@@ -67,7 +67,7 @@ class SetAlarmSingle : AppCompatActivity() {
                     alarm_selected_que_type_single.text = "常识题库"
                 }
                 1 -> {
-                    alarm_selected_que_type_single.text = "考研英语词汇题库"
+                    alarm_selected_que_type_single.text = "英语单词题库"
                 }
             }
         })
@@ -117,7 +117,7 @@ class SetAlarmSingle : AppCompatActivity() {
             }
         } else {
             viewModel.weekdaySelected(8)
-            viewModel.typeSelected(0)
+            viewModel.typeSelected(1)
             hourT = getNowTime()[0]
             minuteT = getNowTime()[1]
         }

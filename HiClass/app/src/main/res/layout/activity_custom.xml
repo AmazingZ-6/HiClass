@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/little_white"
+    android:orientation="vertical"
+    tools:context=".alarm_single.SetAlarmSingle">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/little_white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_item_add_single"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/little_white"
+            app:popupTheme="@style/Theme.MenuTest.PopupOverlay"
+            app:title="个性定制"
+            app:titleTextColor="@color/black" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/hiclass" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/layout_background"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/custom_bg_select"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="280dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
+                        android:text="课表背景"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/custom_bg_select_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="#BFBEBE" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/custom_color_select"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="280dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
+                        android:text="课表风格"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                    <!--                        android:layout_width="300dp"-->
+                    <!--                        android:layout_height="30dp"-->
+                    <!--                        android:text="       为课表事项设置颜色及风格"-->
+                    <!--                        android:gravity="center_vertical"-->
+                    <!--                        android:textColor="@color/black"-->
+                    <!--                        android:textSize="14sp" />-->
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/custom_color_select_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="#BFBEBE" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/custom_data"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="280dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
+                        android:text="课表数据"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="280dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
+                        android:text="设置每节课上课时间、学期周数等数据"
+                        android:textColor="#232323"
+                        android:textSize="14sp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/custom_data_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/layout_background"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/custom_clock"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="280dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
+                        android:text="闹钟风格"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/custom_clock_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="#BFBEBE" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/custom_answer"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="?android:attr/selectableItemBackground">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:layout_height="match_parent">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="280dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
+                        android:text="答题样式"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/custom_answer_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+</LinearLayout>

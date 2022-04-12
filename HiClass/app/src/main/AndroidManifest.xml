@@ -19,22 +19,24 @@
     <!-- 弹出 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 亮屏的权限 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.USES_POLICY_FORCE_LOCK" />
-    <!-- 获取读写权限   -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.USES_POLICY_FORCE_LOCK" /> <!-- 获取读写权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-
 
     <application
         android:name=".setting.App"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher_playstore_2"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/ic_launcher_playstore_2"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HiClass"
-        android:requestLegacyExternalStorage="true">
+        android:theme="@style/Theme.HiClass">
+        <activity
+            android:name=".setting.custom.Custom"
+            android:exported="false" />
         <activity
             android:name=".setting.ring_select.RingFromUser"
             android:exported="false" />

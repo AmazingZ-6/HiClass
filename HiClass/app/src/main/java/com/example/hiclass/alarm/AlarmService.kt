@@ -56,12 +56,23 @@ class AlarmService : Service() {
             .build()
         startForeground(1, notification)
         initDateMap()
+        isServiceAlive = true
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alarmId = intent?.getLongExtra("alarm_id", -1)
         val isGroup = intent?.getBooleanExtra("isGroup", false)
         isDelete = intent?.getBooleanExtra("isDelete", false)
+        val isClock = intent?.getBooleanExtra("isCLock", false)
+        if (isClock == true) {
+            for (entity in alarmList) {
+                if (alarmId == entity.id) {
+                    alarm = entity
+                    break
+                }
+            }
+            clockedClock()
+        }
         if (!isGroup!!) {
             for (entity in alarmList) {
                 if (alarmId == entity.id) {
@@ -88,7 +99,10 @@ class AlarmService : Service() {
                 for (al in group) {
                     if (al.alarmSwitch) {
                         alarm = al
-                        analyseTermDay()
+                        if (alarm.alarmType == 0)
+                            analyseTermDay()
+                        else
+                            analyseWeekday()
                     }
                 }
                 GroupAlarm.clearG()
@@ -144,6 +158,12 @@ class AlarmService : Service() {
         }
     }
 
+    private fun clockedClock() {
+        if (piMap[alarm.id] != null) {
+            piMap.remove(alarm.id)
+        }
+    }
+
     private fun analyseTermDay() {
         val random = (0..900).random()
         val que = resourceDao.getRandomQue(random.toLong(), "english")
@@ -157,7 +177,7 @@ class AlarmService : Service() {
         } else {
             charToInt(weekSt[0])
         }
-        val weekday = chineseToInt(alarm.alarmTermDay[alarm.alarmTermDay.length - 6])
+        val weekday = chineseToInt(alarm.alarmTermDay.split("星期")[1][0])
         val date = getDate(week, weekday)
         val month = if (date.split(".")[0].length > 1) {
             charToInt(date.split(".")[0][0]) * 10 + charToInt(date.split(".")[0][1])
@@ -181,7 +201,7 @@ class AlarmService : Service() {
             Log.d("time", calendar.time.toString())
             val cal1 = Calendar.getInstance()
             cal1.timeInMillis = System.currentTimeMillis()
-            if (calendar.timeInMillis >= cal1.timeInMillis){
+            if (calendar.timeInMillis >= cal1.timeInMillis && piMap[alarm.id] == null) {
                 setClock(que, calendar)
             }
         }
@@ -191,6 +211,8 @@ class AlarmService : Service() {
         val hVal = charToInt(alarm.alarmTime[0]) * 10 + charToInt(alarm.alarmTime[1])
         val mVal = charToInt(alarm.alarmTime[3]) * 10 + charToInt(alarm.alarmTime[4])
         val weekdayT = mutableListOf<Int>()
+        val calNow = Calendar.getInstance()
+        calNow.timeInMillis = System.currentTimeMillis()
         for (wd in alarm.alarmWeekday.split(",")) {
             if (wd.isNotEmpty()) {
                 weekdayT.add(charToInt(wd[0]))
@@ -276,11 +298,11 @@ class AlarmService : Service() {
         dateMap2[6] = 1
     }
 
-    private fun clearClock() {
-        for (alarm in alarmList) {
-            alarm.alarmSwitch = false
-        }
-    }
+//    private fun clearClock() {
+//        for (alarm in alarmList) {
+//            alarm.alarmSwitch = false
+//        }
+//    }
 
     private fun deleteAlarm(ala: AlarmDataBean) {
         alarmList.remove(ala)

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -25,6 +26,7 @@ import com.example.hiclass.utils.GroupAlarm
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher.charToInt
 import kotlinx.android.synthetic.main.activity_alarm_display.*
+import kotlinx.android.synthetic.main.activity_set_alarm_clock.*
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -33,6 +35,11 @@ class AlarmDisplay : AppCompatActivity() {
     private val alarmShow = mutableListOf<AlarmDataBean>()
     private lateinit var viewModel: AlarmDisplayViewModel
     private lateinit var adapter: AlarmDisplayAdapter
+
+    data class InfoTemp(var tableId: Int, var itemId: Long)
+
+    private val allInfoMap = mutableMapOf<AlarmDataBean, InfoTemp>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
@@ -52,16 +59,36 @@ class AlarmDisplay : AppCompatActivity() {
         viewModel.editFlag.observe(this, Observer {
             when (it) {
                 0 -> {
-                    val intent = Intent(this, SetAlarm::class.java)
-                    intent.putExtra("alarm_id", viewModel.editAlarmId)
-                    intent.putExtra("isUpdate", true)
-                    startActivity(intent)
+                    for (i in alarmList) {
+                        if (i.id == viewModel.editAlarmId) {
+                            if (i.alarmSwitch) {
+                                Toast.makeText(this, "请先关闭闹钟", Toast.LENGTH_SHORT).show()
+                                break
+                            } else {
+                                val intent = Intent(this, SetAlarm::class.java)
+                                intent.putExtra("alarm_id", viewModel.editAlarmId)
+                                intent.putExtra("isUpdate", true)
+                                startActivity(intent)
+                            }
+                        }
+                    }
+
                 }
                 1 -> {
-                    val intent = Intent(this, SetAlarmSingle::class.java)
-                    intent.putExtra("alarm_id", viewModel.editAlarmId)
-                    intent.putExtra("isUpdate", true)
-                    startActivity(intent)
+                    for (i in alarmList) {
+                        if (i.id == viewModel.editAlarmId) {
+                            if (i.alarmSwitch) {
+                                Toast.makeText(this, "请先关闭闹钟", Toast.LENGTH_SHORT).show()
+                                break
+                            } else {
+                                val intent = Intent(this, SetAlarmSingle::class.java)
+                                intent.putExtra("alarm_id", viewModel.editAlarmId)
+                                intent.putExtra("isUpdate", true)
+                                startActivity(intent)
+                            }
+                        }
+
+                    }
                 }
             }
         })
@@ -294,25 +321,41 @@ class AlarmDisplay : AppCompatActivity() {
 
     private fun autoSetClock(weekFlag: Int) {
         val alarms = mutableListOf<AlarmDataBean>()
+        val alarmsTrue = mutableListOf<AlarmDataBean>()
         val matches = mutableListOf<MatchInfoBean>()
         val tables = mutableListOf<Int>()
         val alarmIds = mutableListOf<Long>()
         val itemIds = mutableListOf<Long>()
         val sp = getSharedPreferences("com.example.hiClass_preferences", MODE_PRIVATE)
-        val advancedTime = sp.getInt("advanced_time", 0)
-        val queType = sp.getInt("que_type", 0)
+        val advancedTime = sp.getString("auto_advanced", "0")
+        val queTypeT = sp.getString("auto_que", "0")
+        val queType = queTypeT?.get(0)?.let { charToInt(it) }
+        val spanFlag = when (sp.getStringSet("auto_time", setOf("0"))) {
+            setOf("0") -> arrayOf(1, 2, 3, 4)
+            setOf("0", "1") -> arrayOf(1, 2, 3, 4, 5, 6, 7, 8)
+            setOf("0", "1", "2") -> arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+            setOf("0", "2") -> arrayOf(1, 2, 3, 4, 9, 10, 11, 12)
+            setOf("1") -> arrayOf(5, 6, 7, 8)
+            setOf("2") -> arrayOf(9, 10, 11, 12)
+            else -> arrayOf(1, 2, 3, 4)
+        }
         val week = if (weekFlag == 0) getBoldDay()[0]
         else getBoldDay()[0] + 1
         for (item in weekList[week].dayItemList) {
             val startClassT = item.getTimeString3().split("-")[0]
-            val startClass = charToInt(startClassT[startClassT.length - 1])
-            if (startClass <= 4) {
+            val startClass1 = charToInt(startClassT[startClassT.length - 2])
+            val startClass2 = charToInt(startClassT[startClassT.length - 1])
+            val startClass = startClass1 * 10 + startClass2
+            if (startClass in spanFlag) {
                 val alarmName = item.itemName
                 val alarmTermDay = item.getTimeString3()
 
                 val timeList = getClassAutoClockTime(startClass)
                 val time = when (advancedTime) {
-                    0 -> listOf(timeList[0] - 1, 0)
+                    "0" -> listOf(timeList[0] - 1, 0)
+                    "1" -> listOf(timeList[0] - 1, 15)
+                    "2" -> listOf(timeList[0] - 1, 30)
+                    "3" -> listOf(timeList[0] - 1, 45)
                     else -> {
                         listOf(timeList[0] - 1, 0)
                     }
@@ -325,7 +368,7 @@ class AlarmDisplay : AppCompatActivity() {
                 val alarmInterval = 0
                 val alarm = AlarmDataBean(
                     0, alarmName, alarmTermDay, "", alarmTime,
-                    queType, alarmInterval, true
+                    queType!!, alarmInterval, true
                 )
 
                 val tableId =
@@ -333,18 +376,22 @@ class AlarmDisplay : AppCompatActivity() {
                 alarms.add(alarm)
                 tables.add(tableId)
                 itemIds.add(item.id)
+                val info = InfoTemp(tableId, item.id)
+                allInfoMap[alarm] = info
             }
         }
         thread {
-            val junkList = mutableListOf<AlarmDataBean>()
             for (i in alarms.indices) {
                 if (!judgeAlarmOff(alarms[i])) {
                     alarms[i].id = alarmDao.insertAlarm(alarms[i])
                     alarmList.add(alarms[i])
                     alarmIds.add(alarms[i].id)
+                    alarmsTrue.add(alarms[i])
                 } else {
-                    tables.removeAt(i)
-                    itemIds.removeAt(i)
+                    val tableId = allInfoMap[alarms[i]]?.tableId
+                    val itemId = allInfoMap[alarms[i]]?.itemId
+                    tables.remove(tableId)
+                    itemIds.remove(itemId)
 //                    junkList.add(alarms[i])
                 }
 //                ChangeAlarm.alarmAddFlag = 1
@@ -353,11 +400,17 @@ class AlarmDisplay : AppCompatActivity() {
 //            for (junk in junkList) {
 //                alarms.remove(junk)
 //            }
-            for (j in alarmIds.indices) {
-                val match = MatchInfoBean(alarmIds[j], tables[j], itemIds[j])
-                match.id = matchDao.insertInfo(match)
-                matchList.add(match)
+            for (j in alarmIds) {
+                for (z in alarms) {
+                    if (j == z.id) {
+                        val match =
+                            MatchInfoBean(j, allInfoMap[z]!!.tableId, allInfoMap[z]!!.itemId)
+                        match.id = matchDao.insertInfo(match)
+                        matchList.add(match)
+                    }
+                }
             }
+            allInfoMap.clear()
         }
         GroupAlarm.addG(alarms)
         val intent = Intent(this, AlarmService::class.java)

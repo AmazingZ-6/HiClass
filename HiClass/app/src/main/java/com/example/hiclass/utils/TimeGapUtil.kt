@@ -56,7 +56,7 @@ object TimeGapUtil {
                     charToInt(weekSt[0])
                 }
                 val weekday =
-                    TypeSwitcher.chineseToInt(entity.alarmTermDay[entity.alarmTermDay.length - 6])
+                    TypeSwitcher.chineseToInt(entity.alarmTermDay.split("星期")[1][0])
                 val date = CalendarUtil.getDate(week, weekday)
                 val month = if (date.split(".")[0].length > 1) {
                     charToInt(date.split(".")[0][0]) * 10 + charToInt(date.split(".")[0][1])

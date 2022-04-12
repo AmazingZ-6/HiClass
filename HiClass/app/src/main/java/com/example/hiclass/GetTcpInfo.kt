@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ContentLoadingProgressBar
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.hiclass.setting.App.Companion.context
 import com.example.hiclass.utils.ConnectTcp
 import com.example.hiclass.utils.StatusUtil
@@ -21,15 +23,23 @@ import kotlin.concurrent.thread
 
 class GetTcpInfo : AppCompatActivity() {
 
+    private lateinit var viewModel: GetTcpInfoViewModel
     private val classItem = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusUtil.setStatusBarMode(this, true, R.color.little_white)
         setContentView(R.layout.activity_getinfo)
+        viewModel = ViewModelProvider(this).get(GetTcpInfoViewModel::class.java)
         val btnLogin: Button = findViewById(R.id.login)
         val btnPass: Button = findViewById(R.id.pass)
         val loadingProgressBar: ContentLoadingProgressBar = findViewById(R.id.load_progressbar)
         val userSno: EditText = findViewById(R.id.username)
+        viewModel.isLoginFailed.observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show()
+                loadingProgressBar.visibility = GONE
+            }
+        })
         btnPass.setOnClickListener {
             val mIntent = intent
             val loginFlag = mIntent.getStringExtra("isReLogin")
@@ -42,16 +52,27 @@ class GetTcpInfo : AppCompatActivity() {
             finish()
         }
         btnLogin.setOnClickListener {
-            if (userSno.text.toString().length != 10){
-                Toast.makeText(this,"请输入正确的学号！",Toast.LENGTH_SHORT).show()
-            }else{
+            if (userSno.text.toString().length != 10) {
+                Toast.makeText(this, "请输入正确的学号！", Toast.LENGTH_SHORT).show()
+            } else {
                 loadingProgressBar.visibility = VISIBLE
-                loadingProgressBar.indeterminateDrawable.setColorFilter(ContextCompat.getColor(context,
-                    android.R.color.darker_gray
-                ), PorterDuff.Mode.MULTIPLY);
+                loadingProgressBar.indeterminateDrawable.setColorFilter(
+                    ContextCompat.getColor(
+                        context,
+                        android.R.color.darker_gray
+                    ), PorterDuff.Mode.MULTIPLY
+                );
                 thread {
                     val userInfo = ConnectTcp.login(userSno.text.toString())
-                    dealInfo(userInfo)
+                    if (userInfo != null) {
+                        if (userInfo.length > 10)
+                            dealInfo(userInfo)
+                        else
+                            viewModel.loginFailed()
+                    } else {
+                        viewModel.loginFailed()
+                    }
+
                 }
             }
         }
@@ -79,9 +100,9 @@ class GetTcpInfo : AppCompatActivity() {
             }
             startActivity(intent)
             finish()
-        }else{
+        } else {
 //            loadingProgressBar.visibility = GONE
-            Toast.makeText(this,"请检查学号正确性或网络连接状况！",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "请检查学号正确性或网络连接状况！", Toast.LENGTH_LONG).show()
         }
 
     }

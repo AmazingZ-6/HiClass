@@ -4,9 +4,11 @@ import android.app.StatusBarManager
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.hiclass.alarm.AlarmService
 import com.example.hiclass.dao.AlarmDao
 import com.example.hiclass.dao.ItemDao
 import com.example.hiclass.dao.MatchDao
@@ -14,8 +16,10 @@ import com.example.hiclass.dao.ResourceDao
 import com.example.hiclass.data_class.AlarmDataBean
 import com.example.hiclass.data_class.ItemDataBean
 import com.example.hiclass.data_class.MatchInfoBean
+import com.example.hiclass.load.LoadResource
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.utils.GetDefaultColor
+import com.example.hiclass.utils.GroupAlarm
 import com.example.hiclass.utils.StatusUtil
 import com.example.hiclass.utils.TypeSwitcher
 import kotlinx.android.synthetic.main.tab_layout.*
@@ -30,6 +34,7 @@ lateinit var resourceDao: ResourceDao
 lateinit var alarmDao: AlarmDao
 lateinit var matchDao: MatchDao
 private var isInfoExited = false
+var isServiceAlive = false
 
 
 class WeekItemList(week: Int) {
@@ -74,6 +79,17 @@ class StartActivity : AppCompatActivity() {
         val file = File(applicationContext.filesDir, "load_info")
         if (!isInfoExited) {
             getAllInfo()
+        }
+
+        thread {
+            val sp = getSharedPreferences("resource_settings", MODE_PRIVATE)
+            val isEnglishLoad = sp.getBoolean("english_1000",false)
+            if (!isEnglishLoad){
+                LoadResource.loadInfo("0001")
+                val editor = sp.edit()
+                editor.putBoolean("english_1000",true)
+                editor.apply()
+            }
         }
 
 
@@ -128,6 +144,22 @@ class StartActivity : AppCompatActivity() {
         thread {
             for (entity in alarmDao.loadAllAlarms()) {
                 alarmList.add(entity)
+            }
+            if (!isServiceAlive && alarmList.isNotEmpty()) {
+                val alaGroup = mutableListOf<AlarmDataBean>()
+                Log.d("time", "live-create")
+                for (alm in alarmList) {
+                    if (alm.alarmSwitch) {
+                        alaGroup.add(alm)
+                    }
+                }
+                Log.d("time", alaGroup.size.toString())
+                if (alaGroup.isNotEmpty()) {
+                    GroupAlarm.addG(alaGroup)
+                    val intent = Intent(this, AlarmService::class.java)
+                    intent.putExtra("isGroup", true)
+                    startService(intent)
+                }
             }
         }
     }

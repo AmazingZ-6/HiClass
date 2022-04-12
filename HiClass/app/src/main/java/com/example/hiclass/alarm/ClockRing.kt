@@ -2,6 +2,7 @@ package com.example.hiclass.alarm
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.media.AudioAttributes
@@ -105,7 +106,7 @@ class ClockRing : AppCompatActivity() {
         val sp = getSharedPreferences("user_data", MODE_PRIVATE)
         val flag = sp.getBoolean("is_local_ring", false)
         if (flag) {
-            val path = sp.getString("local_ring",null)
+            val path = sp.getString("local_ring", null)
             mediaPlayer.setAudioAttributes(
                 AudioAttributes
                     .Builder()
@@ -122,7 +123,7 @@ class ClockRing : AppCompatActivity() {
                 "dushen.wav", "chongfenghao.wav",
                 "jianqiang.wav", "youyang.wav"
             )
-            val index = sp.getInt("ring", 0)
+            val index = sp.getInt("ring", 1)
             val fd = assetManager.openFd(musicList[index])
             mediaPlayer.setAudioAttributes(
                 AudioAttributes
@@ -193,6 +194,9 @@ class ClockRing : AppCompatActivity() {
     }
 
     private fun updateAlarm() {
+        val intent = Intent(this, AlarmService::class.java)
+        intent.putExtra("alarm_id", alarmId)
+        intent.putExtra("isClock", true)
         thread {
             for (i in alarmList) {
                 if (i.id == alarmId) {

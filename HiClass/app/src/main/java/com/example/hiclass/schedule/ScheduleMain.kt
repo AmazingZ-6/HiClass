@@ -34,6 +34,7 @@ import com.example.hiclass.schedule.apply.ApplyPowersFragment
 import com.example.hiclass.setting.AboutMe
 import com.example.hiclass.setting.bg_select.BackImageSelect
 import com.example.hiclass.setting.SettingsActivity
+import com.example.hiclass.setting.custom.Custom
 import com.example.hiclass.utils.ActivityController.addActivity
 import com.example.hiclass.utils.BitMapScale
 import com.example.hiclass.utils.CalendarUtil
@@ -199,8 +200,8 @@ class ScheduleMain : AppCompatActivity() {
                     true
                 }
                 R.id.nav_select_bg -> {
-                    addActivity(this)
-                    val intent = Intent(this, BackImageSelect::class.java)
+//                    addActivity(this)
+                    val intent = Intent(this, Custom::class.java)
                     startActivity(intent)
                     true
                 }

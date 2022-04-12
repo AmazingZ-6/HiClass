@@ -1,16 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/about_me_main"
-    android:background="@drawable/bg_3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".setting.AboutMe">
+    android:background="@color/little_white"
+    android:orientation="vertical"
+    tools:context=".alarm_single.SetAlarmSingle">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/little_white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_item_add_single"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/little_white"
+            app:popupTheme="@style/Theme.MenuTest.PopupOverlay"
+            app:title="关于我们"
+            app:titleTextColor="@color/black" />
+
+
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/hiclass"/>
 
 
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/layout_background"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/about_user_read"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginStart="10dp"
+                        android:layout_width="280dp"
+                        android:layout_height="match_parent"
+                        android:text="用户须知"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/about_user_read_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:src="#BFBEBE" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/about_thank"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginStart="10dp"
+                        android:layout_width="280dp"
+                        android:layout_height="50dp"
+                        android:text="致谢"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+                    <!--                        android:layout_width="280dp"-->
+                    <!--                        android:layout_height="30dp"-->
+                    <!--                        android:text="       为课表事项设置颜色及风格"-->
+                    <!--                        android:gravity="center_vertical"-->
+                    <!--                        android:textColor="@color/black"-->
+                    <!--                        android:textSize="14sp" />-->
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/about_thank_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:src="#BFBEBE" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/about_comment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="280dp"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginStart="10dp"
+                        android:layout_width="280dp"
+                        android:layout_height="50dp"
+                        android:text="意见反馈"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/about_comment_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+</LinearLayout>

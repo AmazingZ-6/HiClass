@@ -67,7 +67,7 @@ class AlarmDisplayViewModel : ViewModel() {
         if (alarm.alarmSwitch) {
             alarm.alarmSwitch = false
             _preDeleteFlag.value = alarm.id
-        }else{
+        } else {
             deleteAlarm(alarm)
         }
     }
@@ -130,7 +130,10 @@ class AlarmDisplayViewModel : ViewModel() {
             _clockTime.postValue("暂无开启闹钟")
         } else {
             val minGap = getTimeGap(openAlarm)
-            _clockTime.postValue("${minGap.dayGap} 天 ${minGap.hGap} 小时 ${minGap.mGap} 分钟后响铃")
+            if (minGap.dayGap != 0)
+                _clockTime.postValue("${minGap.dayGap} 天 ${minGap.hGap} 小时 ${minGap.mGap} 分钟后响铃")
+            else
+                _clockTime.postValue("${minGap.hGap} 小时 ${minGap.mGap} 分钟后响铃")
         }
     }
 

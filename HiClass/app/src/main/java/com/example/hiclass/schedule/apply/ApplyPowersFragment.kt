@@ -16,6 +16,7 @@ import com.example.hiclass.schedule.apply.ApplyOverLayUtil.checkPermission
 import com.example.hiclass.schedule.ScheduleMain
 import com.example.hiclass.schedule.ScheduleViewModel
 import com.example.hiclass.setting.App
+import com.example.hiclass.utils.ApplyStorageUtil
 import kotlinx.android.synthetic.main.fragment_apply_powers.*
 
 
@@ -45,9 +46,15 @@ class ApplyPowersFragment : DialogFragment() {
                 apply_overlay_icon.text = App.context.resources.getString(R.string.icon_load_ok)
             }
         })
+//        viewModel.isApplyStorage.observe(this, Observer {
+//            if (it){
+//                apply_storage_icon.text = App.context.resources.getString(R.string.icon_load_ok)
+//            }
+//        })
         val font = Typeface.createFromAsset(App.context.assets, "iconfont.ttf")
         apply_auto_icon.typeface = font
         apply_overlay_icon.typeface = font
+        apply_storage_icon.typeface = font
         apply_overlay_icon.text = if (checkPermission(activity as ScheduleMain)) {
             App.context.resources.getString(R.string.icon_load_ok)
         } else {
@@ -60,6 +67,15 @@ class ApplyPowersFragment : DialogFragment() {
         }
         apply_auto_start.setOnClickListener {
             AutoStartUtil.jumpStartInterface(activity as ScheduleMain)
+        }
+        apply_storage_icon.text = if (ApplyStorageUtil.checkPermission(activity as ScheduleMain)) {
+            App.context.resources.getString(R.string.icon_load_ok)
+        } else {
+            App.context.resources.getString(R.string.icon_next)
+        }
+        apply_storage.setOnClickListener {
+            ApplyStorageUtil.applyPower(activity as ScheduleMain)
+            apply_storage_icon.text = App.context.resources.getString(R.string.icon_load_ok)
         }
         btn_ignore_apply.setOnClickListener {
             val editor = (activity as ScheduleMain).getSharedPreferences(

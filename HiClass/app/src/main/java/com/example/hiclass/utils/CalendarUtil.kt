@@ -145,7 +145,7 @@ object CalendarUtil {
                 TypeSwitcher.charToInt(weekSt[0])
             }
             val weekday =
-                TypeSwitcher.chineseToInt(alarm.alarmTermDay[alarm.alarmTermDay.length - 6])
+                TypeSwitcher.chineseToInt(alarm.alarmTermDay.split("星期")[1][0])  //未考虑节数有两位情况
             val date = getDate(week, weekday)
             val month = if (date.split(".")[0].length > 1) {
                 TypeSwitcher.charToInt(date.split(".")[0][0]) * 10 + TypeSwitcher.charToInt(
